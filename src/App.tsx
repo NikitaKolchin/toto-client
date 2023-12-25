@@ -11,16 +11,23 @@ const App: FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);
 
     useEffect(() => {
+
         const getData = async () => {
-            const resp = await axios.get('http://localhost:3000/api/matches');
-            console.log(resp.data)
+            try {
+                const resp = await axios.get('http://localhost:3000/api/matches');
+                console.log(resp.data)
+            }
+            catch (e) {
+                console.log(e);
+            }
+            
         }
         
         if (localStorage.getItem('token')) {
             store.checkAuth()
         }
         getData();
-    }, [])
+    }, [store])
 
     async function getUsers() {
         try {
