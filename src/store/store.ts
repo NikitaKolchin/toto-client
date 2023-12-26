@@ -71,6 +71,8 @@ export default class Store {
             this.setUser(response.data.user);
         } catch (e) {
             console.log(e);
+        }
+        finally {
             this.setLoading(false);
         }
     }

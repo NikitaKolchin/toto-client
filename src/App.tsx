@@ -14,7 +14,7 @@ const App: FC = () => {
 
         const getData = async () => {
             try {
-                const resp = await axios.get('http://localhost:3000/api/matches');
+                const resp = await axios.get('/api/matches');
                 console.log(resp.data)
             }
             catch (e) {
