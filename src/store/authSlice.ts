@@ -13,6 +13,7 @@ type DataState = {
 
 const setError = (state: DataState, action: PayloadAction<any>) => {
     state.isLoading = false;
+    state.isAuth = false;
     state.error = action.payload;
 };
 
@@ -54,6 +55,7 @@ const authSlice = createSlice({
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state.isAuth = true;
                 state.user = action.payload.user;
             })
             .addCase(login.rejected, setError)
