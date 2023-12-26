@@ -1,14 +1,16 @@
-import {FC, useContext, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import LoginForm from "./components/LoginForm";
-import {Context} from "./index";
-import {observer} from "mobx-react-lite";
+import { useAppDispatch, useAppSelector } from './store/hooks';
 import {IUser} from "./models/IUser";
 import UserService from "./services/UserService";
 import axios from 'axios';
+import { checkAuth, logout } from './store/authSlice';
 
 const App: FC = () => {
-    const {store} = useContext(Context);
     const [users, setUsers] = useState<IUser[]>([]);
+    const { isLoading, error, isAuth, user } = useAppSelector(state => state.data);
+    const dispatch = useAppDispatch();
+
 
     useEffect(() => {
 
@@ -24,10 +26,10 @@ const App: FC = () => {
         }
         
         if (localStorage.getItem('token')) {
-            store.checkAuth()
+            dispatch(checkAuth())
         }
         getData();
-    }, [store])
+    }, [dispatch])
 
     async function getUsers() {
         try {
@@ -38,11 +40,14 @@ const App: FC = () => {
         }
     }
 
-    if (store.isLoading) {
+    if (isLoading) {
         return <div>Загрузка...</div>
     }
 
-    if (!store.isAuth) {
+    if (error) {
+        return <div>{error}</div>
+    }
+    if (!isAuth) {
         return (
             <div>
                 <LoginForm/>
@@ -53,9 +58,9 @@ const App: FC = () => {
 
     return (
         <div>
-            <h1>{store.isAuth ? `Пользователь авторизован ${store.user.email}` : 'АВТОРИЗУЙТЕСЬ'}</h1>
-            <h1>{store.user.isActivated ? 'Аккаунт подтвержден по почте' : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}</h1>
-            <button onClick={() => store.logout()}>Выйти</button>
+            <h1>{isAuth ? `Пользователь авторизован ${user.email}` : 'АВТОРИЗУЙТЕСЬ'}</h1>
+            <h1>{user.isActivated ? 'Аккаунт подтвержден по почте' : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}</h1>
+            <button onClick={() => dispatch(logout())}>Выйти</button>
             <div>
                 <button onClick={getUsers}>Получить пользователей</button>
             </div>
@@ -66,4 +71,4 @@ const App: FC = () => {
     );
 };
 
-export default observer(App);
+export default App;

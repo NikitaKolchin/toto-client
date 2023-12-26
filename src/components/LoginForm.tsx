@@ -1,11 +1,13 @@
-import React, {FC, useContext, useState} from 'react';
-import {Context} from "../index";
-import {observer} from "mobx-react-lite";
+import {FC, useState} from 'react';
+import { useAppDispatch } from '../store/hooks';
+import { login, registration } from '../store/authSlice';
+
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const {store} = useContext(Context);
+    const dispatch = useAppDispatch();
+
 
     return (
         <div>
@@ -21,14 +23,14 @@ const LoginForm: FC = () => {
                 type="password"
                 placeholder='Пароль'
             />
-            <button onClick={() => store.login(email, password)}>
+            <button onClick={() => dispatch(login({email, password}))}>
                 Логин
             </button>
-            <button onClick={() => store.registration(email, password)}>
+            <button onClick={() => dispatch(registration({email, password}))}>
                 Регистрация
             </button>
         </div>
     );
 };
 
-export default observer(LoginForm);
+export default LoginForm;
