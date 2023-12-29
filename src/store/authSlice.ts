@@ -42,7 +42,7 @@ export const registration = createAsyncThunk<
     const response = await AuthService.registration(email, password);
     localStorage.setItem('token', response.data.accessToken);
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
         return rejectWithValue('Server Error!');
     }
     return response.data;
