@@ -1,14 +1,22 @@
-import {FC, useState} from 'react';
-import { useAppDispatch } from '../store/hooks';
-import { login, registration } from '../store/authSlice';
+import {FC, useEffect, useState} from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { login, registration } from '../../../store/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const dispatch = useAppDispatch();
-
-
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const { isLoading, error, isAuth } = useAppSelector(
+        (state) => state.data
+      )
+    useEffect(() => {
+    if (isAuth) {
+        navigate('/profile')
+    }
+    }, [navigate, isAuth])
     return (
         <div>
             <input

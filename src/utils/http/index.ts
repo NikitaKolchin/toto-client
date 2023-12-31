@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuthResponse } from "../models/response/AuthResponse";
+import { AuthResponse } from "../../models/response/AuthResponse";
 
 export const API_URL = `/api/`
 const $api = axios.create({

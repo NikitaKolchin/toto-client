@@ -1,5 +1,5 @@
-import $api from "../http";
-import {AxiosResponse} from 'axios';
+import $api from "../utils/http";
+import axios, {AxiosResponse} from 'axios';
 import {AuthResponse} from "../models/response/AuthResponse";
 
 export default class AuthService {
@@ -16,7 +16,8 @@ export default class AuthService {
     }
 
     static async checkAuth(): Promise<AxiosResponse<AuthResponse>> {
-        return $api.get(`/auth/refresh`)
+        return await axios.get<AuthResponse>(`/api/auth/refresh`, {withCredentials: true})
+        // return $api.get(`/auth/refresh`)
     }    
 }
 
