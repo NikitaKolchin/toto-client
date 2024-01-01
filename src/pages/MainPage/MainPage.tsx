@@ -42,7 +42,10 @@ const Main: FC = (props: Props) => {
             <button onClick={() => dispatch(logout())}>Выйти</button>
           </>
         ) : (
-          <Link to="login">login</Link>
+          <div>
+            <Link to="login">login</Link> <br />
+            <Link to="registration">registration</Link>
+          </div>
         )}
       </div>
     </div>

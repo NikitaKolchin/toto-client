@@ -105,16 +105,18 @@ const authSlice = createSlice({
             .addCase(login.rejected, setError)
             .addCase(registration.pending, (state) => {
                 state.isLoading = true;
+                state.isAuth = false;
                 state.error = null;
             })
             .addCase(registration.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.isAuth = true;
+                state.isAuth = false;
                 state.user = action.payload.user;
             })
             .addCase(registration.rejected, setError)
             .addCase(checkAuth.pending, (state) => {
                 state.isLoading = true;
+                state.isAuth = false;
                 state.error = null;
             })
             .addCase(checkAuth.fulfilled, (state, action) => {

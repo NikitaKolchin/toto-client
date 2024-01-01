@@ -1,18 +1,20 @@
 import { FC } from "react"
-import Main from "./pages/Main/Main"
+import MainPage from "./pages/MainPage/MainPage"
 import { Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./components/layout/ProtectedRoute/ProtectedRoute"
-import ProfileScreen from "./components/containers/ProfileScreen/ProfileScreen"
+import ProfileScreen from "./pages/ProfilePage/ProfilePage"
 import { BrowserRouter } from 'react-router-dom'
-import LoginForm from "./components/containers/LoginForm/LoginForm"
+import LoginPage from "./pages/LoginPage/LoginPage"
+import RegistrationPage from "./pages/RegistrationPage/RegistrationPage"
 
 const App: FC = () => {
 
   return (
     <BrowserRouter>
     <Routes>
-      <Route path='/' element={<Main />} />
-      <Route path='/login' element={<LoginForm />} />
+      <Route path='/' element={<MainPage />} />
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/registration' element={<RegistrationPage />} />
       <Route element={<ProtectedRoute />}>
         <Route path='/profile' element={<ProfileScreen />} />
       </Route>

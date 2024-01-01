@@ -1,14 +1,14 @@
 import { FC, useState } from "react"
-import { useAppSelector } from "../../../store/hooks"
-import { IUser } from "../../../models/IUser"
-import UserService from "../../../services/UserService"
+import { useAppSelector } from "../../store/hooks"
+import { IUser } from "../../models/IUser"
+import UserService from "../../services/UserService"
 
 type Props = {}
 
 const ProfileScreen: FC = (props: Props) => {
   const [users, setUsers] = useState<IUser[]>([])
 
-  const { user } = useAppSelector((state) => state.data)
+  const { isLoading, error ,user } = useAppSelector((state) => state.data)
 
   async function getUsers() {
     try {
@@ -17,6 +17,14 @@ const ProfileScreen: FC = (props: Props) => {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  if (isLoading) {
+    return <div>Загрузка...</div>
+  }
+
+  if (error) {
+    console.error("случилось страшное: ", error)
   }
 
   return (
