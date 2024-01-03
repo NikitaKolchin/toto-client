@@ -36,7 +36,7 @@ export const login = createAsyncThunk<
 
 export const registration = createAsyncThunk<
     AuthResponse,
-    {email : string, password: string},
+    AuthDto,
     { rejectValue: string }
 >('auth/registration', async ({ email, password }, { rejectWithValue }) => {
 
