@@ -1,12 +1,12 @@
 import { FC, useState } from "react"
 import { useAppSelector } from "../../store/hooks"
-import { IUser } from "../../models/IUser"
+import { User } from "../../models/User"
 import UserService from "../../services/UserService"
 
 type Props = {}
 
 const ProfileScreen: FC = (props: Props) => {
-  const [users, setUsers] = useState<IUser[]>([])
+  const [users, setUsers] = useState<User[]>([])
 
   const { isLoading, error ,user } = useAppSelector((state) => state.data)
 

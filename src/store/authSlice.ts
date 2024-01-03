@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import AuthService from "../services/AuthService";
 import {AuthResponse} from "../models/response/AuthResponse";
-import {IUser} from "../models/IUser";
+import {User} from "../models/User";
+import { AuthDto } from '../models/dto/AuthDto';
 type DataState = {
-    user: IUser;
+    user: User;
     isAuth: boolean;
     isLoading: boolean;
     error: string | null;
@@ -20,7 +21,7 @@ const setError = (state: DataState, action: PayloadAction<any>) => {
 
 export const login = createAsyncThunk<
     AuthResponse,
-    {email : string, password: string},
+    AuthDto,
     { rejectValue: string }
 >('auth/login', async ({ email, password }, { rejectWithValue }) => {
 
@@ -81,7 +82,7 @@ export const checkAuth = createAsyncThunk<
 
 
 const initialState: DataState = {
-    user: {} as IUser,
+    user: {} as User,
     isAuth: false,
     isLoading: false,
     error: null,
@@ -132,7 +133,7 @@ const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.isLoading = false;
                 state.isAuth = false;
-                state.user = {} as IUser;
+                state.user = {} as User;
             })
             .addCase(logout.rejected, setError)
     },
