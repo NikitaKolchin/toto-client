@@ -3,6 +3,7 @@ import AuthService from "../services/AuthService";
 import {AuthResponse} from "../models/response/AuthResponse";
 import {User} from "../models/User";
 import { AuthDto } from '../models/dto/AuthDto';
+import { RegDto } from '../models/dto/RegDto';
 type DataState = {
     user: User;
     isAuth: boolean;
@@ -17,15 +18,13 @@ const setError = (state: DataState, action: PayloadAction<any>) => {
 };
 
 
-
-
 export const login = createAsyncThunk<
     AuthResponse,
     AuthDto,
     { rejectValue: string }
 >('auth/login', async ({ email, password }, { rejectWithValue }) => {
 
-    const response = await AuthService.login(email, password);
+    const response = await AuthService.login({email, password});
     localStorage.setItem('token', response.data.accessToken);
 
     if (response.status !== 200) {
@@ -36,11 +35,11 @@ export const login = createAsyncThunk<
 
 export const registration = createAsyncThunk<
     AuthResponse,
-    AuthDto,
+    RegDto,
     { rejectValue: string }
->('auth/registration', async ({ email, password }, { rejectWithValue }) => {
+>('auth/registration', async ({ email, password, name }, { rejectWithValue }) => {
 
-    const response = await AuthService.registration(email, password);
+    const response = await AuthService.registration({ email, password, name });
     localStorage.setItem('token', response.data.accessToken);
 
     if (response.status !== 201) {
