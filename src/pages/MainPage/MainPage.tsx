@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react"
-import { checkAuth, logout } from "../../store/authSlice"
+import { checkAuth } from "../../store/authSlice"
 import { useAppSelector, useAppDispatch } from "../../store/hooks"
 import { Link } from "react-router-dom"
 
@@ -34,6 +34,11 @@ const Main: FC = (props: Props) => {
         {user.isActivated
           ? "Аккаунт подтвержден по почте"
           : "ПОДТВЕРДИТЕ АККАУНТ!!!!"}
+      </h1>
+      <h1>
+        {user.isAllowed
+          ? "Участие подтверждено"
+          : "Необходимо подтверждение участия"}
       </h1>
       <div>
         

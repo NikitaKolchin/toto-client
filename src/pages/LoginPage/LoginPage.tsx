@@ -21,7 +21,7 @@ const LoginForm: FC = () => {
   const { isLoading, error, isAuth } = useAppSelector((state) => state.data)
   useEffect(() => {
     if (isAuth) {
-      navigate("/profile")
+      navigate("/")
     }
   }, [navigate, isAuth])
 

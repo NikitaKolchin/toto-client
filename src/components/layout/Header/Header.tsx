@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { logout } from "../../../store/authSlice"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import Link from '@mui/material/Link';
+import { useNavigate } from "react-router-dom"
 
 
 type TotoMenuItem = {
@@ -19,7 +20,8 @@ type TotoMenuItem = {
   value: string
 }
 const menuItems: TotoMenuItem[] = [
-  { name: "Главная", value: "/" },
+  { name: "Toto Online", value: "/" },
+  { name: "Ставки", value: "/stakes" },
   { name: "Результаты", value: "/results" },
   { name: "Информация", value: "/info" },
 ]
@@ -27,6 +29,8 @@ const menuItems: TotoMenuItem[] = [
 function Header() {
   const { isAuth } = useAppSelector((state) => state.data)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
   const matchThen600 = useMediaQuery("(min-width:600px)")
   const [accountAnchorEl, setAccountAnchorEl] = useState<null | HTMLElement>(
     null
@@ -54,6 +58,10 @@ function Header() {
     dispatch(logout())
   }
 
+  const handleLogin = () => {
+    setAccountAnchorEl(null)
+    navigate('login')
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -96,9 +104,9 @@ function Header() {
           )}
           <Box  sx={{ flexGrow: 1, display: 'flex', justifyContent:'space-around', alignItems: 'center' }}>
 
-          <Typography variant="h5" component="span">
+          {/* <Typography variant="h5" component="span">
             Toto Online
-          </Typography>
+          </Typography> */}
           {matchThen600 &&
             menuItems.map((item) => (
               <Link key={item.value} href={item.value} variant="h6" underline='none' color='white' >
@@ -108,7 +116,7 @@ function Header() {
             ))}
           </Box>
 
-          {isAuth && (
+         
             <div>
               <IconButton
                 size="large"
@@ -120,6 +128,7 @@ function Header() {
               >
                 <AccountCircle />
               </IconButton>
+               {isAuth? (
               <Menu
                 id="menu-appbar"
                 anchorEl={accountAnchorEl}
@@ -144,8 +153,27 @@ function Header() {
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Выйти </MenuItem>
               </Menu>
-            </div>
-          )}
+          ): 
+          
+          <Menu
+                id="menu-appbar"
+                anchorEl={accountAnchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(accountAnchorEl)}
+                onClose={handleCloseAccountMenu}
+              >
+                <MenuItem onClick={handleLogin}>Войти </MenuItem>
+              </Menu>}
+          </div>
+
         </Toolbar>
       </AppBar>
     </Box>
