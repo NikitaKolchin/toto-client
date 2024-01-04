@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { registration } from "../../store/authSlice"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { Copyright } from "../LoginPage/LoginPage"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -112,7 +111,6 @@ const RegistrationPage = (props: Props) => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
   );
 }

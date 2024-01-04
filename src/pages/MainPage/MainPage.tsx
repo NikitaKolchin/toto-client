@@ -36,17 +36,8 @@ const Main: FC = (props: Props) => {
           : "ПОДТВЕРДИТЕ АККАУНТ!!!!"}
       </h1>
       <div>
-        {isAuth ? (
-          <>
-            <Link to="profile">user</Link>{" "}
-            <button onClick={() => dispatch(logout())}>Выйти</button>
-          </>
-        ) : (
-          <div>
-            <Link to="login">login</Link> <br />
-            <Link to="registration">registration</Link>
-          </div>
-        )}
+        
+            <Link to="profile">user</Link>
       </div>
     </div>
   )
