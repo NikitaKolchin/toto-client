@@ -11,9 +11,8 @@ import Menu from "@mui/material/Menu"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
 import { logout } from "../../../store/authSlice"
 import useMediaQuery from "@mui/material/useMediaQuery"
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link"
 import { useNavigate } from "react-router-dom"
-
 
 type TotoMenuItem = {
   name: string
@@ -60,7 +59,7 @@ function Header() {
 
   const handleLogin = () => {
     setAccountAnchorEl(null)
-    navigate('login')
+    navigate("login")
   }
 
   return (
@@ -95,40 +94,55 @@ function Header() {
                 onClose={handleCloseMainMenu}
               >
                 {menuItems.map((item, index) => (
-                  <MenuItem key={item.value}>
+                  <MenuItem
+                    key={item.value}
+                    component={Link}
+                    href={item.value}
+                    onClick={handleCloseAccountMenu}
+                  >
                     {item.name}
                   </MenuItem>
                 ))}
               </Menu>
             </>
           )}
-          <Box  sx={{ flexGrow: 1, display: 'flex', justifyContent:'space-around', alignItems: 'center' }}>
-
-          {/* <Typography variant="h5" component="span">
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            {/* <Typography variant="h5" component="span">
             Toto Online
           </Typography> */}
-          {matchThen600 &&
-            menuItems.map((item) => (
-              <Link key={item.value} href={item.value} variant="h6" underline='none' color='white' >
-                {item.name}
-                
-              </Link>
-            ))}
+            {matchThen600 &&
+              menuItems.map((item) => (
+                <Link
+                  key={item.value}
+                  href={item.value}
+                  variant="h6"
+                  underline="none"
+                  color="white"
+                >
+                  {item.name}
+                </Link>
+              ))}
           </Box>
 
-         
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleAccountMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-               {isAuth? (
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleAccountMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            {isAuth ? (
               <Menu
                 id="menu-appbar"
                 anchorEl={accountAnchorEl}
@@ -153,9 +167,8 @@ function Header() {
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Выйти </MenuItem>
               </Menu>
-          ): 
-          
-          <Menu
+            ) : (
+              <Menu
                 id="menu-appbar"
                 anchorEl={accountAnchorEl}
                 anchorOrigin={{
@@ -171,9 +184,9 @@ function Header() {
                 onClose={handleCloseAccountMenu}
               >
                 <MenuItem onClick={handleLogin}>Войти </MenuItem>
-              </Menu>}
+              </Menu>
+            )}
           </div>
-
         </Toolbar>
       </AppBar>
     </Box>
