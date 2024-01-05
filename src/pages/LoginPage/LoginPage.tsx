@@ -18,7 +18,7 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState<string>("")
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const { isLoading, error, isAuth } = useAppSelector((state) => state.data)
+  const { isLoading, error, isAuth } = useAppSelector((state) => state.auth)
   useEffect(() => {
     if (isAuth) {
       navigate("/")

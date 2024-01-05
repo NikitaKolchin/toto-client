@@ -11,7 +11,7 @@ const ResultPage = (props: Props) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { isLoading, error, isAuth } = useAppSelector(
-      (state) => state.data
+      (state) => state.auth
     )
   return (
       <div>

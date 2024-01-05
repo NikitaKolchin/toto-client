@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './authSlice';
+import auth from './authSlice';
+import theme from './themeSlice';
 
 const store = configureStore({
     reducer: {
-        data: userReducer,
+        auth,
+        theme,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

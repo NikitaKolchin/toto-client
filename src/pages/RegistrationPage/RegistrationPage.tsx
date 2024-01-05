@@ -22,7 +22,7 @@ const RegistrationPage = (props: Props) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { isLoading, error, user } = useAppSelector(
-      (state) => state.data
+      (state) => state.auth
     )
   useEffect(() => {
     if (user.email) {

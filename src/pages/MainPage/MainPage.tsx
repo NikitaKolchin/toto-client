@@ -7,7 +7,7 @@ type Props = {}
 
 const Main: FC = (props: Props) => {
   const { isLoading, error, isAuth, user } = useAppSelector(
-    (state) => state.data
+    (state) => state.auth
   )
   const dispatch = useAppDispatch()
 

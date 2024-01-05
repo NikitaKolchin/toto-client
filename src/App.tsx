@@ -11,9 +11,21 @@ import StakesPage from "./pages/StakesPage/StakesPage"
 import InfoPage from "./pages/InfoPage/InfoPage"
 import ResultPage from "./pages/ResultPage/ResultPage"
 
+
+import { ThemeProvider } from "@mui/material/styles";
+import { darkTheme, lightTheme } from "./components/theme/theme"
+import { useAppSelector } from "./store/hooks"
+
+
+
+
+
 const App: FC = () => {
+  const theme = useAppSelector((state) => state.theme);
 
   return (
+    <ThemeProvider theme={theme.darkTheme ? darkTheme : lightTheme}>
+
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<MainLayout />}>
@@ -22,19 +34,15 @@ const App: FC = () => {
         <Route path='/registration' element={<RegistrationPage />} />
         <Route element={<ProtectedRoute />}>        
           <Route path='/stakes' element={<StakesPage />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
           <Route path='/profile' element={<ProfileScreen />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
           <Route path='/info' element={<InfoPage />} />
-        </Route>
-        <Route element={<ProtectedRoute />}>
           <Route path='/results' element={<ResultPage />} />
         </Route>
       </Route>  
     </Routes>
     </BrowserRouter>
+    </ThemeProvider>
+
   )
 }
 

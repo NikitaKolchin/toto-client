@@ -88,7 +88,7 @@ const initialState: DataState = {
 };
 
 const authSlice = createSlice({
-    name: 'user',
+    name: 'auth',
     initialState,
     reducers: {},
     extraReducers: (builder) => {

@@ -5,7 +5,7 @@ import { checkAuth } from '../../../store/authSlice'
 
 const ProtectedRoute = () => {
   const { isLoading, error, isAuth, user } = useAppSelector(
-    (state) => state.data
+    (state) => state.auth
   )
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -14,7 +14,15 @@ const ProtectedRoute = () => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth())
     }
+
   }, [dispatch])
+
+  useEffect(() => {
+    if (!isLoading &&( !isAuth || !user.isActivated)) { // || !user.isAllowed
+      navigate('/')
+    }
+  }, [isAuth, isLoading, navigate, user.isActivated])
+  
 
   if (isLoading) {
     return <div>Загрузка...</div>
@@ -23,9 +31,7 @@ const ProtectedRoute = () => {
   if (error) {
     console.error("случилось страшное: ", error)
   }
-  if (!isAuth || !user.isActivated) { // || !user.isAllowed
-    navigate('/')
-  }
+
 
   return <Outlet />
 }
