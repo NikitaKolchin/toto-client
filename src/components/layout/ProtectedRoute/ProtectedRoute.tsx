@@ -7,15 +7,8 @@ const ProtectedRoute = () => {
   const { isLoading, error, isAuth, user } = useAppSelector(
     (state) => state.auth
   )
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(checkAuth())
-    }
-
-  }, [dispatch])
 
   useEffect(() => {
     if (!isLoading &&( !isAuth || !user.isActivated)) { // || !user.isAllowed

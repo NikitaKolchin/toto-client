@@ -1,16 +1,57 @@
 import $api from "../utils/http";
-import {AxiosResponse} from 'axios';
-import {User} from "../models/User";
+import { AxiosError, AxiosResponse } from 'axios';
+import { User } from "../models/User";
 import { MessageResponse } from "../models/response/MessageResponse";
 
 export default class UserService {
-    static sendCode( userId : User['id']): Promise<AxiosResponse<MessageResponse>> {
-        return $api.get<MessageResponse>(`/users/sendCode/${userId}`)
+    static async sendCode(email: User['email']): Promise<MessageResponse> {
+        let response: MessageResponse;
+        try {
+            response = (await $api.get<MessageResponse>(`/users/sendCode/${email}`)).data;
+        }
+        catch (e) {
+            if ((e as AxiosError<MessageResponse>).response) {
+                response = (e as AxiosError<MessageResponse>).response!.data
+            }
+            else {
+                response = e as Error
+            }
+        }
+        return response
     }
 
-    static activate( userId : User['id'], confirmationCode: number): Promise<AxiosResponse<MessageResponse>> {
-        return $api.get<MessageResponse>(`/users/activate/${userId}/${confirmationCode}`)
+    static async activate(email: User['email'], confirmationCode: string): Promise<MessageResponse> {
+        let response: MessageResponse;
+        try {
+            response = (await $api.get<MessageResponse>(`/users/activate/${email}/${confirmationCode}`)).data;
+        }
+        catch (e) {
+            if ((e as AxiosError<MessageResponse>).response) {
+                response = (e as AxiosError<MessageResponse>).response!.data
+            }
+            else {
+                response = e as Error
+            }
+        }
+        return response
     }
+
+    static async changePasswordAlien(email: User['email'], password: string, confirmationCode: string): Promise<MessageResponse> {
+        let response: MessageResponse;
+        try {
+            response = (await $api.get<MessageResponse>(`/users/changePasswordAlien/${email}/${password}/${confirmationCode}`)).data; //post!!!!
+        }
+        catch (e) {
+            if ((e as AxiosError<MessageResponse>).response) {
+                response = (e as AxiosError<MessageResponse>).response!.data
+            }
+            else {
+                response = e as Error
+            }
+        }
+        return response
+    }
+
 
     static fetchUsers(): Promise<AxiosResponse<User[]>> {
         return $api.get<User[]>('/users')

@@ -6,55 +6,47 @@ const ConfirmEmail: FC<User> = (user) => {
   const [mailSended, setMailSended] = useState(false);
   const [activate, setActivate] = useState(false);
   const [message, setMessage] = useState("");
-  const [confirmationCode, setConfirmationCode] = useState(0);
+  const [confirmationCode, setConfirmationCode] = useState("");
 
   useEffect(() => {
     const getCode = async () => {
-      try {
-        const resp = await UserService.sendCode(user.id);
-        setMessage(resp.data.message);
-      } catch (e) {
-        console.log(e);
-      }
+        const resp = await UserService.sendCode(user.email);
+        setMessage(resp.message);
     };
     if (mailSended) {
       getCode();
     }
-  }, [mailSended, user.id]);
+  }, [mailSended, user.email]);
 
   useEffect(() => {
-    const activate = async () => {
-      try {
-        const resp = await UserService.activate(user.id, confirmationCode);
-        setMessage(resp.data.message);
-      } catch (e) {
-        console.log(e);
-      }
+    const activateUser = async () => {
+      const resp = await UserService.activate(user.email, confirmationCode);
+      setMessage(resp.message);
     };
     if (activate) {
-      activate();
+      activateUser();
     }
-  }, [activate, user.id]);
-  console.log("confirmationCode", confirmationCode);
+  }, [activate, confirmationCode, user.email]);
 
   return (
     <>
-      {!mailSended &&<button onClick={() => setMailSended(true)}>ConfirmEmail</button>}
+      {!mailSended &&<button onClick={() => setMailSended(true) }>ConfirmEmail</button>}
       {mailSended && (
         <>
           <div>
             <input
-              type="number"
+              type="text"
+              disabled={activate}
               value={confirmationCode}
               onChange={(e) =>
-                setConfirmationCode(Number(e.currentTarget.value))
+                setConfirmationCode(e.currentTarget.value)
               }
             />
           </div>
           <div>{message}</div>
         </>
       )}
-      {message &&<button onClick={() => setActivate(true)}>Activate</button>}
+      {message &&<button disabled={activate} onClick={() => setActivate(true)}>Activate</button>}
     </>
   );
 };

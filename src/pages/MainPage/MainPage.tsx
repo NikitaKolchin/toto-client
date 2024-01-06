@@ -1,6 +1,5 @@
-import { FC, useEffect } from "react"
-import { checkAuth } from "../../store/authSlice"
-import { useAppSelector, useAppDispatch } from "../../store/hooks"
+import { FC } from "react"
+import { useAppSelector } from "../../store/hooks"
 import { Link } from "react-router-dom"
 
 type Props = {}
@@ -9,13 +8,7 @@ const Main: FC = (props: Props) => {
   const { isLoading, error, isAuth, user } = useAppSelector(
     (state) => state.auth
   )
-  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(checkAuth())
-    }
-  }, [dispatch])
 
   if (isLoading) {
     return <div>Загрузка...</div>
