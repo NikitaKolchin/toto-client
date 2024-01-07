@@ -1,0 +1,32 @@
+export const users = [
+    {
+        _id: '659a69b9041efec7d2c73a3b',
+        index: 0,
+        guid: '49637b1f-fb8b-422b-bd6c-eaad31e2eae9',
+        isActive: false,
+        balance: '$2,285.76',
+        age: 22,
+        eyeColor: 'blue',
+        name: 'Dena Whitney',
+    },
+    {
+        _id: '659a69b9905222f95accbc8d',
+        index: 1,
+        guid: 'a6eb42c2-c2db-4565-9ed9-51fa6214618a',
+        isActive: true,
+        balance: '$2,337.26',
+        age: 25,
+        eyeColor: 'green',
+        name: 'Dunlap Hall',
+    },
+    {
+        _id: '659a69b9ea2f6564ca4e9f0f',
+        index: 2,
+        guid: 'c7db1940-8ed0-4e69-b2cd-94ee2afc824c',
+        isActive: true,
+        balance: '$1,895.01',
+        age: 24,
+        eyeColor: 'green',
+        name: 'Martin Park',
+    },
+];

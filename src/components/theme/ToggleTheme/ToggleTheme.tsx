@@ -1,30 +1,24 @@
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
-import {
-  FormGroup,
-  FormControlLabel,
-  Switch,
-} from "@mui/material"
-import { toggleTheme } from "../../../store/themeSlice"
+import { FormGroup, FormControlLabel, Switch } from '@mui/material';
+import { toggleTheme } from '../../../store/themeSlice';
 const ToggleTheme = () => {
-  const theme = useAppSelector((state) => state.theme)
+    const theme = useAppSelector((state) => state.theme);
 
-  const dispatch = useAppDispatch()
-  return (
-
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={theme.darkTheme}
-              onChange={() => dispatch(toggleTheme())}
+    const dispatch = useAppDispatch();
+    return (
+        <FormGroup>
+            <FormControlLabel
+                control={
+                    <Switch
+                        checked={theme.darkTheme}
+                        onChange={() => dispatch(toggleTheme())}
+                    />
+                }
+                label="переключить тему"
             />
-          }
-          label="переключить тему"
-        />
-      </FormGroup>
-  
-  )
-}
+        </FormGroup>
+    );
+};
 
-export default ToggleTheme
+export default ToggleTheme;

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import AuthService from "../services/AuthService";
-import {AuthResponse} from "../models/response/AuthResponse";
-import {User} from "../models/User";
+import AuthService from '../services/AuthService';
+import { AuthResponse } from '../models/response/AuthResponse';
+import { User } from '../models/User';
 import { AuthDto } from '../models/dto/AuthDto';
 import { RegDto } from '../models/dto/RegDto';
 type DataState = {
@@ -17,14 +17,12 @@ const setError = (state: DataState, action: PayloadAction<any>) => {
     state.error = action.payload;
 };
 
-
 export const login = createAsyncThunk<
     AuthResponse,
     AuthDto,
     { rejectValue: string }
 >('auth/login', async ({ email, password }, { rejectWithValue }) => {
-
-    const response = await AuthService.login({email, password});
+    const response = await AuthService.login({ email, password });
     localStorage.setItem('token', response.data.accessToken);
 
     if (response.status !== 200) {
@@ -37,23 +35,28 @@ export const registration = createAsyncThunk<
     AuthResponse,
     RegDto,
     { rejectValue: string }
->('auth/registration', async ({ email, password, name }, { rejectWithValue }) => {
+>(
+    'auth/registration',
+    async ({ email, password, name }, { rejectWithValue }) => {
+        const response = await AuthService.registration({
+            email,
+            password,
+            name,
+        });
+        localStorage.setItem('token', response.data.accessToken);
 
-    const response = await AuthService.registration({ email, password, name });
-    localStorage.setItem('token', response.data.accessToken);
-
-    if (response.status !== 201) {
-        return rejectWithValue('Server Error!');
-    }
-    return response.data;
-});
+        if (response.status !== 201) {
+            return rejectWithValue('Server Error!');
+        }
+        return response.data;
+    },
+);
 
 export const logout = createAsyncThunk<
     boolean,
     undefined,
     { rejectValue: string }
 >('auth/logout', async (_, { rejectWithValue }) => {
-
     const response = await AuthService.logout();
     localStorage.removeItem('token');
 
@@ -63,13 +66,11 @@ export const logout = createAsyncThunk<
     return response.data;
 });
 
-
 export const checkAuth = createAsyncThunk<
     AuthResponse,
     undefined,
     { rejectValue: string }
 >('auth/checkAuth', async (_, { rejectWithValue }) => {
-
     const response = await AuthService.checkAuth();
     localStorage.setItem('token', response.data.accessToken);
 
@@ -78,7 +79,6 @@ export const checkAuth = createAsyncThunk<
     }
     return response.data;
 });
-
 
 const initialState: DataState = {
     user: {} as User,
@@ -134,7 +134,7 @@ const authSlice = createSlice({
                 state.isAuth = false;
                 state.user = {} as User;
             })
-            .addCase(logout.rejected, setError)
+            .addCase(logout.rejected, setError);
     },
 });
 

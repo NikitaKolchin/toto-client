@@ -1,23 +1,30 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { login, registration } from "../../store/authSlice"
-import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { useState, useMemo, useDeferredValue } from 'react';
+import { users } from './users';
 
-type Props = {}
+function ResultPage() {
+    const [name, setName] = useState('');
+    const listUsers = useMemo(() => {
+        return users.filter((item) => item.name.includes(name));
+    }, [name]);
+    const deferredList = useDeferredValue(listUsers);
 
-const ResultPage = (props: Props) => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { isLoading, error, isAuth } = useAppSelector(
-      (state) => state.auth
-    )
-  return (
-      <div>
-         ResultPage
-      </div>
-  );
+    return (
+        <div>
+            <div>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+                <div>
+                    {deferredList.map((item) => (
+                        <div>{item.name}</div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
 }
-
-export default ResultPage
+export default ResultPage;
