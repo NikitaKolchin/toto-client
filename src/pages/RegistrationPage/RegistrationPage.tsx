@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registration } from '../../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,6 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import AuthController from '../../controllers/AuthController';
 
 type Props = object;
 
@@ -94,7 +94,13 @@ const RegistrationPage = (props: Props) => {
                     </Grid>
                     <Button
                         onClick={() =>
-                            dispatch(registration({ email, password, name }))
+                            dispatch(
+                                AuthController.registration({
+                                    email,
+                                    password,
+                                    name,
+                                }),
+                            )
                         }
                         fullWidth
                         variant="contained"

@@ -1,7 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import { useEffect } from 'react';
-import { checkAuth } from '../../../store/authSlice';
 
 const ProtectedRoute = () => {
     const { isLoading, error, isAuth, user } = useAppSelector(

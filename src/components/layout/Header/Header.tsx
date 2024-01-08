@@ -9,10 +9,10 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { logout } from '../../../store/authSlice';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
+import AuthController from '../../../controllers/AuthController';
 
 type TotoMenuItem = {
     name: string;
@@ -54,7 +54,7 @@ function Header() {
 
     const handleLogout = () => {
         setAccountAnchorEl(null);
-        dispatch(logout());
+        dispatch(AuthController.logout());
     };
 
     const handleLogin = () => {

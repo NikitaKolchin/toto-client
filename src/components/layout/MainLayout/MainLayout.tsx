@@ -3,15 +3,15 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
-import { checkAuth } from '../../../store/authSlice';
 import { useAppDispatch } from '../../../store/hooks';
+import AuthController from '../../../controllers/AuthController';
 
 const Layout = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
-            dispatch(checkAuth());
+            dispatch(AuthController.checkAuth());
         }
     }, [dispatch]);
 
