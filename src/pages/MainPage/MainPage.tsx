@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { Link } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 type Props = object;
 
@@ -18,7 +19,7 @@ const Main: FC = (props: Props) => {
     }
 
     return (
-        <div>
+        <Container>
             <h1>
                 {isAuth
                     ? `Пользователь авторизован ${user.email}`
@@ -37,7 +38,7 @@ const Main: FC = (props: Props) => {
             <div>
                 <Link to="profile">user</Link>
             </div>
-        </div>
+        </Container>
     );
 };
 

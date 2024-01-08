@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { logout } from '../../../store/authSlice';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 
 type TotoMenuItem = {
     name: string;
@@ -28,8 +29,8 @@ function Header() {
     const { isAuth } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
-    const matchThen600 = useMediaQuery('(min-width:600px)');
+    const theme = useTheme();
+    const matchThen600 = useMediaQuery(theme.breakpoints.up('sm'));
     const [accountAnchorEl, setAccountAnchorEl] = useState<null | HTMLElement>(
         null,
     );

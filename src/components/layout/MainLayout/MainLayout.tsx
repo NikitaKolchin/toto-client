@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import { Container, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
 import { checkAuth } from '../../../store/authSlice';
 import { useAppDispatch } from '../../../store/hooks';
@@ -19,10 +19,7 @@ const Layout = () => {
         <>
             <CssBaseline />
             <Header />
-
-            <Container>
-                <Outlet />
-            </Container>
+            <Outlet />
             <Footer />
         </>
     );
