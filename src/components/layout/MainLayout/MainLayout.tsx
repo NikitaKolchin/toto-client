@@ -5,15 +5,19 @@ import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../store/hooks';
 import AuthController from '../../../controllers/AuthController';
+import { useMediaQuery } from '@mui/material';
+import { initTheme } from '../../../store/themeSlice';
 
 const Layout = () => {
     const dispatch = useAppDispatch();
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     useEffect(() => {
+        dispatch(initTheme(prefersDarkMode));
         if (localStorage.getItem('token')) {
             dispatch(AuthController.checkAuth());
         }
-    }, [dispatch]);
+    }, [dispatch, prefersDarkMode]);
 
     return (
         <>

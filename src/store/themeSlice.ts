@@ -1,27 +1,28 @@
-import { SliceSelectors, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, SliceSelectors, createSlice } from '@reduxjs/toolkit';
+import ThemeController from '../controllers/ThemeController';
 
-type ThemeState = {
+export type ThemeState = {
     darkTheme: boolean;
 };
 
 export const themeSlice = createSlice<
     ThemeState,
-    { toggleTheme: (state: ThemeState) => void },
+    {
+        toggleTheme: (state: ThemeState) => void;
+        initTheme: (state: ThemeState, action: PayloadAction<boolean>) => void;
+    },
     'theme',
     SliceSelectors<ThemeState>,
     'theme'
 >({
     name: 'theme',
-    initialState: {
-        darkTheme: false,
-    },
+    initialState: ThemeController.initialState,
     reducers: {
-        toggleTheme: (state) => {
-            state.darkTheme = !state.darkTheme;
-        },
+        toggleTheme: ThemeController.toggleTheme,
+        initTheme: ThemeController.initTheme,
     },
 });
 
-export const { toggleTheme } = themeSlice.actions;
+export const { toggleTheme, initTheme } = themeSlice.actions;
 
 export default themeSlice.reducer;
