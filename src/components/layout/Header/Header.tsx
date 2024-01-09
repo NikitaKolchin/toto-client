@@ -13,6 +13,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import AuthController from '../../../controllers/AuthController';
+import { Button } from '@mui/material';
 
 type TotoMenuItem = {
     name: string;
@@ -62,14 +63,30 @@ function Header() {
         navigate('login');
     };
 
-    const HeaderLink: FC<PropsWithChildren<TotoMenuItem>> = (props) => (
-        <Link
-            to={props.value}
-            style={{ textDecoration: 'none', textTransform: 'lowercase' }}
-        >
-            {props.children}
-        </Link>
-    );
+    const HeaderLink: FC<
+        PropsWithChildren<TotoMenuItem & { isAuth: boolean }>
+    > = (props) => {
+        if (props.isAuth) {
+            return (
+                <Link
+                    to={props.value}
+                    style={{
+                        textDecoration: 'none',
+                        textTransform: 'lowercase',
+                    }}
+                >
+                    {props.children}
+                </Link>
+            );
+        }
+        return (
+            <Typography
+                style={{ textTransform: 'lowercase', cursor: 'not-allowed' }}
+            >
+                {props.children}
+            </Typography>
+        );
+    };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -129,74 +146,72 @@ function Header() {
                     >
                         {matchThen600 &&
                             menuItems.map((item) => (
-                                <HeaderLink key={item.value} {...item}>
-                                    <Typography variant="h6" color="white">
+                                <HeaderLink
+                                    key={item.value}
+                                    isAuth={isAuth}
+                                    {...item}
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        color={theme.palette.text.secondary}
+                                        sx={{
+                                            '&:hover': {
+                                                textDecoration: 'underline',
+                                            },
+                                        }}
+                                    >
                                         {item.name}
                                     </Typography>
                                 </HeaderLink>
                             ))}
                     </Box>
 
-                    <div>
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleAccountMenu}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                    <Box>
                         {isAuth ? (
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={accountAnchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(accountAnchorEl)}
-                                onClose={handleCloseAccountMenu}
-                            >
-                                <MenuItem
-                                    component={Link}
-                                    to="profile"
-                                    onClick={handleCloseAccountMenu}
+                            <>
+                                <IconButton
+                                    size="large"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleAccountMenu}
+                                    color="inherit"
                                 >
-                                    профиль игрока
-                                </MenuItem>
-                                <MenuItem onClick={handleLogout}>
-                                    выйти{' '}
-                                </MenuItem>
-                            </Menu>
+                                    <AccountCircle />
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={accountAnchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(accountAnchorEl)}
+                                    onClose={handleCloseAccountMenu}
+                                >
+                                    <MenuItem
+                                        component={Link}
+                                        to="profile"
+                                        onClick={handleCloseAccountMenu}
+                                    >
+                                        профиль игрока
+                                    </MenuItem>
+                                    <MenuItem onClick={handleLogout}>
+                                        выйти{' '}
+                                    </MenuItem>
+                                </Menu>
+                            </>
                         ) : (
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={accountAnchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(accountAnchorEl)}
-                                onClose={handleCloseAccountMenu}
-                            >
-                                <MenuItem onClick={handleLogin}>
-                                    войти{' '}
-                                </MenuItem>
-                            </Menu>
+                            <Button color="secondary" onClick={handleLogin}>
+                                войти
+                            </Button>
                         )}
-                    </div>
+                    </Box>
                 </Toolbar>
             </AppBar>
         </Box>

@@ -1,7 +1,14 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { Link } from 'react-router-dom';
-import { Container } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    Container,
+    Grid,
+    Paper,
+} from '@mui/material';
 
 type Props = object;
 
@@ -20,24 +27,33 @@ const Main: FC = (props: Props) => {
 
     return (
         <Container>
-            <h1>
-                {isAuth
-                    ? `Пользователь авторизован ${user.email}`
-                    : 'АВТОРИЗУЙТЕСЬ'}
-            </h1>
-            <h1>
-                {user.isActivated
-                    ? 'Аккаунт подтвержден по почте'
-                    : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}
-            </h1>
-            <h1>
-                {user.isAllowed
-                    ? 'Участие подтверждено'
-                    : 'Необходимо подтверждение участия'}
-            </h1>
-            <div>
-                <Link to="profile">user</Link>
-            </div>
+            <Grid container>
+                <Grid item>
+                    <Card>
+                        <CardHeader title="Авторизация" />
+                        <CardContent>
+                            {' '}
+                            {isAuth
+                                ? `Пользователь авторизован ${user.email}`
+                                : 'АВТОРИЗУЙТЕСЬ'}
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item>
+                    <Paper>
+                        {user.isActivated
+                            ? 'Аккаунт подтвержден по почте'
+                            : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}
+                    </Paper>
+                </Grid>
+                <Grid item>
+                    <Paper>
+                        {user.isAllowed
+                            ? 'Участие подтверждено'
+                            : 'Необходимо подтверждение участия'}
+                    </Paper>
+                </Grid>
+            </Grid>
         </Container>
     );
 };
