@@ -28,7 +28,7 @@ const Main: FC = (props: Props) => {
     return (
         <Container>
             <Grid container>
-                <Grid item>
+                <Grid item xs={12} sm={4} md={4}>
                     <Card>
                         <CardHeader title="Авторизация" />
                         <CardContent>
@@ -39,14 +39,14 @@ const Main: FC = (props: Props) => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={4} md={4}>
                     <Paper>
                         {user.isActivated
                             ? 'Аккаунт подтвержден по почте'
                             : 'ПОДТВЕРДИТЕ АККАУНТ!!!!'}
                     </Paper>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12} sm={4} md={4}>
                     <Paper>
                         {user.isAllowed
                             ? 'Участие подтверждено'
