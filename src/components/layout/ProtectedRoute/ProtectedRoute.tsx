@@ -9,8 +9,8 @@ const ProtectedRoute = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isLoading && (!isAuth || !user.isActivated)) {
-            // || !user.isAllowed
+        if (!isLoading && !isAuth) {
+            //|| !user.isActivated || !user.isAllowed
             navigate('/');
         }
     }, [isAuth, isLoading, navigate, user.isActivated]);

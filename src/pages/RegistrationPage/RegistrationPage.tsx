@@ -17,7 +17,9 @@ type Props = object;
 
 const RegistrationPage = (props: Props) => {
     const [email, setEmail] = useState<string>('');
-    const [name, setName] = useState<string>('');
+    const [alias, setAlias] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
+    const [secondName, setSecondName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -58,11 +60,29 @@ const RegistrationPage = (props: Props) => {
                             <TextField
                                 required
                                 fullWidth
-                                onChange={(e) => setName(e.target.value)}
-                                value={name}
-                                id="name"
+                                onChange={(e) => setAlias(e.target.value)}
+                                value={alias}
                                 label="Игровое имя"
-                                name="name"
+                                autoComplete="family-name"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                onChange={(e) => setFirstName(e.target.value)}
+                                value={firstName}
+                                label="Настоящее имя"
+                                autoComplete="family-name"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                onChange={(e) => setSecondName(e.target.value)}
+                                value={secondName}
+                                label="Настоящая фамилия"
                                 autoComplete="family-name"
                             />
                         </Grid>
@@ -72,9 +92,7 @@ const RegistrationPage = (props: Props) => {
                                 fullWidth
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
-                                id="email"
                                 label="Email"
-                                name="email"
                                 autoComplete="email"
                             />
                         </Grid>
@@ -84,10 +102,8 @@ const RegistrationPage = (props: Props) => {
                                 fullWidth
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
-                                name="password"
                                 label="Пароль"
                                 type="password"
-                                id="password"
                                 autoComplete="new-password"
                             />
                         </Grid>
@@ -98,7 +114,9 @@ const RegistrationPage = (props: Props) => {
                                 AuthController.registration({
                                     email,
                                     password,
-                                    name,
+                                    alias,
+                                    firstName,
+                                    secondName,
                                 }),
                             )
                         }

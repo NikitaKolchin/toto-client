@@ -68,19 +68,32 @@ function Header() {
     > = (props) => {
         if (props.isAuth) {
             return (
-                <Link
-                    to={props.value}
-                    style={{
+                <Typography
+                    onClick={() => navigate(props.value)}
+                    variant="h6"
+                    color={theme.palette.text.secondary}
+                    sx={{
                         textDecoration: 'none',
+                        cursor: 'pointer',
                         textTransform: 'lowercase',
+                        '&:hover': {
+                            textDecoration: 'underline',
+                        },
                     }}
                 >
                     {props.children}
-                </Link>
+                </Typography>
             );
         }
         return (
             <Typography
+                variant="h6"
+                color={theme.palette.text.secondary}
+                sx={{
+                    '&:hover': {
+                        textDecoration: 'underline',
+                    },
+                }}
                 style={{ textTransform: 'lowercase', cursor: 'not-allowed' }}
             >
                 {props.children}
@@ -151,17 +164,7 @@ function Header() {
                                     isAuth={isAuth}
                                     {...item}
                                 >
-                                    <Typography
-                                        variant="h6"
-                                        color={theme.palette.text.secondary}
-                                        sx={{
-                                            '&:hover': {
-                                                textDecoration: 'underline',
-                                            },
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Typography>
+                                    {item.name}
                                 </HeaderLink>
                             ))}
                     </Box>

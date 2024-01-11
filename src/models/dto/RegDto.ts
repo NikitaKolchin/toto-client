@@ -1,5 +1,7 @@
 export interface RegDto {
     email: string;
     password: string;
-    name: string;
+    alias: string;
+    firstName: string;
+    secondName: string;
 }

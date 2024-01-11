@@ -3,4 +3,7 @@ export interface User {
     isActivated: boolean;
     isAllowed: boolean;
     id: string;
+    alias: string;
+    firstName: string;
+    secondName: string;
 }

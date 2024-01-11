@@ -25,11 +25,16 @@ export default class AuthController {
         { rejectValue: string }
     >(
         'auth/registration',
-        async ({ email, password, name }, { rejectWithValue }) => {
+        async (
+            { email, password, alias, firstName, secondName },
+            { rejectWithValue },
+        ) => {
             const response = await AuthService.registration({
                 email,
                 password,
-                name,
+                alias,
+                firstName,
+                secondName,
             });
             localStorage.setItem('token', response.data.accessToken);
 
