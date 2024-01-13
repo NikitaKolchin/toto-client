@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../store/hooks';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
+    Box,
     Button,
     Card,
     CardActions,
@@ -9,7 +10,6 @@ import {
     CardHeader,
     Container,
     Grid,
-    Paper,
     Typography,
 } from '@mui/material';
 
@@ -31,23 +31,31 @@ const Main: FC = (props: Props) => {
 
     return (
         <Container>
-            <Typography
-                component="h2"
-                variant="h3"
-                align="center"
-                color="text.primary"
-                gutterBottom
+            <Box
+                sx={{
+                    flexDirection: 'column',
+                    textAlign: 'center',
+                }}
             >
-                Ты в Тото! &#127881;
-            </Typography>
-            <Typography
-                variant="h5"
-                align="center"
-                color="text.primary"
-                component="p"
-            >
-                Ниже отражаются статусы участника Тото!
-            </Typography>
+                <Typography
+                    mt={6}
+                    component="h2"
+                    variant="h3"
+                    color="text.primary"
+                    gutterBottom
+                >
+                    Ты в Тото! &#127881;
+                </Typography>
+                <Typography variant="h5" color="text.primary" component="p">
+                    Ниже отражаются статусы участника Тото!
+                </Typography>
+                {isAuth && user.isActivated && user.isAllowed && (
+                    <Button size="large" onClick={() => navigate('stakes')}>
+                        Переходим к ставкам!!!
+                    </Button>
+                )}
+            </Box>
+
             <Grid container spacing={5} alignItems="flex-end" mt={2}>
                 <Grid item xs={12} sm={4} md={4}>
                     <Card>
@@ -107,7 +115,16 @@ const Main: FC = (props: Props) => {
                             {user.isAllowed ? (
                                 ''
                             ) : (
-                                <Button size="small">$$$</Button>
+                                <Button
+                                    size="small"
+                                    onClick={(e) => {
+                                        window.location.href =
+                                            'mailto:kolchin.nv@gmail.com';
+                                        e.preventDefault();
+                                    }}
+                                >
+                                    Обратиться за допуском
+                                </Button>
                             )}
                         </CardActions>
                     </Card>
