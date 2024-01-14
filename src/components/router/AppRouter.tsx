@@ -11,11 +11,9 @@ import { StakesPage } from '../../pages/StakesPage';
 import MainLayout from '../layout/MainLayout/MainLayout';
 import ProtectedRoute from '../layout/ProtectedRoute/ProtectedRoute';
 import Loading from '../shared/Loading';
-import { useAppSelector } from '../../store/hooks';
 import AdminPage from '../../pages/AdminPage/AdminPage';
 
 const AppRouter = () => {
-    const { user } = useAppSelector((state) => state.auth);
     return (
         <Suspense fallback={<Loading />}>
             <Routes>
@@ -32,12 +30,8 @@ const AppRouter = () => {
                         <Route path="/profile" element={<ProfileScreen />} />
                         <Route path="/info" element={<InfoPage />} />
                         <Route path="/results" element={<ResultPage />} />
-                    </Route>
-                    {user.isActivated ? (
                         <Route path="/admin" element={<AdminPage />} />
-                    ) : (
-                        ''
-                    )}
+                    </Route>
                 </Route>
             </Routes>
         </Suspense>

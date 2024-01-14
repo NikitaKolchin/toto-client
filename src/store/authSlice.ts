@@ -17,7 +17,7 @@ const setError = (state: DataState, action: PayloadAction<any>) => {
 const initialState: DataState = {
     user: {} as User,
     isAuth: false,
-    isLoading: false,
+    isLoading: true,
     error: null,
 };
 

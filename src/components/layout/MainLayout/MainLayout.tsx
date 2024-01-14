@@ -14,9 +14,7 @@ const Layout = () => {
 
     useEffect(() => {
         dispatch(initTheme(prefersDarkMode));
-        if (localStorage.getItem('token')) {
-            dispatch(AuthController.checkAuth());
-        }
+        dispatch(AuthController.checkAuth());
     }, [dispatch, prefersDarkMode]);
 
     return (
