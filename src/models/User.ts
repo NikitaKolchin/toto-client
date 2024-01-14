@@ -1,9 +1,11 @@
 export interface User {
+    id: string;
     email: string;
     isActivated: boolean;
     isAllowed: boolean;
-    id: string;
     alias: string;
     firstName: string;
     secondName: string;
+    roles: Array<{ value: string }>;
+    competition: { value: string };
 }

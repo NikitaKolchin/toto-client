@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -12,6 +12,7 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
+import Loading from '../../../components/shared/Loading';
 
 type Props = object;
 
@@ -22,7 +23,7 @@ const Main: FC = (props: Props) => {
     const navigate = useNavigate();
 
     if (isLoading) {
-        return <div>Загрузка...</div>;
+        return <Loading />;
     }
 
     if (error) {
