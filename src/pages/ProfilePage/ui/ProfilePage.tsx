@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { useAppSelector } from '../../store/hooks';
-import { User } from '../../models/User';
-import UserService from '../../services/UserService';
-import ToggleTheme from '../../components/theme/ToggleTheme/ToggleTheme';
+import { useAppSelector } from '../../../store/hooks';
+import { User } from '../../../models/User';
+import UserService from '../../../services/UserService';
+import ToggleTheme from '../../../components/theme/ToggleTheme/ToggleTheme';
 import { Link } from 'react-router-dom';
-import ConfirmEmail from '../../components/containers/ConfirmEmail/ConfirmEmail';
+import ConfirmEmail from '../../../components/containers/ConfirmEmail/ConfirmEmail';
 
 type Props = object;
 

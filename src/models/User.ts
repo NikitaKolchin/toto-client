@@ -1,3 +1,6 @@
+import { Competition } from './Competition';
+import { Role } from './Role';
+
 export interface User {
     id: string;
     email: string;
@@ -6,6 +9,6 @@ export interface User {
     alias: string;
     firstName: string;
     secondName: string;
-    roles: Array<{ value: string }>;
-    competition: { value: string };
+    roles: Array<Role>;
+    competition: Competition;
 }

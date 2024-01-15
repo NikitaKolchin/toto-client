@@ -1,0 +1,93 @@
+import { RouteProps } from 'react-router-dom';
+import { MainPage } from '../../../pages/MainPage';
+import { LoginPage } from '../../../pages/LoginPage';
+import { RegistrationPage } from '../../../pages/RegistrationPage';
+import { ForgotPage } from '../../../pages/ForgotPage';
+import { StakesPage } from '../../../pages/StakesPage';
+import { ProfilePage } from '../../../pages/ProfilePage';
+import { InfoPage } from '../../../pages/InfoPage';
+import { ResultPage } from '../../../pages/ResultPage';
+import { AdminPage } from '../../../pages/AdminPage';
+import { Role } from '../../../models/Role';
+export enum AppRoutes {
+    MAIN = 'main',
+    LOGIN = 'login',
+    REGISTRATION = 'registration',
+    FORGOT = 'forgot',
+    STAKES = 'stakes',
+    PROFILE = 'profile',
+    INFO = 'info',
+    RESULT = 'results',
+    ADMIN = 'admin',
+}
+
+export type AppRoutesProps = RouteProps & {
+    authOnly?: boolean;
+    roles?: any[];
+};
+
+export const getRouteMain = () => '/';
+export const getRouteLogin = () => '/login';
+export const getRouteRegistration = () => '/registration';
+export const getRouteForgot = () => '/forgot';
+export const getRouteStakes = () => '/stakes';
+export const getRouteProfile = () => '/profile';
+export const getRouteInfo = () => '/info';
+export const getRouteResult = () => '/results';
+export const getRouteAdmin = () => '/admin';
+// export const getRouteArticleEdit = (id: string) => `/articles/${id}/edit`;
+
+export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
+    [AppRoutes.MAIN]: {
+        path: getRouteMain(),
+        element: <MainPage />,
+    },
+    [AppRoutes.LOGIN]: {
+        path: getRouteLogin(),
+        element: <LoginPage />,
+    },
+    [AppRoutes.REGISTRATION]: {
+        path: getRouteRegistration(),
+        element: <RegistrationPage />,
+    },
+    [AppRoutes.FORGOT]: {
+        path: getRouteForgot(),
+        element: <ForgotPage />,
+        authOnly: true,
+    },
+    [AppRoutes.STAKES]: {
+        path: getRouteStakes(),
+        element: <StakesPage />,
+        authOnly: true,
+    },
+    [AppRoutes.PROFILE]: {
+        path: getRouteProfile(),
+        element: <ProfilePage />,
+        authOnly: true,
+    },
+    [AppRoutes.INFO]: {
+        path: getRouteInfo(),
+        element: <InfoPage />,
+        authOnly: true,
+    },
+    [AppRoutes.RESULT]: {
+        path: getRouteResult(),
+        element: <ResultPage />,
+        authOnly: true,
+    },
+    [AppRoutes.ADMIN]: {
+        path: getRouteAdmin(),
+        element: <AdminPage />,
+        authOnly: true,
+        roles: ['ADMIN' as Role['value']],
+    },
+    // [AppRoutes.FORBIDDEN]: {
+    //     path: getRouteForbidden(),
+    //     element: <ForbiddenPage />,
+    // },
+    // // last
+    // [AppRoutes.NOT_FOUND]: {
+    //     path: '*',
+    //     element: <NotFoundPage />,
+    // },
+};

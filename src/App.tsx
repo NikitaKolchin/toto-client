@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { darkTheme, lightTheme } from './components/theme/theme';
 import { useAppSelector } from './store/hooks';
-import AppRouter from './components/router/AppRouter';
+import AppRouter from './components/router/ui/AppRouter';
 
 const App: FC = () => {
     const theme = useAppSelector((state) => state.theme);
