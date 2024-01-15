@@ -1,19 +1,41 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../store/hooks';
-import { useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
+import { Role } from '../../../models/Role';
 
-const ProtectedRoute = () => {
+type Props = {
+    requiredRoles?: Role[];
+};
+
+const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
     const { isLoading, error, isAuth, user } = useAppSelector(
         (state) => state.auth,
     );
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!isLoading && !isAuth) {
-            //|| !user.isActivated || !user.isAllowed
-            navigate('/');
+    const hasRequiredRoles = useMemo(() => {
+        if (!requiredRoles) {
+            return true;
         }
-    }, [isAuth, isLoading, navigate, user.isActivated]);
+
+        return requiredRoles.some((requiredRole) => {
+            const hasRole = user.roles?.find(
+                (userRole) => userRole.value === requiredRole.value,
+            );
+            return hasRole;
+        });
+    }, [requiredRoles, user.roles]);
+    useEffect(() => {
+        if (!isLoading) {
+            //|| !user.isActivated || !user.isAllowed
+            if (!isAuth || !user.isActivated) {
+                navigate('/');
+            }
+            if (!hasRequiredRoles) {
+                navigate('/');
+            }
+        }
+    }, [hasRequiredRoles, isAuth, isLoading, navigate, user.isActivated]);
 
     if (isLoading) {
         return <div>Загрузка...</div>;

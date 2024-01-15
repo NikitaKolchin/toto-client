@@ -8,7 +8,7 @@ import { ProfilePage } from '../../../pages/ProfilePage';
 import { InfoPage } from '../../../pages/InfoPage';
 import { ResultPage } from '../../../pages/ResultPage';
 import { AdminPage } from '../../../pages/AdminPage';
-import { Role } from '../../../models/Role';
+import { Role, Roles } from '../../../models/Role';
 export enum AppRoutes {
     MAIN = 'main',
     LOGIN = 'login',
@@ -23,7 +23,7 @@ export enum AppRoutes {
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
-    roles?: any[];
+    requiredRoles?: Role[];
 };
 
 export const getRouteMain = () => '/';
@@ -63,7 +63,6 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.PROFILE]: {
         path: getRouteProfile(),
         element: <ProfilePage />,
-        authOnly: true,
     },
     [AppRoutes.INFO]: {
         path: getRouteInfo(),
@@ -79,7 +78,7 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         path: getRouteAdmin(),
         element: <AdminPage />,
         authOnly: true,
-        roles: ['ADMIN' as Role['value']],
+        requiredRoles: [{ value: Roles.ADMIN }],
     },
     // [AppRoutes.FORBIDDEN]: {
     //     path: getRouteForbidden(),
