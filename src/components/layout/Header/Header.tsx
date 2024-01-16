@@ -10,7 +10,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Link, useNavigate } from 'react-router-dom';
+import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import AuthController from '../../../controllers/AuthController';
 import { Button } from '@mui/material';
@@ -37,20 +37,30 @@ function Header() {
     );
     const [mainAnchorEl, setMainAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAccountAnchorEl(event.currentTarget);
-    };
-
     const handleMainMenu = (event: React.MouseEvent<HTMLElement>) => {
         setMainAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseMainMenu = (value: To) => {
+        setMainAnchorEl(null);
+        setTimeout(() => {
+            navigate(value);
+        }, 300);
+    };
+
+    const handleAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAccountAnchorEl(event.currentTarget);
     };
 
     const handleCloseAccountMenu = () => {
         setAccountAnchorEl(null);
     };
 
-    const handleCloseMainMenu = () => {
-        setMainAnchorEl(null);
+    const handleProfile = () => {
+        setAccountAnchorEl(null);
+        setTimeout(() => {
+            navigate('profile');
+        }, 300);
     };
 
     const handleLogout = () => {
@@ -118,7 +128,6 @@ function Header() {
                                 <MenuIcon />
                             </IconButton>
                             <Menu
-                                id="menu-appbar"
                                 anchorEl={mainAnchorEl}
                                 anchorOrigin={{
                                     vertical: 'top',
@@ -135,13 +144,13 @@ function Header() {
                                 {menuItems.map((item, index) => (
                                     <MenuItem
                                         key={item.value}
-                                        component={Link}
-                                        to={item.value}
                                         style={{
                                             textDecoration: 'none',
                                             textTransform: 'lowercase',
                                         }}
-                                        onClick={handleCloseAccountMenu}
+                                        onClick={() =>
+                                            handleCloseMainMenu(item.value)
+                                        }
                                     >
                                         {item.name}
                                     </MenuItem>
@@ -183,7 +192,6 @@ function Header() {
                                     <AccountCircle />
                                 </IconButton>
                                 <Menu
-                                    id="menu-appbar"
                                     anchorEl={accountAnchorEl}
                                     anchorOrigin={{
                                         vertical: 'top',
@@ -197,11 +205,7 @@ function Header() {
                                     open={Boolean(accountAnchorEl)}
                                     onClose={handleCloseAccountMenu}
                                 >
-                                    <MenuItem
-                                        component={Link}
-                                        to="profile"
-                                        onClick={handleCloseAccountMenu}
-                                    >
+                                    <MenuItem onClick={handleProfile}>
                                         профиль игрока
                                     </MenuItem>
                                     <MenuItem onClick={handleLogout}>

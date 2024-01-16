@@ -53,26 +53,29 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.FORGOT]: {
         path: getRouteForgot(),
         element: <ForgotPage />,
+    },
+    [AppRoutes.PROFILE]: {
+        path: getRouteProfile(),
+        element: <ProfilePage />,
         authOnly: true,
     },
     [AppRoutes.STAKES]: {
         path: getRouteStakes(),
         element: <StakesPage />,
         authOnly: true,
-    },
-    [AppRoutes.PROFILE]: {
-        path: getRouteProfile(),
-        element: <ProfilePage />,
+        requiredRoles: [{ value: Roles.USER }],
     },
     [AppRoutes.INFO]: {
         path: getRouteInfo(),
         element: <InfoPage />,
         authOnly: true,
+        requiredRoles: [{ value: Roles.USER }],
     },
     [AppRoutes.RESULT]: {
         path: getRouteResult(),
         element: <ResultPage />,
         authOnly: true,
+        requiredRoles: [{ value: Roles.USER }],
     },
     [AppRoutes.ADMIN]: {
         path: getRouteAdmin(),

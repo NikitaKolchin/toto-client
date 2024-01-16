@@ -28,7 +28,7 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
     useEffect(() => {
         if (!isLoading) {
             //|| !user.isActivated || !user.isAllowed
-            if (!isAuth || !user.isActivated) {
+            if (!isAuth) {
                 navigate('/');
             }
             if (!hasRequiredRoles) {

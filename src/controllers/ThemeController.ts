@@ -12,7 +12,6 @@ export default class ThemeController {
 
     static initTheme = (state: ThemeState, action: PayloadAction<boolean>) => {
         const darkThemeFromStorage = localStorage.getItem('darkTheme');
-        console.log('darkThemeFromStorage', darkThemeFromStorage);
         if (darkThemeFromStorage) {
             state.darkTheme = darkThemeFromStorage === 'true';
         } else {

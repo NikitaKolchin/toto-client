@@ -41,6 +41,16 @@ export default class UserService {
         return response;
     }
 
+    static async toggleAllow(id: User['id']): Promise<Partial<User & Error>> {
+        let response: Partial<User & Error>;
+        try {
+            response = (await $api.get<User>(`/users/toggleAllow/${id}`)).data;
+        } catch (e) {
+            response = e as Error;
+        }
+        return response;
+    }
+
     static async changePasswordAlien(
         email: User['email'],
         password: string,
