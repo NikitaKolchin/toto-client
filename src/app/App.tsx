@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { darkTheme, lightTheme } from './providers/theme/theme';
-import { useAppSelector } from './providers/store/hooks';
-import AppRouter from './providers/router/ui/AppRouter';
+import { darkTheme, lightTheme } from './providers/theme';
+import { useAppSelector } from './providers/store';
+import { AppRouter } from './providers/router';
 
 const App: FC = () => {
     const theme = useAppSelector((state) => state.theme);

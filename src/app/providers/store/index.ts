@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import auth from './authSlice';
-import theme from './themeSlice';
+import auth from './config/authSlice';
+import theme from './config/themeSlice';
+import { useAppDispatch } from './config/hooks';
+import { useAppSelector } from './config/hooks';
 
 const store = configureStore({
     reducer: {
@@ -14,6 +16,7 @@ const store = configureStore({
 });
 
 export default store;
+export { useAppDispatch, useAppSelector };
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

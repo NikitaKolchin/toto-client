@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
 import { Role } from '../../../../models/Role';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store';
 
 type Props = {
     requiredRoles?: Role[];

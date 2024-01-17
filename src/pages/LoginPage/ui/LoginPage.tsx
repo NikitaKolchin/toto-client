@@ -10,10 +10,7 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import AuthController from '../../../controllers/AuthController';
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../../app/providers/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/providers/store';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');

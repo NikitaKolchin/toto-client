@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import Loading from '../../../components/shared/Loading';
-import { useAppSelector } from '../../../app/providers/store/hooks';
+import { useAppSelector } from '../../../app/providers/store';
 
 type Props = object;
 

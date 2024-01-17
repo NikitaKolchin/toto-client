@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { ThemeState } from '../app/providers/store/themeSlice';
+import { ThemeState } from '../app/providers/store/config/themeSlice';
 
 export default class ThemeController {
     static initialState: ThemeState = {

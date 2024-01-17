@@ -13,10 +13,7 @@ import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import AuthController from '../../../controllers/AuthController';
 import { Button } from '@mui/material';
-import {
-    useAppSelector,
-    useAppDispatch,
-} from '../../../app/providers/store/hooks';
+import { useAppSelector, useAppDispatch } from '../../../app/providers/store';
 
 type TotoMenuItem = {
     name: string;

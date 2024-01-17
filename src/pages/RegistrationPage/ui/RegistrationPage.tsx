@@ -11,10 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import AuthController from '../../../controllers/AuthController';
-import {
-    useAppDispatch,
-    useAppSelector,
-} from '../../../app/providers/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/providers/store';
 
 type Props = object;
 

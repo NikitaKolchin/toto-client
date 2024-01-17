@@ -5,8 +5,8 @@ import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
 import AuthController from '../../../controllers/AuthController';
 import { useMediaQuery } from '@mui/material';
-import { useAppDispatch } from '../../../app/providers/store/hooks';
-import { initTheme } from '../../../app/providers/store/themeSlice';
+import { useAppDispatch } from '../../../app/providers/store';
+import { initTheme } from '../../../app/providers/store/config/themeSlice';
 
 const Layout = () => {
     const dispatch = useAppDispatch();

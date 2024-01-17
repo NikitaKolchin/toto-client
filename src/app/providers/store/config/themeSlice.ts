@@ -1,5 +1,5 @@
 import { PayloadAction, SliceSelectors, createSlice } from '@reduxjs/toolkit';
-import ThemeController from '../../../controllers/ThemeController';
+import ThemeController from '../../../../controllers/ThemeController';
 
 export type ThemeState = {
     darkTheme: boolean;
