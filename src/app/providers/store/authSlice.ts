@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../models/User';
-import AuthController from '../controllers/AuthController';
+import AuthController from '../../../controllers/AuthController';
+import { User } from '../../../models/User';
 type DataState = {
     user: User;
     isAuth: boolean;

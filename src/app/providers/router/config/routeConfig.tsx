@@ -1,14 +1,14 @@
 import { RouteProps } from 'react-router-dom';
-import { MainPage } from '../../../pages/MainPage';
-import { LoginPage } from '../../../pages/LoginPage';
-import { RegistrationPage } from '../../../pages/RegistrationPage';
-import { ForgotPage } from '../../../pages/ForgotPage';
-import { StakesPage } from '../../../pages/StakesPage';
-import { ProfilePage } from '../../../pages/ProfilePage';
-import { InfoPage } from '../../../pages/InfoPage';
-import { ResultPage } from '../../../pages/ResultPage';
-import { AdminPage } from '../../../pages/AdminPage';
-import { Role, Roles } from '../../../models/Role';
+import { MainPage } from '../../../../pages/MainPage';
+import { LoginPage } from '../../../../pages/LoginPage';
+import { RegistrationPage } from '../../../../pages/RegistrationPage';
+import { ForgotPage } from '../../../../pages/ForgotPage';
+import { StakesPage } from '../../../../pages/StakesPage';
+import { ProfilePage } from '../../../../pages/ProfilePage';
+import { InfoPage } from '../../../../pages/InfoPage';
+import { ResultPage } from '../../../../pages/ResultPage';
+import { AdminPage } from '../../../../pages/AdminPage';
+import { Role, Roles } from '../../../../models/Role';
 export enum AppRoutes {
     MAIN = 'main',
     LOGIN = 'login',

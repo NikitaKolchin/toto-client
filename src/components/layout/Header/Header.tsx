@@ -8,12 +8,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import AuthController from '../../../controllers/AuthController';
 import { Button } from '@mui/material';
+import {
+    useAppSelector,
+    useAppDispatch,
+} from '../../../app/providers/store/hooks';
 
 type TotoMenuItem = {
     name: string;

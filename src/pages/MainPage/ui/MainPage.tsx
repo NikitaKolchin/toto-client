@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -13,6 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import Loading from '../../../components/shared/Loading';
+import { useAppSelector } from '../../../app/providers/store/hooks';
 
 type Props = object;
 

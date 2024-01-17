@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../../store/hooks';
-import ToggleTheme from '../../../components/theme/ToggleTheme/ToggleTheme';
 import { Link } from 'react-router-dom';
 import ConfirmEmail from '../../../components/containers/ConfirmEmail/ConfirmEmail';
+import { useAppSelector } from '../../../app/providers/store/hooks';
+import ToggleTheme from '../../../app/providers/theme/ToggleTheme/ToggleTheme';
 
 type Props = object;
 

@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,6 +10,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import AuthController from '../../../controllers/AuthController';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from '../../../app/providers/store/hooks';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
