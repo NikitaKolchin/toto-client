@@ -1,4 +1,4 @@
-import { useGetCompetitionByIdQuery } from '../../../shared/lib/rtkApi/rtk';
+import { useGetCompetitionByIdQuery } from '../../../shared/api/rtkApi/rtk';
 
 const StakesPage = () => {
     const { data } = useGetCompetitionByIdQuery(1);

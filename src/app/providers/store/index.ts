@@ -3,7 +3,7 @@ import auth from './config/authSlice';
 import theme from './config/themeSlice';
 import { useAppDispatch } from './config/hooks';
 import { useAppSelector } from './config/hooks';
-import { competitionsApi } from '../../../shared/lib/rtkApi/rtk';
+import { competitionsApi } from '../../../shared/api/rtkApi/rtk';
 
 const store = configureStore({
     reducer: {
