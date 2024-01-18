@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { User } from '../../../models/User';
-import UserService from '../../../services/UserService';
+import { User } from '../../models/User';
+import UserService from '../../services/UserService';
 
 const ConfirmEmail: FC<User> = (user) => {
     const [mailSended, setMailSended] = useState(false);
@@ -62,4 +62,4 @@ const ConfirmEmail: FC<User> = (user) => {
     );
 };
 
-export default ConfirmEmail;
+export { ConfirmEmail };

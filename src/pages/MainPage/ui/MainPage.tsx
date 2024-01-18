@@ -11,7 +11,7 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import Loading from '../../../components/shared/Loading';
+import { Loading } from '../../../shared/ui/Loading';
 import { useAppSelector } from '../../../app/providers/store';
 
 type Props = object;
@@ -39,7 +39,7 @@ const Main: FC = (props: Props) => {
                 }}
             >
                 <Typography
-                    mt={6}
+                    mt={5}
                     component="h2"
                     variant="h3"
                     color="text.primary"

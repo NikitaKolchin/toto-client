@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
 import { Role } from '../../../../models/Role';
 import { useAppSelector } from '../../store';
+import { Loading } from '../../../../shared/ui/Loading';
 
 type Props = {
     requiredRoles?: Role[];
@@ -38,7 +39,7 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
     }, [hasRequiredRoles, isAuth, isLoading, navigate, user.isActivated]);
 
     if (isLoading) {
-        return <div>Загрузка...</div>;
+        return <Loading />;
     }
 
     if (error) {

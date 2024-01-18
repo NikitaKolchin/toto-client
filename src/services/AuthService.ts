@@ -1,4 +1,4 @@
-import $api from '../utils/http';
+import $api from '../shared/lib/http';
 import axios, { AxiosResponse } from 'axios';
 import { AuthResponse } from '../models/response/AuthResponse';
 import { RegDto } from '../models/dto/RegDto';
