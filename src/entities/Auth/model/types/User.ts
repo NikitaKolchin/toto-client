@@ -1,7 +1,7 @@
-import { Competition } from './Competition';
+import { Competition } from '../../../Competition/model/types/Competition';
 import { Role } from './Role';
 
-export interface User {
+interface User {
     id: string;
     email: string;
     isActivated: boolean;
@@ -12,3 +12,5 @@ export interface User {
     roles: Array<Role>;
     competition: Competition;
 }
+
+export type { User };

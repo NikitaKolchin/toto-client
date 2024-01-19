@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import { User } from '../../models/User';
-import UserService from '../../services/UserService';
+import { User } from '../../entities/Auth/model/types/User';
+import UserService from '../../entities/Auth/service/UserService';
 
 const ConfirmEmail: FC<User> = (user) => {
     const [mailSended, setMailSended] = useState(false);

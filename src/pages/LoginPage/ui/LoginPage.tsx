@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import AuthController from '../../../controllers/AuthController';
+import { AuthController } from '../../../entities/Auth';
 import { useAppDispatch, useAppSelector } from '../../../app/providers/store';
 
 const LoginForm: FC = () => {

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 import { ToggleTheme } from '../../app/providers/theme';
-import { User } from '../../models/User';
+import { User } from '../../entities/Auth/model/types/User';
 
 const UserData: FC<User> = (user) => {
     return (

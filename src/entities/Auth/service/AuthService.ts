@@ -1,8 +1,8 @@
-import $api from '../shared/lib/http';
+import $api from '../../../shared/lib/http';
 import axios, { AxiosResponse } from 'axios';
-import { AuthResponse } from '../models/response/AuthResponse';
-import { RegDto } from '../models/dto/RegDto';
-import { AuthDto } from '../models/dto/AuthDto';
+import { AuthResponse } from '../model/types/response/AuthResponse';
+import { RegDto } from '../model/types/dto/RegDto';
+import { AuthDto } from '../model/types/dto/AuthDto';
 
 export default class AuthService {
     static async login({

@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import AuthController from '../../../controllers/AuthController';
+import { AuthController } from '../../../entities/Auth';
 import { Button } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../../app/providers/store';
 

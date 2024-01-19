@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
-import { User } from '../../../models/User';
-import UserService from '../../../services/UserService';
+import { User } from '../../../entities/Auth';
+import UserService from '../../../entities/Auth/service/UserService';
 
 const AdminPage = () => {
     const [users, setUsers] = useState<User[]>([]);

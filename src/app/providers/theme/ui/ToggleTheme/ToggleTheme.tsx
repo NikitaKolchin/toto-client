@@ -1,6 +1,6 @@
 import { FormGroup, FormControlLabel, Switch } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../../../store';
-import { toggleTheme } from '../../../store/config/themeSlice';
+import { toggleTheme } from '../../../../../entities/Theme/model/slice/themeSlice';
 const ToggleTheme = () => {
     const theme = useAppSelector((state) => state.theme);
 

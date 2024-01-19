@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import auth from './config/authSlice';
-import theme from './config/themeSlice';
+import { auth } from '../../../entities/Auth';
+import { theme } from '../../../entities/Theme';
 import { useAppDispatch } from './config/hooks';
 import { useAppSelector } from './config/hooks';
 import { competitionsApi } from '../../../shared/api/rtkApi/rtk';

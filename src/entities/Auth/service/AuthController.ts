@@ -1,10 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import AuthService from '../services/AuthService';
-import { AuthResponse } from '../models/response/AuthResponse';
-import { AuthDto } from '../models/dto/AuthDto';
-import { RegDto } from '../models/dto/RegDto';
+import AuthService from './AuthService';
+import { AuthResponse } from '../model/types/response/AuthResponse';
+import { AuthDto } from '../model/types/dto/AuthDto';
+import { RegDto } from '../model/types/dto/RegDto';
 
-export default class AuthController {
+class AuthController {
     static login = createAsyncThunk<
         AuthResponse,
         AuthDto,
@@ -73,3 +73,5 @@ export default class AuthController {
         return response.data;
     });
 }
+
+export { AuthController };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import AuthController from '../../../../controllers/AuthController';
-import { User } from '../../../../models/User';
+import { AuthController } from '../../service/AuthController';
+import { User } from '../types/User';
 type DataState = {
     user: User;
     isAuth: boolean;
@@ -71,5 +71,4 @@ const authSlice = createSlice({
             .addCase(AuthController.logout.rejected, setError);
     },
 });
-
-export default authSlice.reducer;
+export const { reducer } = authSlice;

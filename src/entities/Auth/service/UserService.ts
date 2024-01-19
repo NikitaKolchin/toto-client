@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { User } from '../models/User';
-import { MessageResponse } from '../models/response/MessageResponse';
-import $api from '../shared/lib/http';
+import { User } from '../model/types/User';
+import { MessageResponse } from '../model/types/response/MessageResponse';
+import $api from '../../../shared/lib/http';
 
 export default class UserService {
     static async sendCode(email: User['email']): Promise<MessageResponse> {

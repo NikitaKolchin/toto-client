@@ -1,5 +1,5 @@
 import { PayloadAction, SliceSelectors, createSlice } from '@reduxjs/toolkit';
-import ThemeController from '../../../../controllers/ThemeController';
+import { ThemeController } from '../../services/ThemeController';
 
 export type ThemeState = {
     darkTheme: boolean;
@@ -25,4 +25,4 @@ export const themeSlice = createSlice<
 
 export const { toggleTheme, initTheme } = themeSlice.actions;
 
-export default themeSlice.reducer;
+export const { reducer } = themeSlice;

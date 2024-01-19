@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { ThemeState } from '../app/providers/store/config/themeSlice';
+import { ThemeState } from '../model/slice/themeSlice';
 
-export default class ThemeController {
+class ThemeController {
     static initialState: ThemeState = {
         darkTheme: localStorage.getItem('darkTheme') === 'true' || false,
     };
@@ -20,3 +20,5 @@ export default class ThemeController {
         }
     };
 }
+
+export { ThemeController };

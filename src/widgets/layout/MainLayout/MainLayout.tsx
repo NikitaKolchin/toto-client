@@ -3,10 +3,10 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
-import AuthController from '../../../controllers/AuthController';
+import { AuthController } from '../../../entities/Auth';
 import { useMediaQuery } from '@mui/material';
 import { useAppDispatch } from '../../../app/providers/store';
-import { initTheme } from '../../../app/providers/store/config/themeSlice';
+import { initTheme } from '../../../entities/Theme/model/slice/themeSlice';
 
 const Layout = () => {
     const dispatch = useAppDispatch();
