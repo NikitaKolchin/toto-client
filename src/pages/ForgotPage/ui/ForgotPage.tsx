@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import UserService from '../../../entities/Auth/service/UserService';
+import UserService from '../../../entities/Auth/services/UserService';
 
 const ForgotPage = () => {
     const [email, setEmail] = useState('');

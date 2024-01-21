@@ -4,8 +4,13 @@ module.exports = {
         'react-app/jest',
         'plugin:@typescript-eslint/recommended',
         'plugin:prettier/recommended',
+        'plugin:@conarti/feature-sliced/rules'
     ],
     ignorePatterns: ['.eslintrc.js'],
+    plugins: [
+        '@conarti/feature-sliced'
+      ],
+    
     rules: {
         'react/react-in-jsx-scope': 'off',
         'react/jsx-uses-react': 'off',
@@ -20,5 +25,8 @@ module.exports = {
                                         tabWidth: 4 
                                     }
                                 ],
+        "@conarti/feature-sliced/layers-slices": "warn",
+        "@conarti/feature-sliced/absolute-relative": "warn",
+        "@conarti/feature-sliced/public-api": "warn"
     },
 };
