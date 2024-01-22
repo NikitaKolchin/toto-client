@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth';
 import { User } from '../../model/types/User';
-import { baseQueryWithReauth } from '../../../../shared/api/rtkApi/baseQueryWithReauth';
 import { MessageResponse } from '../../model/types/response/MessageResponse';
 export const usersApi = createApi({
     reducerPath: 'UsersApi',
@@ -33,12 +33,20 @@ export const usersApi = createApi({
             query: ({ email, confirmationCode }) =>
                 `/users/activate/${email}/${confirmationCode}`,
         }),
+        changePasswordAlien: builder.query<
+            MessageResponse,
+            { email: User['email']; password: string; confirmationCode: string }
+        >({
+            query: ({ email, password, confirmationCode }) =>
+                `/users/changePasswordAlien/${email}/${password}/${confirmationCode}`,
+        }),
     }),
 });
 
 export const {
     useLazyGetAllUsersQuery,
-    useActivateQuery,
-    useSendCodeQuery,
+    useLazyActivateQuery,
+    useLazySendCodeQuery,
+    useLazyChangePasswordAlienQuery,
     useToggleAllowMutation,
 } = usersApi;

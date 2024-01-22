@@ -1,35 +1,29 @@
 import { FC, useEffect, useState } from 'react';
-import { User } from '../../entities/Auth/model/types/User';
-import UserService from '../../entities/Auth/services/UserService';
+import {
+    User,
+    useLazyActivateQuery,
+    useLazySendCodeQuery,
+} from 'entities/Auth';
 
 const ConfirmEmail: FC<User> = (user) => {
     const [mailSended, setMailSended] = useState(false);
     const [activate, setActivate] = useState(false);
-    const [message, setMessage] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
 
-    useEffect(() => {
-        const getCode = async () => {
-            const resp = await UserService.sendCode(user.email);
-            setMessage(resp.message);
-        };
-        if (mailSended) {
-            getCode();
-        }
-    }, [mailSended, user.email]);
+    const [activateUser, { data: messageActivate }] = useLazyActivateQuery();
+    const [sendCode, { data: messageSendCode }] = useLazySendCodeQuery();
 
     useEffect(() => {
-        const activateUser = async () => {
-            const resp = await UserService.activate(
-                user.email,
-                confirmationCode,
-            );
-            setMessage(resp.message);
-        };
-        if (activate) {
-            activateUser();
+        if (mailSended) {
+            sendCode(user.email);
         }
-    }, [activate, confirmationCode, user.email]);
+    }, [mailSended, sendCode, user.email]);
+
+    useEffect(() => {
+        if (activate) {
+            activateUser({ email: user.email, confirmationCode });
+        }
+    }, [activate, activateUser, confirmationCode, user.email]);
 
     return (
         <>
@@ -50,10 +44,11 @@ const ConfirmEmail: FC<User> = (user) => {
                             }
                         />
                     </div>
-                    <div>{message}</div>
+                    <div>{messageSendCode?.message}</div>
+                    <div>{messageActivate?.message}</div>
                 </>
             )}
-            {message && (
+            {messageSendCode && (
                 <button disabled={activate} onClick={() => setActivate(true)}>
                     Activate
                 </button>

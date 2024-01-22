@@ -1,10 +1,9 @@
-import { ChangeEvent, useState } from 'react';
-import { User } from '../../../entities/Auth';
-import UserService from '../../../entities/Auth/services/UserService';
+import { ChangeEvent } from 'react';
 import {
+    User,
     useToggleAllowMutation,
     useLazyGetAllUsersQuery,
-} from '../../../entities/Auth/services/queriesForUser/queriesForUser';
+} from 'entities/Auth';
 
 const AdminPage = () => {
     const [getAllUsers, { data: users }] = useLazyGetAllUsersQuery();
@@ -15,7 +14,6 @@ const AdminPage = () => {
         const userId = event.target.value as unknown as User['id'];
         toggleAllow(userId);
     }
-    console.log(users);
 
     return (
         <>

@@ -1,5 +1,8 @@
+import {
+    useLazyChangePasswordAlienQuery,
+    useLazySendCodeQuery,
+} from 'entities/Auth';
 import { useState, useEffect } from 'react';
-import UserService from '../../../entities/Auth/services/UserService';
 
 const ForgotPage = () => {
     const [email, setEmail] = useState('');
@@ -7,32 +10,29 @@ const ForgotPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
-    const [message, setMessage] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
 
-    useEffect(() => {
-        const getCode = async () => {
-            const resp = await UserService.sendCode(email);
-            setMessage(resp.message);
-        };
-        if (mailSended) {
-            getCode();
-        }
-    }, [mailSended, email]);
+    const [changePasswordAlien, { data: messageChangePasswordAlien }] =
+        useLazyChangePasswordAlienQuery();
+    const [sendCode, { data: messageSendCode }] = useLazySendCodeQuery();
 
     useEffect(() => {
-        const changeUserPassword = async () => {
-            const resp = await UserService.changePasswordAlien(
-                email,
-                password,
-                confirmationCode,
-            );
-            setMessage(resp.message);
-        };
-        if (changePassword) {
-            changeUserPassword();
+        if (mailSended) {
+            sendCode(email);
         }
-    }, [changePassword, confirmationCode, email, password]);
+    }, [mailSended, email, sendCode]);
+
+    useEffect(() => {
+        if (changePassword) {
+            changePasswordAlien({ email, password, confirmationCode });
+        }
+    }, [
+        changePassword,
+        changePasswordAlien,
+        confirmationCode,
+        email,
+        password,
+    ]);
 
     return (
         <>
@@ -76,10 +76,11 @@ const ForgotPage = () => {
                             }
                         />
                     </div>
-                    <div>{message}</div>
+                    <div>{messageSendCode?.message}</div>
+                    <div>{messageChangePasswordAlien?.message}</div>
                 </>
             )}
-            {message && (
+            {messageSendCode && (
                 <button
                     disabled={changePassword}
                     onClick={() => setChangePassword(true)}
