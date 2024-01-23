@@ -11,7 +11,7 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import { useAppSelector } from '../../../app/providers/store';
+import { useAppSelector } from 'shared/store/config';
 
 type Props = object;
 

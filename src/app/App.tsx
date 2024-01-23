@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { darkTheme, lightTheme } from './providers/theme';
-import { useAppSelector } from './providers/store';
+import { useAppSelector } from 'shared/store/config';
 import { AppRouter } from './providers/router';
 
 const App: FC = () => {
