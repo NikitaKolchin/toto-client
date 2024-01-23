@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -11,25 +11,15 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import { Loading } from '../../../shared/ui/Loading';
 import { useAppSelector } from '../../../app/providers/store';
 
 type Props = object;
 
 const Main: FC = (props: Props) => {
-    const { isLoading, error, isAuth, user } = useAppSelector(
-        (state) => state.auth,
-    );
+    const { isAuth, user } = useAppSelector((state) => state.auth);
+
     const navigate = useNavigate();
-
-    if (isLoading) {
-        return <Loading />;
-    }
-
-    if (error) {
-        console.error('случилось страшное: ', error);
-    }
-
+    console.log(user);
     return (
         <Container>
             <Box

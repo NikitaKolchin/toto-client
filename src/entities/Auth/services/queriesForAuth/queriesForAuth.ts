@@ -4,16 +4,24 @@ import { AuthResponse } from '../../model/types/response/AuthResponse';
 import { AuthDto } from '../../model/types/dto/AuthDto';
 import { RegDto } from '../../model/types/dto/RegDto';
 export const authApi = createApi({
-    reducerPath: 'UsersApi',
+    reducerPath: 'AuthApi',
     baseQuery: baseQueryWithAuth,
     endpoints: (builder) => ({
-        login: builder.query<AuthResponse, AuthDto>({
+        login: builder.mutation<AuthResponse, AuthDto>({
             query: ({ email, password }) => ({
                 method: 'post',
                 url: `/auth/login`,
                 body: { email, password },
             }),
+            transformResponse: (response: AuthResponse) => {
+                localStorage.setItem('token', response.accessToken);
+                return {
+                    ...response,
+                    isAuth: true,
+                };
+            },
         }),
+        /////////////////////////////////////////////////////////////////
         registration: builder.query<AuthResponse, RegDto>({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
@@ -21,21 +29,32 @@ export const authApi = createApi({
                 body: { email, password, alias, firstName, secondName },
             }),
         }),
-        logout: builder.query<boolean, void>({
+        logout: builder.mutation<boolean, void>({
             query: () => ({
                 method: 'post',
                 url: `/auth/logout`,
             }),
+            transformResponse: (response: boolean) => {
+                localStorage.removeItem('token');
+                return response;
+            },
         }),
-        checkAuth: builder.query<AuthResponse, void>({
-            query: () => `/api/auth/refresh`,
+        checkAuth: builder.mutation<AuthResponse, void>({
+            query: () => `/auth/refresh`,
+            transformResponse: (response: AuthResponse) => {
+                localStorage.setItem('token', response.accessToken);
+                return {
+                    ...response,
+                    isAuth: true,
+                };
+            },
         }),
     }),
 });
 
 export const {
-    useLazyLoginQuery,
+    useLoginMutation,
     useLazyRegistrationQuery,
-    useLazyLogoutQuery,
-    useLazyCheckAuthQuery,
+    useLogoutMutation,
+    useCheckAuthMutation,
 } = authApi;

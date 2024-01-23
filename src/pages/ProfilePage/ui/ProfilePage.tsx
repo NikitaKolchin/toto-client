@@ -18,11 +18,7 @@ import { UserData } from '../../../widgets/UserData';
 type Props = object;
 
 const ProfileScreen: FC = (props: Props) => {
-    const { error, user } = useAppSelector((state) => state.auth);
-
-    if (error) {
-        console.error('случилось страшное: ', error);
-    }
+    const { user } = useAppSelector((state) => state.auth);
 
     return (
         <Container>
@@ -50,6 +46,7 @@ const ProfileScreen: FC = (props: Props) => {
                     <ConfirmEmail {...user} />
                 </Grid>
             </Grid>
+            <Link to={'../admin'}>TEST admin</Link>
         </Container>
     );
 };

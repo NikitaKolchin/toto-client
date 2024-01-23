@@ -11,9 +11,9 @@ import Menu from '@mui/material/Menu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { AuthController } from '../../../entities/Auth';
+import { useLogoutMutation } from 'entities/Auth';
 import { Button } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '../../../app/providers/store';
+import { useAppSelector, useAppDispatch } from 'shared/store/config';
 
 type TotoMenuItem = {
     name: string;
@@ -27,8 +27,8 @@ const menuItems: TotoMenuItem[] = [
 ];
 
 function Header() {
+    const [logout] = useLogoutMutation();
     const { isAuth } = useAppSelector((state) => state.auth);
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const theme = useTheme();
     const matchThen600 = useMediaQuery(theme.breakpoints.up('sm'));
@@ -65,7 +65,7 @@ function Header() {
 
     const handleLogout = () => {
         setAccountAnchorEl(null);
-        dispatch(AuthController.logout());
+        logout();
     };
 
     const handleLogin = () => {

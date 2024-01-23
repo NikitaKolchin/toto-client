@@ -32,10 +32,10 @@ export default class AuthService {
         return $api.post('/auth/logout');
     }
 
-    static async checkAuth(): Promise<AxiosResponse<AuthResponse>> {
-        return await axios.get<AuthResponse>(`/api/auth/refresh`, {
-            withCredentials: true,
-        });
-        // return $api.get(`/auth/refresh`)
-    }
+    // static async checkAuth(): Promise<AxiosResponse<AuthResponse>> {
+    //     return await axios.get<AuthResponse>(`/api/auth/refresh`, {
+    //         withCredentials: true,
+    //     });
+    //     // return $api.get(`/auth/refresh`)
+    // }
 }

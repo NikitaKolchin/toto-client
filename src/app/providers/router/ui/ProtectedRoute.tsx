@@ -2,16 +2,13 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
 import { Role } from '../../../../entities/Auth';
 import { useAppSelector } from '../../store';
-import { Loading } from '../../../../shared/ui/Loading';
 
 type Props = {
     requiredRoles?: Role[];
 };
 
 const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
-    const { isLoading, error, isAuth, user } = useAppSelector(
-        (state) => state.auth,
-    );
+    const { isAuth, user } = useAppSelector((state) => state.auth);
     const navigate = useNavigate();
 
     const hasRequiredRoles = useMemo(() => {
@@ -27,24 +24,13 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
         });
     }, [requiredRoles, user.roles]);
     useEffect(() => {
-        if (!isLoading) {
-            //|| !user.isActivated || !user.isAllowed
-            if (!isAuth) {
-                navigate('/');
-            }
-            if (!hasRequiredRoles) {
-                navigate('/');
-            }
+        if (!isAuth) {
+            navigate('/');
         }
-    }, [hasRequiredRoles, isAuth, isLoading, navigate, user.isActivated]);
-
-    if (isLoading) {
-        return <Loading />;
-    }
-
-    if (error) {
-        console.error('случилось страшное: ', error);
-    }
+        if (!hasRequiredRoles) {
+            navigate('/');
+        }
+    }, [hasRequiredRoles, isAuth, navigate, user.isActivated]);
 
     return <Outlet />;
 };

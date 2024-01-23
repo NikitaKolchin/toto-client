@@ -23,20 +23,13 @@ const RegistrationPage = (props: Props) => {
     const [password, setPassword] = useState<string>('');
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { isLoading, error, user } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.auth);
     useEffect(() => {
         if (user.email) {
             navigate('/login');
         }
     }, [navigate, user]);
 
-    if (isLoading) {
-        return <div>Загрузка...</div>;
-    }
-
-    if (error) {
-        console.error('случилось страшное: ', error);
-    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />

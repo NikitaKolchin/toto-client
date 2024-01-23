@@ -4,4 +4,5 @@ export {
     useGetCompetitionByIdQuery,
     useUpdateCompetitionByIdMutation,
     useAddCompetitionMutation,
+    competitionsApi,
 } from './services/queriesForCompetitions/queriesForCompetitions';

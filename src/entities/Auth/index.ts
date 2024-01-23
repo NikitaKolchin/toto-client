@@ -8,4 +8,13 @@ export {
     useLazySendCodeQuery,
     useLazyChangePasswordAlienQuery,
     useToggleAllowMutation,
+    usersApi,
 } from './services/queriesForUser/queriesForUser';
+
+export {
+    useLoginMutation,
+    useLazyRegistrationQuery,
+    useLogoutMutation,
+    useCheckAuthMutation,
+    authApi,
+} from './services/queriesForAuth/queriesForAuth';

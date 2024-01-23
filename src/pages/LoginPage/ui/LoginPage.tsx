@@ -9,20 +9,19 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { AuthController } from '../../../entities/Auth';
-import { useAppDispatch, useAppSelector } from '../../../app/providers/store';
+import { useLoginMutation } from 'entities/Auth';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { isLoading, error, isAuth } = useAppSelector((state) => state.auth);
+    const [login, { isLoading, error, data: response }] = useLoginMutation();
+
     useEffect(() => {
-        if (isAuth) {
+        if (response?.isAuth) {
             navigate('/');
         }
-    }, [navigate, isAuth]);
+    }, [navigate, response?.isAuth]);
 
     if (isLoading) {
         return <div>Загрузка...</div>;
@@ -103,11 +102,7 @@ const LoginForm: FC = () => {
 
                         <Button
                             fullWidth
-                            onClick={() =>
-                                dispatch(
-                                    AuthController.login({ email, password }),
-                                )
-                            }
+                            onClick={() => login({ email, password })}
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >

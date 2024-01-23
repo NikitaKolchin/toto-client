@@ -59,19 +59,19 @@ class AuthController {
         return response.data;
     });
 
-    static checkAuth = createAsyncThunk<
-        AuthResponse,
-        undefined,
-        { rejectValue: string }
-    >('auth/checkAuth', async (_, { rejectWithValue }) => {
-        const response = await AuthService.checkAuth();
-        localStorage.setItem('token', response.data.accessToken);
+    // static checkAuth = createAsyncThunk<
+    //     AuthResponse,
+    //     undefined,
+    //     { rejectValue: string }
+    // >('auth/checkAuth', async (_, { rejectWithValue }) => {
+    //     const response = await AuthService.checkAuth();
+    //     localStorage.setItem('token', response.data.accessToken);
 
-        if (response.status !== 200) {
-            return rejectWithValue('Server Error!');
-        }
-        return response.data;
-    });
+    //     if (response.status !== 200) {
+    //         return rejectWithValue('Server Error!');
+    //     }
+    //     return response.data;
+    // });
 }
 
 export { AuthController };

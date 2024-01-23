@@ -2,8 +2,8 @@ import { Suspense, useCallback } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import { AppRoutesProps, routeConfig } from '../config/routeConfig';
-import { Loading } from '../../../../shared/ui/Loading';
-import { MainLayout } from '../../../../widgets/layout';
+import { Loading } from 'shared/ui/Loading';
+import { MainLayout } from 'widgets/layout';
 
 const AppRouter = () => {
     const renderWithWrapper = useCallback((route: AppRoutesProps) => {
