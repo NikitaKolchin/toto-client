@@ -1,7 +1,6 @@
+import { TokensResponse } from 'shared/types/TokensResponse';
 import { User } from '../User';
 
-export interface AuthResponse {
-    accessToken: string;
-    refreshToken: string;
+export interface AuthResponse extends TokensResponse {
     user: User;
 }

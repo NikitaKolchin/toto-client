@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { auth } from '../../../entities/Auth';
-import { theme } from '../../../entities/Theme';
+import { auth } from 'entities/Auth';
+import { theme } from 'entities/Theme';
 import { useAppDispatch } from './config/hooks';
 import { useAppSelector } from './config/hooks';
-import { competitionsApi } from '../../../entities/Competition/services/queriesForCompetitions/queriesForCompetitions';
-import { usersApi } from '../../../entities/Auth/services/queriesForUser/queriesForUser';
+import { competitionsApi } from 'entities/Competition/services/queriesForCompetitions/queriesForCompetitions';
+import { usersApi } from 'entities/Auth/services/queriesForUser/queriesForUser';
 
 const store = configureStore({
     reducer: {

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth';
+import { baseQueryWithReauth } from 'shared/api/rtkApi';
 import { User } from '../../model/types/User';
 import { MessageResponse } from '../../model/types/response/MessageResponse';
 export const usersApi = createApi({
