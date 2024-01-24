@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -19,7 +19,6 @@ const Main: FC = (props: Props) => {
     const { isAuth, user } = useAppSelector((state) => state.auth);
 
     const navigate = useNavigate();
-    console.log(user);
     return (
         <Container>
             <Box

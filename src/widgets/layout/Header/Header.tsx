@@ -13,7 +13,7 @@ import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useLogoutMutation } from 'entities/Auth';
 import { Button } from '@mui/material';
-import { useAppSelector, useAppDispatch } from 'shared/store/config';
+import { useAppSelector } from 'shared/store/config';
 
 type TotoMenuItem = {
     name: string;

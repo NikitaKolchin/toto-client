@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from 'shared/store/config';
 import { Container, Box, Typography, Grid } from '@mui/material';
-import { ConfirmEmail } from '../../../widgets/ConfirmEmail';
-import { UserData } from '../../../widgets/UserData';
+import { ConfirmEmail } from 'widgets/ConfirmEmail';
+import { UserData } from 'widgets/UserData';
 
 type Props = object;
 

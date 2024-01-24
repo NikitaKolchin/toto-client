@@ -1,2 +1,6 @@
-export { reducer as theme } from './model/slice/themeSlice';
-export { ThemeController } from './services/ThemeController';
+export {
+    reducer as theme,
+    toggleTheme,
+    initTheme,
+} from './model/slice/themeSlice';
+export {} from './';

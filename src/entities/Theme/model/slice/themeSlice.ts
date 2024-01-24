@@ -1,8 +1,11 @@
 import { PayloadAction, SliceSelectors, createSlice } from '@reduxjs/toolkit';
-import { ThemeController } from '../../services/ThemeController';
 
 export type ThemeState = {
     darkTheme: boolean;
+};
+
+const initialState: ThemeState = {
+    darkTheme: localStorage.getItem('darkTheme') === 'true' || false,
 };
 
 export const themeSlice = createSlice<
@@ -16,10 +19,21 @@ export const themeSlice = createSlice<
     'theme'
 >({
     name: 'theme',
-    initialState: ThemeController.initialState,
+    initialState,
     reducers: {
-        toggleTheme: ThemeController.toggleTheme,
-        initTheme: ThemeController.initTheme,
+        toggleTheme: (state: ThemeState) => {
+            localStorage.setItem('darkTheme', (!state.darkTheme).toString());
+            state.darkTheme = !state.darkTheme;
+        },
+        initTheme: (state: ThemeState, action: PayloadAction<boolean>) => {
+            const darkThemeFromStorage = localStorage.getItem('darkTheme');
+            if (darkThemeFromStorage) {
+                state.darkTheme = darkThemeFromStorage === 'true';
+            } else {
+                localStorage.setItem('darkTheme', action.payload.toString());
+                state.darkTheme = action.payload;
+            }
+        },
     },
 });
 

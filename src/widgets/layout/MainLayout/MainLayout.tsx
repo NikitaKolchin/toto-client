@@ -5,7 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { useAppDispatch } from 'shared/store/config';
-import { initTheme } from '../../../entities/Theme/model/slice/themeSlice';
+import { initTheme } from 'entities/Theme';
 import { useCheckAuthMutation } from 'entities/Auth';
 
 const Layout = () => {
