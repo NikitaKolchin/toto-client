@@ -32,7 +32,7 @@ const baseQueryWithReauth: BaseQueryFn<
                 extraOptions,
             );
             localStorage.removeItem('token');
-            // api.dispatch(AuthController.logout());
+            window.location.reload();
         }
     }
     return result;

@@ -14,7 +14,7 @@ export {
 
 export {
     useLoginMutation,
-    useLazyRegistrationQuery,
+    useRegistrationMutation,
     useLogoutMutation,
     useCheckAuthMutation,
     authApi,

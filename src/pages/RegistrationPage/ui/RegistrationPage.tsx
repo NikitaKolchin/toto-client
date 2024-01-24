@@ -10,8 +10,8 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { AuthController } from 'entities/Auth';
-import { useAppDispatch, useAppSelector } from 'shared/store/config';
+import { useRegistrationMutation } from 'entities/Auth';
+import { useAppSelector } from 'shared/store/config';
 
 type Props = object;
 
@@ -21,7 +21,8 @@ const RegistrationPage = (props: Props) => {
     const [firstName, setFirstName] = useState<string>('');
     const [secondName, setSecondName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const dispatch = useAppDispatch();
+    const [registration] = useRegistrationMutation();
+
     const navigate = useNavigate();
     const { user } = useAppSelector((state) => state.auth);
     useEffect(() => {
@@ -103,15 +104,13 @@ const RegistrationPage = (props: Props) => {
                     </Grid>
                     <Button
                         onClick={() =>
-                            dispatch(
-                                AuthController.registration({
-                                    email,
-                                    password,
-                                    alias,
-                                    firstName,
-                                    secondName,
-                                }),
-                            )
+                            registration({
+                                email,
+                                password,
+                                alias,
+                                firstName,
+                                secondName,
+                            })
                         }
                         fullWidth
                         variant="contained"
