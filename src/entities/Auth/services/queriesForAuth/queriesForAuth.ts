@@ -21,13 +21,19 @@ export const authApi = createApi({
                 };
             },
         }),
-        /////////////////////////////////////////////////////////////////
-        registration: builder.query<AuthResponse, RegDto>({
+        registration: builder.mutation<AuthResponse, RegDto>({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
                 url: `/auth/registration`,
                 body: { email, password, alias, firstName, secondName },
             }),
+            transformResponse: (response: AuthResponse) => {
+                localStorage.setItem('token', response.accessToken);
+                return {
+                    ...response,
+                    isAuth: true,
+                };
+            },
         }),
         logout: builder.mutation<boolean, void>({
             query: () => ({
@@ -54,7 +60,7 @@ export const authApi = createApi({
 
 export const {
     useLoginMutation,
-    useLazyRegistrationQuery,
+    useRegistrationMutation,
     useLogoutMutation,
     useCheckAuthMutation,
 } = authApi;

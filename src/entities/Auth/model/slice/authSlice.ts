@@ -15,28 +15,35 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addMatcher(
-            authApi.endpoints.login.matchFulfilled,
-            (state, { payload }) => {
-                state.accessToken = payload.accessToken;
-                state.user = payload.user;
-                state.refreshToken = payload.refreshToken;
-                state.isAuth = payload.isAuth;
-            },
-        );
-        builder.addMatcher(
-            authApi.endpoints.checkAuth.matchFulfilled,
-            (state, { payload }) => {
-                state.accessToken = payload.accessToken;
-                state.user = payload.user;
-                state.refreshToken = payload.refreshToken;
-                state.isAuth = payload.isAuth;
-            },
-        );
-        builder.addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
-            state.user = {} as User;
-            state.isAuth = false;
-        });
+        builder
+            .addMatcher(
+                authApi.endpoints.login.matchFulfilled,
+                (state, { payload }) => {
+                    state.accessToken = payload.accessToken;
+                    state.user = payload.user;
+                    state.refreshToken = payload.refreshToken;
+                    state.isAuth = payload.isAuth;
+                },
+            )
+            .addMatcher(
+                authApi.endpoints.registration.matchFulfilled,
+                (state, { payload }) => {
+                    state = payload;
+                },
+            )
+            .addMatcher(
+                authApi.endpoints.checkAuth.matchFulfilled,
+                (state, { payload }) => {
+                    state.accessToken = payload.accessToken;
+                    state.user = payload.user;
+                    state.refreshToken = payload.refreshToken;
+                    state.isAuth = payload.isAuth;
+                },
+            )
+            .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+                state.user = {} as User;
+                state.isAuth = false;
+            });
         // .addCase(AuthController.login.pending, (state) => {
         //     state.isLoading = true;
         //     state.error = null;
