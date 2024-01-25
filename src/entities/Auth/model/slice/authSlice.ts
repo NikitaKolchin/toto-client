@@ -28,7 +28,7 @@ const authSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.registration.matchFulfilled,
                 (state, { payload }) => {
-                    state = payload;
+                    state.user = payload.user;
                 },
             )
             .addMatcher(
@@ -44,48 +44,6 @@ const authSlice = createSlice({
                 state.user = {} as User;
                 state.isAuth = false;
             });
-        // .addCase(AuthController.login.pending, (state) => {
-        //     state.isLoading = true;
-        //     state.error = null;
-        // })
-        // .addCase(AuthController.login.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isAuth = true;
-        //     state.user = action.payload.user;
-        // })
-        // .addCase(AuthController.login.rejected, setError)
-        // .addCase(AuthController.registration.pending, (state) => {
-        //     state.isLoading = true;
-        //     state.isAuth = false;
-        //     state.error = null;
-        // })
-        // .addCase(AuthController.registration.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isAuth = false;
-        //     state.user = action.payload.user;
-        // })
-        // .addCase(AuthController.registration.rejected, setError)
-        // .addCase(AuthController.checkAuth.pending, (state) => {
-        //     state.isLoading = true;
-        //     state.isAuth = false;
-        //     state.error = null;
-        // })
-        // .addCase(AuthController.checkAuth.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.isAuth = true;
-        //     state.user = action.payload.user;
-        // })
-        // .addCase(AuthController.checkAuth.rejected, setError)
-        // .addCase(AuthController.logout.pending, (state) => {
-        //     state.isLoading = true;
-        //     state.error = null;
-        // })
-        // .addCase(AuthController.logout.fulfilled, (state) => {
-        //     state.isLoading = false;
-        //     state.isAuth = false;
-        //     state.user = {} as User;
-        // })
-        // .addCase(AuthController.logout.rejected, setError);
     },
 });
 export const { reducer } = authSlice;
