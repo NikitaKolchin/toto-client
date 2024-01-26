@@ -1,34 +1,60 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import {
     User,
-    useLazyActivateQuery,
-    useLazySendCodeQuery,
+    setMailSended,
+    setActivationCodeSended,
+    useActivateUserMutation,
+    useSendCodeMutation,
+    setConfirmationCode,
+    setActivationCodeSending,
+    setMailSending,
 } from 'entities/Auth';
+import { useAppDispatch, useAppSelector } from 'shared/store/config';
 
 const ConfirmEmail: FC<User> = (user) => {
-    const [mailSended, setMailSended] = useState(false);
-    const [activate, setActivate] = useState(false);
-    const [confirmationCode, setConfirmationCode] = useState('');
-
-    const [activateUser, { data: messageActivate }] = useLazyActivateQuery();
-    const [sendCode, { data: messageSendCode }] = useLazySendCodeQuery();
+    const dispatch = useAppDispatch();
+    const {
+        mailSended,
+        mailSending,
+        activationCodeSended,
+        activationCodeSending,
+        message,
+        confirmationCode,
+    } = useAppSelector((state) => state.user);
+    const [activateUser] = useActivateUserMutation();
+    const [sendCode] = useSendCodeMutation();
 
     useEffect(() => {
-        if (mailSended) {
+        if (mailSending && !mailSended) {
             sendCode(user.email);
+            dispatch(setMailSended(true));
         }
-    }, [mailSended, sendCode, user.email]);
+    }, [dispatch, mailSended, mailSending, sendCode, user.email]);
 
     useEffect(() => {
-        if (activate) {
+        if (activationCodeSending && !activationCodeSended) {
             activateUser({ email: user.email, confirmationCode });
+            dispatch(setActivationCodeSended(true));
         }
-    }, [activate, activateUser, confirmationCode, user.email]);
+    }, [
+        activationCodeSended,
+        activationCodeSending,
+        activateUser,
+        confirmationCode,
+        user.email,
+        dispatch,
+    ]);
+
+    useEffect(() => {
+        if (confirmationCode.length > 3) {
+            dispatch(setActivationCodeSending(true));
+        }
+    }, [confirmationCode, dispatch]);
 
     return (
         <>
             {!mailSended && (
-                <button onClick={() => setMailSended(true)}>
+                <button onClick={() => dispatch(setMailSending(true))}>
                     ConfirmEmail
                 </button>
             )}
@@ -37,21 +63,17 @@ const ConfirmEmail: FC<User> = (user) => {
                     <div>
                         <input
                             type="text"
-                            disabled={activate}
+                            disabled={activationCodeSended}
                             value={confirmationCode}
                             onChange={(e) =>
-                                setConfirmationCode(e.currentTarget.value)
+                                dispatch(
+                                    setConfirmationCode(e.currentTarget.value),
+                                )
                             }
                         />
                     </div>
-                    <div>{messageSendCode?.message}</div>
-                    <div>{messageActivate?.message}</div>
+                    <div>{message}</div>
                 </>
-            )}
-            {messageSendCode && (
-                <button disabled={activate} onClick={() => setActivate(true)}>
-                    Activate
-                </button>
             )}
         </>
     );

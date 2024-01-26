@@ -23,30 +23,40 @@ export const usersApi = createApi({
             query: (id) => `/users/toggleAllow/${id}`,
             invalidatesTags: [{ type: 'Users', id: 'LIST' }],
         }),
-        sendCode: builder.query<MessageResponse, User['email']>({
-            query: (email) => `/users/sendCode/${email}`,
+        sendCode: builder.mutation<MessageResponse, User['email']>({
+            query: (email) => ({
+                method: 'post',
+                url: `/users/sendCode`,
+                body: { email },
+            }),
         }),
-        activate: builder.query<
+        activateUser: builder.mutation<
             MessageResponse,
-            { email: User['email']; confirmationCode: string }
+            Pick<User, 'email' | 'confirmationCode'>
         >({
-            query: ({ email, confirmationCode }) =>
-                `/users/activate/${email}/${confirmationCode}`,
+            query: ({ email, confirmationCode }) => ({
+                method: 'post',
+                url: `/users/activate`,
+                body: { email, confirmationCode },
+            }),
         }),
-        changePasswordAlien: builder.query<
+        changePasswordAlien: builder.mutation<
             MessageResponse,
-            { email: User['email']; password: string; confirmationCode: string }
+            Pick<User, 'email' | 'password' | 'confirmationCode'>
         >({
-            query: ({ email, password, confirmationCode }) =>
-                `/users/changePasswordAlien/${email}/${password}/${confirmationCode}`,
+            query: ({ email, password, confirmationCode }) => ({
+                method: 'post',
+                url: `/users/changePasswordAlien`,
+                body: { email, password, confirmationCode },
+            }),
         }),
     }),
 });
 
 export const {
     useLazyGetAllUsersQuery,
-    useLazyActivateQuery,
-    useLazySendCodeQuery,
-    useLazyChangePasswordAlienQuery,
+    useActivateUserMutation,
+    useSendCodeMutation,
+    useChangePasswordAlienMutation,
     useToggleAllowMutation,
 } = usersApi;

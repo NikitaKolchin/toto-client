@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { auth } from 'entities/Auth';
+import { auth, user } from 'entities/Auth';
 import { theme } from 'entities/Theme';
 import { competitionsApi } from 'entities/Competition';
 import { usersApi, authApi } from 'entities/Auth';
@@ -7,6 +7,7 @@ import { usersApi, authApi } from 'entities/Auth';
 const store = configureStore({
     reducer: {
         auth,
+        user,
         theme,
         [competitionsApi.reducerPath]: competitionsApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,

@@ -1,8 +1,8 @@
 import {
-    useLazyChangePasswordAlienQuery,
-    useLazySendCodeQuery,
+    useChangePasswordAlienMutation,
+    useSendCodeMutation,
 } from 'entities/Auth';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const ForgotPage = () => {
     const [email, setEmail] = useState('');
@@ -13,8 +13,8 @@ const ForgotPage = () => {
     const [confirmationCode, setConfirmationCode] = useState('');
 
     const [changePasswordAlien, { data: messageChangePasswordAlien }] =
-        useLazyChangePasswordAlienQuery();
-    const [sendCode, { data: messageSendCode }] = useLazySendCodeQuery();
+        useChangePasswordAlienMutation();
+    const [sendCode, { data: messageSendCode }] = useSendCodeMutation();
 
     useEffect(() => {
         if (mailSended) {

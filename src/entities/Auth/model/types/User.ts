@@ -1,4 +1,4 @@
-import { Competition } from '../../../Competition/model/types/Competition';
+import type { Competition } from '../../../Competition';
 import { Role } from './Role';
 
 interface User {
@@ -11,6 +11,8 @@ interface User {
     secondName: string;
     roles: Array<Role>;
     competition: Competition;
+    confirmationCode: string;
+    password: string;
 }
 
 export type { User };
