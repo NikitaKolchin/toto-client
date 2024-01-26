@@ -1,4 +1,3 @@
-import type { Competition } from '../../../Competition';
 import { Role } from './Role';
 
 interface User {
@@ -10,7 +9,6 @@ interface User {
     firstName: string;
     secondName: string;
     roles: Array<Role>;
-    competition: Competition;
     confirmationCode: string;
     password: string;
 }
