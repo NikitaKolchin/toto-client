@@ -23,7 +23,7 @@ export enum AppRoutes {
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
-    requiredRoles?: Role[];
+    requiredRoles?: Partial<Role>[];
 };
 
 export const getRouteMain = () => '/';

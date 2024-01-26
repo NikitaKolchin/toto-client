@@ -4,7 +4,7 @@ import { Role } from 'entities/Auth';
 import { useAppSelector } from 'shared/store/config';
 
 type Props = {
-    requiredRoles?: Role[];
+    requiredRoles?: Partial<Role>[];
 };
 
 const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from 'shared/store/config';
 import { Container, Box, Typography, Grid } from '@mui/material';
 import { ConfirmEmail } from 'widgets/ConfirmEmail';
-import { UserData } from 'widgets/UserData';
+import { UserDataCard } from 'widgets/UserDataCard';
 
 type Props = object;
 
@@ -30,7 +30,7 @@ const ProfileScreen: FC = (props: Props) => {
             </Box>
             <Grid container spacing={5} alignItems="flex-end" mt={2}>
                 <Grid item xs={12} sm={6} md={6}>
-                    <UserData {...user} />
+                    <UserDataCard {...user} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
                     <ConfirmEmail {...user} />

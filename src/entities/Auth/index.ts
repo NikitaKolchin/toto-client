@@ -18,3 +18,5 @@ export {
     useCheckAuthMutation,
     authApi,
 } from './services/queriesForAuth/queriesForAuth';
+
+export { UserDataList } from './ui/UserDataList/UserDataList';

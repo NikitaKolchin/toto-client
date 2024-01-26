@@ -20,4 +20,4 @@ const ToggleTheme = () => {
     );
 };
 
-export default ToggleTheme;
+export { ToggleTheme };
