@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useRegistrationMutation } from 'entities/Auth';
+import { useRegistrationMutation } from 'entities/User';
 import { useAppSelector } from 'shared/store/config';
 
 type Props = object;
@@ -24,7 +24,7 @@ const RegistrationPage = (props: Props) => {
     const [registration] = useRegistrationMutation();
 
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.user);
     useEffect(() => {
         if (user.email) {
             navigate('/login');

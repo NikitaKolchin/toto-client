@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { useAppDispatch } from 'shared/store/config';
 import { initTheme } from 'entities/Theme';
-import { useCheckAuthMutation } from 'entities/Auth';
+import { useCheckAuthMutation } from 'entities/User';
 
 const Layout = () => {
     const dispatch = useAppDispatch();

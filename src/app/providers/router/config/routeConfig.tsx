@@ -8,7 +8,7 @@ import { ProfilePage } from 'pages/ProfilePage';
 import { InfoPage } from 'pages/InfoPage';
 import { ResultPage } from 'pages/ResultPage';
 import { AdminPage } from 'pages/AdminPage';
-import { Role, Roles } from 'entities/Auth';
+import { Role, Roles } from 'entities/User';
 export enum AppRoutes {
     MAIN = 'main',
     LOGIN = 'login',

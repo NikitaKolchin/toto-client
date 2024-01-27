@@ -16,7 +16,7 @@ import { useAppSelector } from 'shared/store/config';
 type Props = object;
 
 const Main: FC = (props: Props) => {
-    const { isAuth, user } = useAppSelector((state) => state.auth);
+    const { isAuth, user } = useAppSelector((state) => state.user);
 
     const navigate = useNavigate();
     return (

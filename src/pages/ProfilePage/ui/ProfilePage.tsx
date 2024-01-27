@@ -8,7 +8,7 @@ import { UserDataCard } from 'widgets/UserDataCard';
 type Props = object;
 
 const ProfileScreen: FC = (props: Props) => {
-    const { user } = useAppSelector((state) => state.auth);
+    const { user } = useAppSelector((state) => state.user);
 
     return (
         <Container>

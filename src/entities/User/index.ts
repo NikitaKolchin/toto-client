@@ -1,4 +1,3 @@
-export { reducer as auth } from './model/slice/authSlice';
 export {
     reducer as user,
     setMailSended,

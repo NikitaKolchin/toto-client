@@ -1,16 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { usersApi } from '../../services/queriesForUser/queriesForUser';
+import { authApi } from '../../services/queriesForAuth/queriesForAuth';
+import { User } from '../types/User';
+import { AuthResponse } from '../types/response/AuthResponse';
 
-type UserState = {
-    activationCodeSending: boolean;
-    activationCodeSended: boolean;
-    mailSending: boolean;
-    mailSended: boolean;
-    message: string;
-    confirmationCode: string;
-};
-
-const initialState: UserState = {
+const initialState: AuthResponse = {
+    user: {} as User,
+    isAuth: false,
+    accessToken: '',
+    refreshToken: '',
     activationCodeSending: false,
     activationCodeSended: false,
     mailSending: false,
@@ -42,6 +40,34 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(
+                authApi.endpoints.login.matchFulfilled,
+                (state, { payload }) => {
+                    state.accessToken = payload.accessToken;
+                    state.user = payload.user;
+                    state.refreshToken = payload.refreshToken;
+                    state.isAuth = payload.isAuth;
+                },
+            )
+            .addMatcher(
+                authApi.endpoints.registration.matchFulfilled,
+                (state, { payload }) => {
+                    state.user = payload.user;
+                },
+            )
+            .addMatcher(
+                authApi.endpoints.checkAuth.matchFulfilled,
+                (state, { payload }) => {
+                    state.accessToken = payload.accessToken;
+                    state.user = payload.user;
+                    state.refreshToken = payload.refreshToken;
+                    state.isAuth = payload.isAuth;
+                },
+            )
+            .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
+                state.user = {} as User;
+                state.isAuth = false;
+            })
+            .addMatcher(
                 usersApi.endpoints.sendCode.matchFulfilled,
                 (state, { payload }) => {
                     state.mailSended = true;
@@ -51,7 +77,7 @@ const userSlice = createSlice({
             .addMatcher(
                 usersApi.endpoints.activateUser.matchFulfilled,
                 (state, { payload }) => {
-                    state.mailSended = true;
+                    state.user.isActivated = true;
                     state.message = payload.message;
                 },
             )

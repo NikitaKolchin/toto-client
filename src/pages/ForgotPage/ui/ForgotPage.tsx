@@ -1,7 +1,7 @@
 import {
     useChangePasswordAlienMutation,
     useSendCodeMutation,
-} from 'entities/Auth';
+} from 'entities/User';
 import { useEffect, useState } from 'react';
 
 const ForgotPage = () => {

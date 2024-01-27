@@ -8,7 +8,7 @@ import {
     setConfirmationCode,
     setActivationCodeSending,
     setMailSending,
-} from 'entities/Auth';
+} from 'entities/User';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
 
 const ConfirmEmail: FC<User> = (user) => {

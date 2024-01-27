@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
-import { Role } from 'entities/Auth';
+import { Role } from 'entities/User';
 import { useAppSelector } from 'shared/store/config';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
-    const { isAuth, user } = useAppSelector((state) => state.auth);
+    const { isAuth, user } = useAppSelector((state) => state.user);
     const navigate = useNavigate();
 
     const hasRequiredRoles = useMemo(() => {
