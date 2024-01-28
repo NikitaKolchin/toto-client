@@ -5,7 +5,7 @@ import {
     setActivationCodeSended,
     useActivateUserMutation,
     useSendCodeMutation,
-    setConfirmationCode,
+    setActivationCode,
     setActivationCodeSending,
     setMailSending,
 } from 'entities/User';
@@ -19,7 +19,7 @@ const ConfirmEmail: FC<User> = (user) => {
         activationCodeSended,
         activationCodeSending,
         message,
-        confirmationCode,
+        activationCode,
     } = useAppSelector((state) => state.user);
     const [activateUser] = useActivateUserMutation();
     const [sendCode] = useSendCodeMutation();
@@ -33,27 +33,27 @@ const ConfirmEmail: FC<User> = (user) => {
 
     useEffect(() => {
         if (activationCodeSending && !activationCodeSended) {
-            activateUser({ email: user.email, confirmationCode });
+            activateUser({ email: user.email, activationCode });
             dispatch(setActivationCodeSended(true));
         }
     }, [
         activationCodeSended,
         activationCodeSending,
         activateUser,
-        confirmationCode,
+        activationCode,
         user.email,
         dispatch,
     ]);
 
     useEffect(() => {
-        if (confirmationCode.length > 3) {
+        if (activationCode.length > 3) {
             dispatch(setActivationCodeSending(true));
         }
-    }, [confirmationCode, dispatch]);
+    }, [activationCode, dispatch]);
 
     return (
         <>
-            {!mailSended && (
+            {!mailSended && !user.isActivated && (
                 <button onClick={() => dispatch(setMailSending(true))}>
                     ConfirmEmail
                 </button>
@@ -64,17 +64,17 @@ const ConfirmEmail: FC<User> = (user) => {
                         <input
                             type="text"
                             disabled={activationCodeSended}
-                            value={confirmationCode}
+                            value={activationCode}
                             onChange={(e) =>
                                 dispatch(
-                                    setConfirmationCode(e.currentTarget.value),
+                                    setActivationCode(e.currentTarget.value),
                                 )
                             }
                         />
                     </div>
-                    <div>{message}</div>
                 </>
             )}
+            <div>{message}</div>
         </>
     );
 };

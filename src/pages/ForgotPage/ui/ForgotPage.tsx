@@ -10,7 +10,7 @@ const ForgotPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
-    const [confirmationCode, setConfirmationCode] = useState('');
+    const [activationCode, setActivationCode] = useState('');
 
     const [changePasswordAlien, { data: messageChangePasswordAlien }] =
         useChangePasswordAlienMutation();
@@ -24,15 +24,9 @@ const ForgotPage = () => {
 
     useEffect(() => {
         if (changePassword) {
-            changePasswordAlien({ email, password, confirmationCode });
+            changePasswordAlien({ email, password, activationCode });
         }
-    }, [
-        changePassword,
-        changePasswordAlien,
-        confirmationCode,
-        email,
-        password,
-    ]);
+    }, [changePassword, changePasswordAlien, activationCode, email, password]);
 
     return (
         <>
@@ -70,9 +64,9 @@ const ForgotPage = () => {
                         <input
                             type="text"
                             disabled={changePassword}
-                            value={confirmationCode}
+                            value={activationCode}
                             onChange={(e) =>
-                                setConfirmationCode(e.currentTarget.value)
+                                setActivationCode(e.currentTarget.value)
                             }
                         />
                     </div>

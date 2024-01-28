@@ -14,7 +14,7 @@ const initialState: AuthResponse = {
     mailSending: false,
     mailSended: false,
     message: '',
-    confirmationCode: '',
+    activationCode: '',
 };
 
 const userSlice = createSlice({
@@ -33,8 +33,8 @@ const userSlice = createSlice({
         setActivationCodeSending: (state, action: PayloadAction<boolean>) => {
             state.activationCodeSending = action.payload;
         },
-        setConfirmationCode: (state, action: PayloadAction<string>) => {
-            state.confirmationCode = action.payload;
+        setActivationCode: (state, action: PayloadAction<string>) => {
+            state.activationCode = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -78,13 +78,22 @@ const userSlice = createSlice({
                 usersApi.endpoints.activateUser.matchFulfilled,
                 (state, { payload }) => {
                     state.user.isActivated = true;
+                    state.mailSended = false;
+                    state.mailSending = false;
+                    state.activationCodeSended = false;
+                    state.activationCodeSending = false;
+                    state.activationCode = '';
                     state.message = payload.message;
                 },
             )
             .addMatcher(
                 usersApi.endpoints.activateUser.matchRejected,
                 (state) => {
-                    state.mailSended = true;
+                    state.mailSended = false;
+                    state.mailSending = false;
+                    state.activationCodeSended = false;
+                    state.activationCodeSending = false;
+                    state.activationCode = '';
                     state.message = 'Активация провалена';
                 },
             );
@@ -95,6 +104,6 @@ export const {
     setMailSended,
     setMailSending,
     setActivationCodeSended,
-    setConfirmationCode,
+    setActivationCode,
     setActivationCodeSending,
 } = userSlice.actions;

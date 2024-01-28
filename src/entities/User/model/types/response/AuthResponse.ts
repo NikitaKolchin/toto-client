@@ -9,5 +9,5 @@ export interface AuthResponse extends TokensResponse {
     mailSending: boolean;
     mailSended: boolean;
     message: string;
-    confirmationCode: string;
+    activationCode: string;
 }

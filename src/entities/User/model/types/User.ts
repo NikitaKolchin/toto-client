@@ -9,7 +9,7 @@ interface User {
     firstName: string;
     secondName: string;
     roles: Array<Role>;
-    confirmationCode: string;
+    activationCode: string;
     password: string;
 }
 

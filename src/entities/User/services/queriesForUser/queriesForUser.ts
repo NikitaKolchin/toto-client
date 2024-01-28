@@ -32,22 +32,22 @@ export const usersApi = createApi({
         }),
         activateUser: builder.mutation<
             MessageResponse,
-            Pick<User, 'email' | 'confirmationCode'>
+            Pick<User, 'email' | 'activationCode'>
         >({
-            query: ({ email, confirmationCode }) => ({
+            query: ({ email, activationCode }) => ({
                 method: 'post',
                 url: `/users/activate`,
-                body: { email, confirmationCode },
+                body: { email, activationCode },
             }),
         }),
         changePasswordAlien: builder.mutation<
             MessageResponse,
-            Pick<User, 'email' | 'password' | 'confirmationCode'>
+            Pick<User, 'email' | 'password' | 'activationCode'>
         >({
-            query: ({ email, password, confirmationCode }) => ({
+            query: ({ email, password, activationCode }) => ({
                 method: 'post',
                 url: `/users/changePasswordAlien`,
-                body: { email, password, confirmationCode },
+                body: { email, password, activationCode },
             }),
         }),
     }),

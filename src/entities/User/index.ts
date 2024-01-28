@@ -3,7 +3,7 @@ export {
     setMailSended,
     setMailSending,
     setActivationCodeSended,
-    setConfirmationCode,
+    setActivationCode,
     setActivationCodeSending,
 } from './model/slice/userSlice';
 export type { User } from './model/types/User';
