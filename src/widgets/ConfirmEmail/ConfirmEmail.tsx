@@ -10,6 +10,7 @@ import {
     setMailSending,
 } from 'entities/User';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
+import { Typography, Box, TextField, Button, Grow, Stack } from '@mui/material';
 
 const ConfirmEmail: FC<User> = (user) => {
     const dispatch = useAppDispatch();
@@ -53,28 +54,41 @@ const ConfirmEmail: FC<User> = (user) => {
 
     return (
         <>
-            {!mailSended && !user.isActivated && (
-                <button onClick={() => dispatch(setMailSending(true))}>
-                    ConfirmEmail
-                </button>
-            )}
-            {mailSended && (
-                <>
-                    <div>
-                        <input
-                            type="text"
-                            disabled={activationCodeSended}
-                            value={activationCode}
-                            onChange={(e) =>
-                                dispatch(
-                                    setActivationCode(e.currentTarget.value),
-                                )
-                            }
-                        />
-                    </div>
-                </>
-            )}
-            <div>{message}</div>
+            <Typography component="h1" variant="h5">
+                Активация email
+            </Typography>
+            <Stack spacing={2}>
+                <Grow in={!mailSended && !user.isActivated}>
+                    <Button
+                        fullWidth
+                        onClick={() => dispatch(setMailSending(true))}
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Направить письмо с кодом активации
+                    </Button>
+                </Grow>
+                <Grow in={mailSended}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        disabled={activationCodeSended}
+                        onChange={(e) =>
+                            dispatch(setActivationCode(e.currentTarget.value))
+                        }
+                        value={activationCode}
+                        id="code"
+                        label="Код"
+                        name="code"
+                        autoComplete="number"
+                        autoFocus
+                    />
+                </Grow>
+                <Grow in={!!message}>
+                    <Typography height={30}>{message}</Typography>
+                </Grow>
+            </Stack>
         </>
     );
 };
