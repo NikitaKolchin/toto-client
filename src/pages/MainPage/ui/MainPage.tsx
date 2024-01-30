@@ -12,11 +12,9 @@ import {
     Typography,
 } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
-import { GoToStakes } from 'features/GoToStakes/GoToStakes';
+import { GoToStakes } from 'features/GoToStakes';
 
-type Props = object;
-
-const Main: FC = (props: Props) => {
+const Main: FC = () => {
     const { isAuth, user } = useAppSelector((state) => state.user);
 
     const navigate = useNavigate();
