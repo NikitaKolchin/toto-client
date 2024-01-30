@@ -3,7 +3,7 @@ import {
     User,
     useToggleAllowMutation,
     useLazyGetAllUsersQuery,
-} from 'entities/Auth';
+} from 'entities/User';
 
 const AdminPage = () => {
     const [getAllUsers, { data: users }] = useLazyGetAllUsersQuery();

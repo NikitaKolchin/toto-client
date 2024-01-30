@@ -1,27 +1,34 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithAuth } from 'shared/api/rtkApi';
 import { AuthResponse } from '../../model/types/response/AuthResponse';
-import { AuthDto } from '../../model/types/dto/AuthDto';
-import { RegDto } from '../../model/types/dto/RegDto';
+import { User } from '../../model/types/User';
 export const authApi = createApi({
     reducerPath: 'AuthApi',
     baseQuery: baseQueryWithAuth,
     endpoints: (builder) => ({
-        login: builder.mutation<AuthResponse, AuthDto>({
-            query: ({ email, password }) => ({
-                method: 'post',
-                url: `/auth/login`,
-                body: { email, password },
-            }),
-            transformResponse: (response: AuthResponse) => {
-                localStorage.setItem('token', response.accessToken);
-                return {
-                    ...response,
-                    isAuth: true,
-                };
+        login: builder.mutation<AuthResponse, Pick<User, 'email' | 'password'>>(
+            {
+                query: ({ email, password }) => ({
+                    method: 'post',
+                    url: `/auth/login`,
+                    body: { email, password },
+                }),
+                transformResponse: (response: AuthResponse) => {
+                    localStorage.setItem('token', response.accessToken);
+                    return {
+                        ...response,
+                        isAuth: true,
+                    };
+                },
             },
-        }),
-        registration: builder.mutation<AuthResponse, RegDto>({
+        ),
+        registration: builder.mutation<
+            AuthResponse,
+            Pick<
+                User,
+                'email' | 'password' | 'alias' | 'firstName' | 'secondName'
+            >
+        >({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
                 url: `/auth/registration`,

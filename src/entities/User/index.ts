@@ -1,12 +1,19 @@
-export { reducer as auth } from './model/slice/authSlice';
+export {
+    reducer as user,
+    setMailSended,
+    setMailSending,
+    setActivationCodeSended,
+    setActivationCode,
+    setActivationCodeSending,
+} from './model/slice/userSlice';
 export type { User } from './model/types/User';
 export type { Role } from './model/types/Role';
 export { Roles } from './model/types/Role';
 export {
     useLazyGetAllUsersQuery,
-    useLazyActivateQuery,
-    useLazySendCodeQuery,
-    useLazyChangePasswordAlienQuery,
+    useActivateUserMutation,
+    useSendCodeMutation,
+    useChangePasswordAlienMutation,
     useToggleAllowMutation,
     usersApi,
 } from './services/queriesForUser/queriesForUser';

@@ -1,4 +1,3 @@
-import { Competition } from '../../../Competition/model/types/Competition';
 import { Role } from './Role';
 
 interface User {
@@ -10,7 +9,8 @@ interface User {
     firstName: string;
     secondName: string;
     roles: Array<Role>;
-    competition: Competition;
+    activationCode: string;
+    password: string;
 }
 
 export type { User };

@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useLoginMutation } from 'entities/Auth';
+import { useLoginMutation } from 'entities/User';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
