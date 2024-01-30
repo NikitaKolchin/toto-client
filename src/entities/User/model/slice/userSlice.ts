@@ -14,6 +14,7 @@ const initialState: AuthResponse = {
     mailSending: false,
     mailSended: false,
     message: '',
+    severity: 'info',
     activationCode: '',
 };
 
@@ -66,12 +67,22 @@ const userSlice = createSlice({
             .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
                 state.user = {} as User;
                 state.isAuth = false;
+                state.accessToken = '';
+                state.refreshToken = '';
+                state.activationCodeSending = false;
+                state.activationCodeSended = false;
+                state.mailSending = false;
+                state.mailSended = false;
+                state.message = '';
+                state.severity = 'info';
+                state.activationCode = '';
             })
             .addMatcher(
                 usersApi.endpoints.sendCode.matchFulfilled,
                 (state, { payload }) => {
                     state.mailSended = true;
                     state.message = payload.message;
+                    state.severity = 'info';
                 },
             )
             .addMatcher(
@@ -84,6 +95,7 @@ const userSlice = createSlice({
                     state.activationCodeSending = false;
                     state.activationCode = '';
                     state.message = payload.message;
+                    state.severity = 'success';
                 },
             )
             .addMatcher(
@@ -95,6 +107,7 @@ const userSlice = createSlice({
                     state.activationCodeSending = false;
                     state.activationCode = '';
                     state.message = 'Активация провалена';
+                    state.severity = 'error';
                 },
             );
     },

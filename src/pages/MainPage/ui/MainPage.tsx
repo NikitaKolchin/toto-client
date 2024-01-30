@@ -12,6 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
+import { GoToStakes } from 'features/GoToStakes/GoToStakes';
 
 type Props = object;
 
@@ -39,11 +40,7 @@ const Main: FC = (props: Props) => {
                 <Typography variant="h5" color="text.primary" component="p">
                     Ниже отражаются статусы участника Тото!
                 </Typography>
-                {isAuth && user.isActivated && user.isAllowed && (
-                    <Button size="large" onClick={() => navigate('stakes')}>
-                        Переходим к ставкам!!!
-                    </Button>
-                )}
+                <GoToStakes />
             </Box>
 
             <Grid container spacing={5} alignItems="flex-end" mt={2}>

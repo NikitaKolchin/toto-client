@@ -2,12 +2,10 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from 'shared/store/config';
 import { Container, Box, Typography, Grid } from '@mui/material';
-import { ConfirmEmail } from 'widgets/ConfirmEmail';
 import { UserDataCard } from 'widgets/UserDataCard';
+import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
 
-type Props = object;
-
-const ProfileScreen: FC = (props: Props) => {
+const ProfileScreen: FC = () => {
     const { user } = useAppSelector((state) => state.user);
 
     return (
@@ -33,7 +31,7 @@ const ProfileScreen: FC = (props: Props) => {
                     <UserDataCard {...user} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={6}>
-                    <ConfirmEmail {...user} />
+                    <ConfirmEmailCard {...user} />
                 </Grid>
             </Grid>
             <Link to={'../admin'}>TEST admin</Link>
