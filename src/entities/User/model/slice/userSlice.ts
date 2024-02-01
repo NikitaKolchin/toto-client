@@ -16,6 +16,7 @@ const initialState: AuthResponse = {
     message: '',
     severity: 'info',
     activationCode: '',
+    activationCompleted: false,
 };
 
 const userSlice = createSlice({
@@ -49,10 +50,19 @@ const userSlice = createSlice({
                     state.isAuth = payload.isAuth;
                 },
             )
+            .addMatcher(authApi.endpoints.login.matchRejected, (state) => {
+                state.severity = 'error';
+            })
             .addMatcher(
                 authApi.endpoints.registration.matchFulfilled,
                 (state, { payload }) => {
                     state.user = payload.user;
+                },
+            )
+            .addMatcher(
+                authApi.endpoints.registration.matchRejected,
+                (state) => {
+                    state.severity = 'error';
                 },
             )
             .addMatcher(
@@ -76,6 +86,7 @@ const userSlice = createSlice({
                 state.message = '';
                 state.severity = 'info';
                 state.activationCode = '';
+                state.activationCompleted = false;
             })
             .addMatcher(
                 usersApi.endpoints.sendCode.matchFulfilled,
@@ -95,6 +106,7 @@ const userSlice = createSlice({
                     state.activationCodeSending = false;
                     state.activationCode = '';
                     state.message = payload.message;
+                    state.activationCompleted = true;
                     state.severity = 'success';
                 },
             )

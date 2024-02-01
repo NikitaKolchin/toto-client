@@ -6,7 +6,7 @@ import { UserDataCard } from 'widgets/UserDataCard';
 import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
 
 const ProfileScreen: FC = () => {
-    const { user } = useAppSelector((state) => state.user);
+    const { user, activationCompleted } = useAppSelector((state) => state.user);
 
     return (
         <Container>
@@ -30,9 +30,11 @@ const ProfileScreen: FC = () => {
                 <Grid item xs={12} sm={6} md={6}>
                     <UserDataCard {...user} />
                 </Grid>
-                <Grid item xs={12} sm={6} md={6}>
-                    <ConfirmEmailCard {...user} />
-                </Grid>
+                {(activationCompleted || !user.isActivated) && (
+                    <Grid item xs={12} sm={6} md={6}>
+                        <ConfirmEmailCard {...user} />
+                    </Grid>
+                )}
             </Grid>
             <Link to={'../admin'}>TEST admin</Link>
         </Container>

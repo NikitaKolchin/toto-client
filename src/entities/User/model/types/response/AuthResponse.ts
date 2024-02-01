@@ -10,5 +10,6 @@ export interface AuthResponse extends TokensResponse {
     mailSended: boolean;
     message: string;
     activationCode: string;
+    activationCompleted: boolean;
     severity: 'success' | 'info' | 'warning' | 'error';
 }

@@ -10,8 +10,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useRegistrationMutation } from 'entities/User';
+import { MessageResponse, useRegistrationMutation } from 'entities/User';
 import { useAppSelector } from 'shared/store/config';
+import { Alert, Grow } from '@mui/material';
 
 type Props = object;
 
@@ -21,7 +22,8 @@ const RegistrationPage = (props: Props) => {
     const [firstName, setFirstName] = useState<string>('');
     const [secondName, setSecondName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [registration] = useRegistrationMutation();
+    const [registration, { error }] = useRegistrationMutation();
+    const { severity } = useAppSelector((state) => state.user);
 
     const navigate = useNavigate();
     const { user } = useAppSelector((state) => state.user);
@@ -125,6 +127,15 @@ const RegistrationPage = (props: Props) => {
                             </Link>
                         </Grid>
                     </Grid>
+                    {error && (
+                        <Grow in={!!error}>
+                            <Alert severity={severity}>
+                                {'data' in error
+                                    ? (error.data as MessageResponse).message
+                                    : ''}
+                            </Alert>
+                        </Grow>
+                    )}
                 </Box>
             </Box>
         </Container>
