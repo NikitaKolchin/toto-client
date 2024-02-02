@@ -1,9 +1,9 @@
-import { TokensResponse } from 'shared/types/TokensResponse';
-import { User } from '../User';
+import { User } from './User';
 
-export interface AuthResponse extends TokensResponse {
-    user: User;
-    isAuth: boolean;
+interface UserState extends User {
+    password: string;
+    newPassword: string;
+    confirmPassword: string;
     activationCodeSending: boolean;
     activationCodeSended: boolean;
     mailSending: boolean;
@@ -13,3 +13,5 @@ export interface AuthResponse extends TokensResponse {
     activationCompleted: boolean;
     severity: 'success' | 'info' | 'warning' | 'error';
 }
+
+export type { UserState };

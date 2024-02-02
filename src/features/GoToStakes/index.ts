@@ -1,1 +1,1 @@
-export { GoToStakes } from './GoToStakes';
+export { GoToStakes } from './ui/GoToStakes/GoToStakes';

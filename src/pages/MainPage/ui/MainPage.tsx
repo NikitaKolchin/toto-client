@@ -15,7 +15,7 @@ import { useAppSelector } from 'shared/store/config';
 import { GoToStakes } from 'features/GoToStakes';
 
 const Main: FC = () => {
-    const { isAuth, user } = useAppSelector((state) => state.user);
+    const { isAuth, ...user } = useAppSelector((state) => state.user);
 
     const navigate = useNavigate();
     return (

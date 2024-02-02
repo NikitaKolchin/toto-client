@@ -1,1 +1,1 @@
-export { ChangePassword } from './ChangePassword/ChangePassword';
+export { ChangePassword } from './ui/ChangePassword/ChangePassword';

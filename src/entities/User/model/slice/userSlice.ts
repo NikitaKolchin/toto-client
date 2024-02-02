@@ -1,14 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { usersApi } from '../../services/queriesForUser/queriesForUser';
 import { authApi } from '../../services/queriesForAuth/queriesForAuth';
-import { User } from '../types/User';
-import { AuthResponse } from '../types/response/AuthResponse';
+import { UserState } from '../types/UserState';
 
-const initialState: AuthResponse = {
-    user: {} as User,
+const initialState: UserState = {
+    id: '',
+    email: '',
     isAuth: false,
-    accessToken: '',
-    refreshToken: '',
+    isActivated: false,
+    isAllowed: false,
+    alias: '',
+    firstName: '',
+    secondName: '',
+    roles: [],
+    password: '',
+    newPassword: '',
+    confirmPassword: '',
     activationCodeSending: false,
     activationCodeSended: false,
     mailSending: false,
@@ -44,10 +51,16 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.login.matchFulfilled,
                 (state, { payload }) => {
-                    state.accessToken = payload.accessToken;
-                    state.user = payload.user;
-                    state.refreshToken = payload.refreshToken;
+                    state.id = payload.id;
+                    state.email = payload.email;
                     state.isAuth = payload.isAuth;
+                    state.isActivated = payload.isActivated;
+                    state.isAllowed = payload.isAllowed;
+                    state.alias = payload.alias;
+                    state.firstName = payload.firstName;
+                    state.secondName = payload.secondName;
+                    state.roles = payload.roles;
+                    state.email = payload.email;
                 },
             )
             .addMatcher(authApi.endpoints.login.matchRejected, (state) => {
@@ -56,7 +69,8 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.registration.matchFulfilled,
                 (state, { payload }) => {
-                    state.user = payload.user;
+                    state.email = payload.email;
+                    state.isAuth = payload.isAuth;
                 },
             )
             .addMatcher(
@@ -68,17 +82,28 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.checkAuth.matchFulfilled,
                 (state, { payload }) => {
-                    state.accessToken = payload.accessToken;
-                    state.user = payload.user;
-                    state.refreshToken = payload.refreshToken;
+                    state.id = payload.id;
+                    state.email = payload.email;
                     state.isAuth = payload.isAuth;
+                    state.isActivated = payload.isActivated;
+                    state.isAllowed = payload.isAllowed;
+                    state.alias = payload.alias;
+                    state.firstName = payload.firstName;
+                    state.secondName = payload.secondName;
+                    state.roles = payload.roles;
+                    state.email = payload.email;
                 },
             )
             .addMatcher(authApi.endpoints.logout.matchFulfilled, (state) => {
-                state.user = {} as User;
+                state.id = '';
+                state.email = '';
                 state.isAuth = false;
-                state.accessToken = '';
-                state.refreshToken = '';
+                state.isActivated = false;
+                state.isAllowed = false;
+                state.alias = '';
+                state.firstName = '';
+                state.secondName = '';
+                state.roles = [];
                 state.activationCodeSending = false;
                 state.activationCodeSended = false;
                 state.mailSending = false;
@@ -99,7 +124,7 @@ const userSlice = createSlice({
             .addMatcher(
                 usersApi.endpoints.activateUser.matchFulfilled,
                 (state, { payload }) => {
-                    state.user.isActivated = true;
+                    state.isActivated = true;
                     state.mailSended = false;
                     state.mailSending = false;
                     state.activationCodeSended = false;

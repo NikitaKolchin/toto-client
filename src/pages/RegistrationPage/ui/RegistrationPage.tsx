@@ -23,15 +23,15 @@ const RegistrationPage = (props: Props) => {
     const [secondName, setSecondName] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [registration, { error }] = useRegistrationMutation();
-    const { severity } = useAppSelector((state) => state.user);
-
     const navigate = useNavigate();
-    const { user } = useAppSelector((state) => state.user);
+    const { email: respEmail, severity } = useAppSelector(
+        (state) => state.user,
+    );
     useEffect(() => {
-        if (user.email) {
+        if (respEmail) {
             navigate('/login');
         }
-    }, [navigate, user]);
+    }, [navigate, respEmail]);
 
     return (
         <Container component="main" maxWidth="xs">

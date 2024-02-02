@@ -1,1 +1,1 @@
-export { ConfirmEmail } from './ConfirmEmail/ConfirmEmail';
+export { ConfirmEmail } from './ui/ConfirmEmail/ConfirmEmail';

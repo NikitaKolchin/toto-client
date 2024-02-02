@@ -8,7 +8,9 @@ type Props = {
 };
 
 const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
-    const { isAuth, user } = useAppSelector((state) => state.user);
+    const { isAuth, roles, isActivated } = useAppSelector(
+        (state) => state.user,
+    );
     const navigate = useNavigate();
 
     const hasRequiredRoles = useMemo(() => {
@@ -17,12 +19,12 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
         }
 
         return requiredRoles.some((requiredRole) => {
-            const hasRole = user.roles?.find(
+            const hasRole = roles?.find(
                 (userRole) => userRole.value === requiredRole.value,
             );
             return hasRole;
         });
-    }, [requiredRoles, user.roles]);
+    }, [requiredRoles, roles]);
     useEffect(() => {
         if (!isAuth) {
             navigate('/');
@@ -30,7 +32,7 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
         if (!hasRequiredRoles) {
             navigate('/');
         }
-    }, [hasRequiredRoles, isAuth, navigate, user.isActivated]);
+    }, [hasRequiredRoles, isAuth, navigate, isActivated]);
 
     return <Outlet />;
 };

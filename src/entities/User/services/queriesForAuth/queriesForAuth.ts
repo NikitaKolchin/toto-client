@@ -1,31 +1,35 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithAuth } from 'shared/api/rtkApi';
-import { AuthResponse } from '../../model/types/response/AuthResponse';
-import { User } from '../../model/types/User';
+import { UserState } from '../../model/types/UserState';
+import { TokensResponse } from 'shared/types/TokensResponse';
+interface AuthResponse extends TokensResponse {
+    user: UserState;
+}
 export const authApi = createApi({
     reducerPath: 'AuthApi',
     baseQuery: baseQueryWithAuth,
     endpoints: (builder) => ({
-        login: builder.mutation<AuthResponse, Pick<User, 'email' | 'password'>>(
-            {
-                query: ({ email, password }) => ({
-                    method: 'post',
-                    url: `/auth/login`,
-                    body: { email, password },
-                }),
-                transformResponse: (response: AuthResponse) => {
-                    localStorage.setItem('token', response.accessToken);
-                    return {
-                        ...response,
-                        isAuth: true,
-                    };
-                },
+        login: builder.mutation<
+            UserState,
+            Pick<UserState, 'email' | 'password'>
+        >({
+            query: ({ email, password }) => ({
+                method: 'post',
+                url: `/auth/login`,
+                body: { email, password },
+            }),
+            transformResponse: (response: AuthResponse) => {
+                localStorage.setItem('token', response.accessToken);
+                return {
+                    ...response.user,
+                    isAuth: true,
+                };
             },
-        ),
+        }),
         registration: builder.mutation<
-            AuthResponse,
+            UserState,
             Pick<
-                User,
+                UserState,
                 'email' | 'password' | 'alias' | 'firstName' | 'secondName'
             >
         >({
@@ -37,8 +41,7 @@ export const authApi = createApi({
             transformResponse: (response: AuthResponse) => {
                 localStorage.setItem('token', response.accessToken);
                 return {
-                    ...response,
-                    isAuth: true,
+                    ...response.user,
                 };
             },
         }),
@@ -52,12 +55,12 @@ export const authApi = createApi({
                 return response;
             },
         }),
-        checkAuth: builder.mutation<AuthResponse, void>({
+        checkAuth: builder.mutation<UserState, void>({
             query: () => `/auth/refresh`,
             transformResponse: (response: AuthResponse) => {
                 localStorage.setItem('token', response.accessToken);
                 return {
-                    ...response,
+                    ...response.user,
                     isAuth: true,
                 };
             },

@@ -1,9 +1,9 @@
 import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
 import { FC } from 'react';
 import { ToggleTheme } from 'features/ToggleTheme';
-import { User, UserDataList } from 'entities/User';
+import { UserDataList, UserState } from 'entities/User';
 
-const UserDataCard: FC<User> = (user) => {
+const UserDataCard: FC<UserState> = (user) => {
     console.log(user);
     return (
         <Card>

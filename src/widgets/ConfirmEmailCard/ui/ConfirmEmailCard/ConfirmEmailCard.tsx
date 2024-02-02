@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { CardActions, Card, CardContent, CardHeader } from '@mui/material';
 import { ConfirmEmail } from 'features/ConfirmEmail';
-import { User } from 'entities/User';
+import { UserState } from 'entities/User';
 import { GoToStakes } from 'features/GoToStakes';
 
-const ConfirmEmailCard: FC<User> = (user) => {
+const ConfirmEmailCard: FC<UserState> = (user) => {
     return (
         <Card>
             <CardHeader title="Подтвердить email" />

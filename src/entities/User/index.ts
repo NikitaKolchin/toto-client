@@ -6,7 +6,7 @@ export {
     setActivationCode,
     setActivationCodeSending,
 } from './model/slice/userSlice';
-export type { User } from './model/types/User';
+export type { UserState } from './model/types/UserState';
 export type { Role } from './model/types/Role';
 export type { MessageResponse } from './model/types/response/MessageResponse';
 export { Roles } from './model/types/Role';

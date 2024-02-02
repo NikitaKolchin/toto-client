@@ -1,1 +1,1 @@
-export { ConfirmEmailCard } from './ConfirmEmailCard';
+export { ConfirmEmailCard } from './ui/ConfirmEmailCard/ConfirmEmailCard';

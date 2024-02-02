@@ -6,8 +6,9 @@ import { UserDataCard } from 'widgets/UserDataCard';
 import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
 
 const ProfileScreen: FC = () => {
-    const { user, activationCompleted } = useAppSelector((state) => state.user);
-
+    const { ...user } = useAppSelector((state) => state.user);
+    const confirmEmailNotDisplayed =
+        user.activationCompleted || !user.isActivated;
     return (
         <Container>
             <Box
@@ -27,10 +28,15 @@ const ProfileScreen: FC = () => {
                 </Typography>
             </Box>
             <Grid container spacing={5} alignItems="flex-end" mt={2}>
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid
+                    item
+                    xs={12}
+                    sm={confirmEmailNotDisplayed ? 6 : 12}
+                    md={confirmEmailNotDisplayed ? 6 : 12}
+                >
                     <UserDataCard {...user} />
                 </Grid>
-                {(activationCompleted || !user.isActivated) && (
+                {confirmEmailNotDisplayed && (
                     <Grid item xs={12} sm={6} md={6}>
                         <ConfirmEmailCard {...user} />
                     </Grid>

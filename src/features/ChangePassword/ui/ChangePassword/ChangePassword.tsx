@@ -1,16 +1,27 @@
 import {
+    setActivationCode,
+    setMailSended,
     useChangePasswordAlienMutation,
     useSendCodeMutation,
 } from 'entities/User';
 import { FC, useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'shared/store/config';
 
 const ChangePassword: FC = () => {
+    const dispatch = useAppDispatch();
+    const {
+        mailSended,
+        mailSending,
+        activationCodeSended,
+        activationCodeSending,
+        message,
+        activationCode,
+        severity,
+    } = useAppSelector((state) => state.user);
     const [email, setEmail] = useState('');
-    const [mailSended, setMailSended] = useState(false);
-    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
-    const [activationCode, setActivationCode] = useState('');
 
     const [changePasswordAlien, { data: messageChangePasswordAlien }] =
         useChangePasswordAlienMutation();
@@ -24,9 +35,19 @@ const ChangePassword: FC = () => {
 
     useEffect(() => {
         if (changePassword) {
-            changePasswordAlien({ email, password, activationCode });
+            changePasswordAlien({
+                email,
+                newPassword,
+                activationCode,
+            });
         }
-    }, [changePassword, changePasswordAlien, activationCode, email, password]);
+    }, [
+        changePassword,
+        changePasswordAlien,
+        activationCode,
+        email,
+        newPassword,
+    ]);
 
     return (
         <>
@@ -39,7 +60,7 @@ const ChangePassword: FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.currentTarget.value)}
                     />
-                    <button onClick={() => setMailSended(true)}>
+                    <button onClick={() => dispatch(setMailSended(true))}>
                         SendEmail
                     </button>
                 </div>
@@ -50,8 +71,10 @@ const ChangePassword: FC = () => {
                         <input
                             type="password"
                             disabled={changePassword}
-                            value={password}
-                            onChange={(e) => setPassword(e.currentTarget.value)}
+                            value={newPassword}
+                            onChange={(e) =>
+                                setNewPassword(e.currentTarget.value)
+                            }
                         />
                         <input
                             type="password"
@@ -66,7 +89,9 @@ const ChangePassword: FC = () => {
                             disabled={changePassword}
                             value={activationCode}
                             onChange={(e) =>
-                                setActivationCode(e.currentTarget.value)
+                                dispatch(
+                                    setActivationCode(e.currentTarget.value),
+                                )
                             }
                         />
                     </div>

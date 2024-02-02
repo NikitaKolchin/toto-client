@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi';
-import { User } from '../../model/types/User';
+import { UserState } from '../../model/types/UserState';
 import { MessageResponse } from '../../model/types/response/MessageResponse';
 export const usersApi = createApi({
     reducerPath: 'UsersApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Users'],
     endpoints: (builder) => ({
-        getAllUsers: builder.query<User[], void>({
+        getAllUsers: builder.query<UserState[], void>({
             query: () => `users`,
             providesTags: (result) =>
                 result
@@ -19,11 +19,11 @@ export const usersApi = createApi({
                       ]
                     : [{ type: 'Users', id: 'LIST' }],
         }),
-        toggleAllow: builder.mutation<User, User['id']>({
+        toggleAllow: builder.mutation<UserState, UserState['id']>({
             query: (id) => `/users/toggleAllow/${id}`,
             invalidatesTags: [{ type: 'Users', id: 'LIST' }],
         }),
-        sendCode: builder.mutation<MessageResponse, User['email']>({
+        sendCode: builder.mutation<MessageResponse, UserState['email']>({
             query: (email) => ({
                 method: 'post',
                 url: `/users/sendCode`,
@@ -32,7 +32,7 @@ export const usersApi = createApi({
         }),
         activateUser: builder.mutation<
             MessageResponse,
-            Pick<User, 'email' | 'activationCode'>
+            Pick<UserState, 'email' | 'activationCode'>
         >({
             query: ({ email, activationCode }) => ({
                 method: 'post',
@@ -42,12 +42,12 @@ export const usersApi = createApi({
         }),
         changePasswordAlien: builder.mutation<
             MessageResponse,
-            Pick<User, 'email' | 'password' | 'activationCode'>
+            Pick<UserState, 'email' | 'newPassword' | 'activationCode'>
         >({
-            query: ({ email, password, activationCode }) => ({
+            query: ({ email, newPassword, activationCode }) => ({
                 method: 'post',
                 url: `/users/changePasswordAlien`,
-                body: { email, password, activationCode },
+                body: { email, password: newPassword, activationCode },
             }),
         }),
     }),

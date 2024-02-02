@@ -1,8 +1,8 @@
 import { ChangeEvent } from 'react';
 import {
-    User,
     useToggleAllowMutation,
     useLazyGetAllUsersQuery,
+    UserState,
 } from 'entities/User';
 
 const AdminPage = () => {
@@ -11,7 +11,7 @@ const AdminPage = () => {
     async function handleChange(
         event: ChangeEvent<HTMLInputElement>,
     ): Promise<void> {
-        const userId = event.target.value as unknown as User['id'];
+        const userId = event.target.value as unknown as UserState['id'];
         toggleAllow(userId);
     }
 
