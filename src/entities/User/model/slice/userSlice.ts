@@ -13,9 +13,6 @@ const initialState: UserState = {
     firstName: '',
     secondName: '',
     roles: [],
-    password: '',
-    newPassword: '',
-    confirmPassword: '',
     activationCodeSending: false,
     activationCodeSended: false,
     mailSending: false,
@@ -44,6 +41,16 @@ const userSlice = createSlice({
         },
         setActivationCode: (state, action: PayloadAction<string>) => {
             state.activationCode = action.payload;
+        },
+        setMessage: (
+            state,
+            action: PayloadAction<{
+                message: string;
+                severity: UserState['severity'];
+            }>,
+        ) => {
+            state.message = action.payload.message;
+            state.severity = action.payload.severity;
         },
     },
     extraReducers: (builder) => {
@@ -143,8 +150,28 @@ const userSlice = createSlice({
                     state.activationCodeSended = false;
                     state.activationCodeSending = false;
                     state.activationCode = '';
-                    state.message = 'Активация провалена';
+                    state.message = 'Неверный код активации';
                     state.severity = 'error';
+                },
+            )
+            .addMatcher(
+                usersApi.endpoints.changePasswordAlien.matchRejected,
+                (state) => {
+                    // state.mailSended = false;
+                    // state.activationCodeSended = false;
+                    // state.activationCode = '';
+                    state.message = 'Неверный код активации';
+                    state.severity = 'error';
+                },
+            )
+            .addMatcher(
+                usersApi.endpoints.changePasswordAlien.matchFulfilled,
+                (state) => {
+                    // state.mailSended = false;
+                    // state.activationCodeSended = false;
+                    // state.activationCode = '';
+                    state.message = 'Пароль изменён';
+                    state.severity = 'success';
                 },
             );
     },
@@ -153,6 +180,7 @@ export const { reducer } = userSlice;
 export const {
     setMailSended,
     setMailSending,
+    setMessage,
     setActivationCodeSended,
     setActivationCode,
     setActivationCodeSending,

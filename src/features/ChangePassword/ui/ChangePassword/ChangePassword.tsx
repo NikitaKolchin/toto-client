@@ -1,8 +1,11 @@
+import { Alert, Button, Grow, Stack, TextField } from '@mui/material';
 import {
     setActivationCode,
+    setActivationCodeSended,
     setMailSended,
     useChangePasswordAlienMutation,
     useSendCodeMutation,
+    setMessage,
 } from 'entities/User';
 import { FC, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
@@ -11,33 +14,62 @@ const ChangePassword: FC = () => {
     const dispatch = useAppDispatch();
     const {
         mailSended,
-        mailSending,
         activationCodeSended,
-        activationCodeSending,
         message,
         activationCode,
         severity,
     } = useAppSelector((state) => state.user);
     const [email, setEmail] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+    const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
+    const [canSend, setCanSend] = useState(false);
 
-    const [changePasswordAlien, { data: messageChangePasswordAlien }] =
-        useChangePasswordAlienMutation();
-    const [sendCode, { data: messageSendCode }] = useSendCodeMutation();
+    const [changePasswordAlien] = useChangePasswordAlienMutation();
+    const [sendCode] = useSendCodeMutation();
+
+    useEffect(() => {
+        return () => {
+            dispatch(setActivationCodeSended(false));
+            dispatch(setMailSended(false));
+        };
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!password) {
+            return;
+        }
+        if (password !== confirmPassword) {
+            dispatch(
+                setMessage({
+                    message: 'Пароли не совпадают',
+                    severity: 'error',
+                }),
+            );
+            setCanSend(false);
+        } else {
+            dispatch(
+                setMessage({
+                    message: '',
+                    severity: 'info',
+                }),
+            );
+            setCanSend(!!activationCode);
+        }
+    }, [password, confirmPassword, dispatch, activationCode]);
 
     useEffect(() => {
         if (mailSended) {
-            sendCode(email);
+            sendCode({ email });
         }
     }, [mailSended, email, sendCode]);
-
+    console.log(canSend);
     useEffect(() => {
-        if (changePassword) {
+        if (changePassword && !activationCodeSended) {
+            dispatch(setActivationCodeSended(true));
             changePasswordAlien({
                 email,
-                newPassword,
+                password,
                 activationCode,
             });
         }
@@ -46,37 +78,47 @@ const ChangePassword: FC = () => {
         changePasswordAlien,
         activationCode,
         email,
-        newPassword,
+        password,
+        dispatch,
+        activationCodeSended,
     ]);
 
     return (
-        <>
-            <h1>change password</h1>
-            {!mailSended && (
-                <div>
-                    <input
-                        type="text"
-                        disabled={mailSended}
-                        value={email}
-                        onChange={(e) => setEmail(e.currentTarget.value)}
-                    />
-                    <button onClick={() => dispatch(setMailSended(true))}>
-                        SendEmail
-                    </button>
-                </div>
-            )}
+        <Stack spacing={2}>
+            <>
+                <TextField
+                    label="Укажите email для отправки кода"
+                    autoComplete="email"
+                    required
+                    fullWidth
+                    disabled={mailSended}
+                    value={email}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                />
+                <Grow in={!mailSended && !!email}>
+                    <Button onClick={() => dispatch(setMailSended(true))}>
+                        Направить код на email
+                    </Button>
+                </Grow>
+            </>
             {mailSended && (
                 <>
-                    <div>
-                        <input
+                    <Grow in={mailSended}>
+                        <TextField
+                            label="Укажите новый пароль"
+                            required
+                            fullWidth
                             type="password"
                             disabled={changePassword}
-                            value={newPassword}
-                            onChange={(e) =>
-                                setNewPassword(e.currentTarget.value)
-                            }
+                            value={password}
+                            onChange={(e) => setPassword(e.currentTarget.value)}
                         />
-                        <input
+                    </Grow>
+                    <Grow in={mailSended}>
+                        <TextField
+                            label="Подтвердите новый пароль"
+                            required
+                            fullWidth
                             type="password"
                             disabled={changePassword}
                             value={confirmPassword}
@@ -84,30 +126,40 @@ const ChangePassword: FC = () => {
                                 setConfirmPassword(e.currentTarget.value)
                             }
                         />
-                        <input
-                            type="text"
-                            disabled={changePassword}
-                            value={activationCode}
+                    </Grow>
+                    <Grow in={mailSended}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            disabled={activationCodeSended}
                             onChange={(e) =>
                                 dispatch(
                                     setActivationCode(e.currentTarget.value),
                                 )
                             }
+                            value={activationCode}
+                            id="code"
+                            label="Код"
+                            name="code"
+                            autoComplete="number"
+                            autoFocus
                         />
-                    </div>
-                    <div>{messageSendCode?.message}</div>
-                    <div>{messageChangePasswordAlien?.message}</div>
+                    </Grow>
+                    <Grow in={!!message}>
+                        <Alert severity={severity}>{message}</Alert>
+                    </Grow>
                 </>
             )}
-            {messageSendCode && (
-                <button
-                    disabled={changePassword}
+            <Grow in={mailSended}>
+                <Button
+                    disabled={changePassword || !canSend}
                     onClick={() => setChangePassword(true)}
                 >
-                    Change password
-                </button>
-            )}
-        </>
+                    Изменить пароль
+                </Button>
+            </Grow>
+        </Stack>
     );
 };
 

@@ -2,6 +2,8 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithAuth } from 'shared/api/rtkApi';
 import { UserState } from '../../model/types/UserState';
 import { TokensResponse } from 'shared/types/TokensResponse';
+import { LoginDto } from '../../model/types/dto/LoginDto';
+import { RegistrationDto } from '../../model/types/dto/RegistrationDto';
 interface AuthResponse extends TokensResponse {
     user: UserState;
 }
@@ -9,10 +11,7 @@ export const authApi = createApi({
     reducerPath: 'AuthApi',
     baseQuery: baseQueryWithAuth,
     endpoints: (builder) => ({
-        login: builder.mutation<
-            UserState,
-            Pick<UserState, 'email' | 'password'>
-        >({
+        login: builder.mutation<UserState, LoginDto>({
             query: ({ email, password }) => ({
                 method: 'post',
                 url: `/auth/login`,
@@ -26,13 +25,7 @@ export const authApi = createApi({
                 };
             },
         }),
-        registration: builder.mutation<
-            UserState,
-            Pick<
-                UserState,
-                'email' | 'password' | 'alias' | 'firstName' | 'secondName'
-            >
-        >({
+        registration: builder.mutation<UserState, RegistrationDto>({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
                 url: `/auth/registration`,

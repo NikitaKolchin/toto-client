@@ -2,6 +2,9 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi';
 import { UserState } from '../../model/types/UserState';
 import { MessageResponse } from '../../model/types/response/MessageResponse';
+import { ActivateDto } from '../../model/types/dto/ActivateDto';
+import { ChangePasswordDto } from '../../model/types/dto/ChangePasswordDto';
+import { SendCodeDto } from '../../model/types/dto/SendCodeDto';
 export const usersApi = createApi({
     reducerPath: 'UsersApi',
     baseQuery: baseQueryWithReauth,
@@ -23,17 +26,14 @@ export const usersApi = createApi({
             query: (id) => `/users/toggleAllow/${id}`,
             invalidatesTags: [{ type: 'Users', id: 'LIST' }],
         }),
-        sendCode: builder.mutation<MessageResponse, UserState['email']>({
-            query: (email) => ({
+        sendCode: builder.mutation<MessageResponse, SendCodeDto>({
+            query: ({ email }) => ({
                 method: 'post',
                 url: `/users/sendCode`,
                 body: { email },
             }),
         }),
-        activateUser: builder.mutation<
-            MessageResponse,
-            Pick<UserState, 'email' | 'activationCode'>
-        >({
+        activateUser: builder.mutation<MessageResponse, ActivateDto>({
             query: ({ email, activationCode }) => ({
                 method: 'post',
                 url: `/users/activate`,
@@ -42,12 +42,12 @@ export const usersApi = createApi({
         }),
         changePasswordAlien: builder.mutation<
             MessageResponse,
-            Pick<UserState, 'email' | 'newPassword' | 'activationCode'>
+            ChangePasswordDto
         >({
-            query: ({ email, newPassword, activationCode }) => ({
+            query: ({ email, password, activationCode }) => ({
                 method: 'post',
                 url: `/users/changePasswordAlien`,
-                body: { email, password: newPassword, activationCode },
+                body: { email, password, activationCode },
             }),
         }),
     }),

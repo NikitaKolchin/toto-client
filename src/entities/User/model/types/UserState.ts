@@ -1,9 +1,6 @@
 import { User } from './User';
 
 interface UserState extends User {
-    password: string;
-    newPassword: string;
-    confirmPassword: string;
     activationCodeSending: boolean;
     activationCodeSended: boolean;
     mailSending: boolean;

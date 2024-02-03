@@ -28,7 +28,7 @@ const ConfirmEmail: FC<UserState> = (user) => {
 
     useEffect(() => {
         if (mailSending && !mailSended) {
-            sendCode(user.email);
+            sendCode({ email: user.email });
             dispatch(setMailSended(true));
         }
     }, [dispatch, mailSended, mailSending, sendCode, user.email]);
