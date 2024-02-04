@@ -6,8 +6,10 @@ import {
     useChangePasswordAlienMutation,
     useSendCodeMutation,
     setMessage,
+    MessageResponse,
 } from 'entities/User';
 import { FC, useState, useEffect } from 'react';
+import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
 
 const ChangePassword: FC = () => {
@@ -23,10 +25,9 @@ const ChangePassword: FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
-    const [canSend, setCanSend] = useState(false);
-
+    const canSend = useCanSend({ password, confirmPassword, activationCode });
     const [changePasswordAlien] = useChangePasswordAlienMutation();
-    const [sendCode] = useSendCodeMutation();
+    const [sendCode, { error }] = useSendCodeMutation();
 
     useEffect(() => {
         return () => {
@@ -36,27 +37,13 @@ const ChangePassword: FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!password) {
-            return;
-        }
-        if (password !== confirmPassword) {
-            dispatch(
-                setMessage({
-                    message: 'Пароли не совпадают',
-                    severity: 'error',
-                }),
-            );
-            setCanSend(false);
-        } else {
-            dispatch(
-                setMessage({
-                    message: '',
-                    severity: 'info',
-                }),
-            );
-            setCanSend(!!activationCode);
-        }
-    }, [password, confirmPassword, dispatch, activationCode]);
+        dispatch(
+            setMessage({
+                message: canSend.message,
+                severity: canSend.enable ? 'info' : 'error',
+            }),
+        );
+    }, [canSend, dispatch]);
 
     useEffect(() => {
         if (mailSended) {
@@ -101,7 +88,16 @@ const ChangePassword: FC = () => {
                     </Button>
                 </Grow>
             </>
-            {mailSended && (
+            {error && (
+                <Grow in={!!error}>
+                    <Alert severity={severity}>
+                        {'data' in error
+                            ? (error.data as MessageResponse).message
+                            : ''}
+                    </Alert>
+                </Grow>
+            )}
+            {mailSended && !error && (
                 <>
                     <Grow in={mailSended}>
                         <TextField
@@ -153,7 +149,7 @@ const ChangePassword: FC = () => {
             )}
             <Grow in={mailSended}>
                 <Button
-                    disabled={changePassword || !canSend}
+                    disabled={changePassword || !canSend.enable}
                     onClick={() => setChangePassword(true)}
                 >
                     Изменить пароль
