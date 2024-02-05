@@ -11,14 +11,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useLoginMutation } from 'entities/User';
 import { Loading } from 'shared/ui/Loading';
-import { Alert, Grow } from '@mui/material';
-import { MessageResponse } from 'entities/User';
-import { useAppSelector } from 'shared/store/config';
+import { ShowMessage } from 'shared/ui/ShowMessage';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const { severity } = useAppSelector((state) => state.user);
     const navigate = useNavigate();
     const [login, { isLoading, error, data: response }] = useLoginMutation();
 
@@ -31,8 +28,6 @@ const LoginForm: FC = () => {
     if (isLoading) {
         return <Loading />;
     }
-    console.log('sev', response?.severity);
-
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <Grid
@@ -124,15 +119,7 @@ const LoginForm: FC = () => {
                         </Grid>
                     </Box>
                 </Box>
-                {error && (
-                    <Grow in={!!error}>
-                        <Alert severity={severity}>
-                            {'data' in error
-                                ? (error.data as MessageResponse).message
-                                : ''}
-                        </Alert>
-                    </Grow>
-                )}
+                <ShowMessage error={error} />
             </Grid>
         </Grid>
     );

@@ -10,28 +10,47 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { MessageResponse, useRegistrationMutation } from 'entities/User';
-import { useAppSelector } from 'shared/store/config';
-import { Alert, Grow } from '@mui/material';
+import { setMessage, useRegistrationMutation } from 'entities/User';
+import { useAppDispatch, useAppSelector } from 'shared/store/config';
+import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
+import { ShowMessage } from 'shared/ui/ShowMessage';
 
-type Props = object;
-
-const RegistrationPage = (props: Props) => {
-    const [email, setEmail] = useState<string>('');
-    const [alias, setAlias] = useState<string>('');
-    const [firstName, setFirstName] = useState<string>('');
-    const [secondName, setSecondName] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+const RegistrationPage = () => {
+    const dispatch = useAppDispatch();
+    const [email, setEmail] = useState('');
+    const [alias, setAlias] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [secondName, setSecondName] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [registration, { error }] = useRegistrationMutation();
     const navigate = useNavigate();
-    const { email: respEmail, severity } = useAppSelector(
-        (state) => state.user,
-    );
+    const canSend = useCanSend({ password, confirmPassword });
+    const {
+        email: respondedEmail,
+        severity,
+        message,
+    } = useAppSelector((state) => state.user);
     useEffect(() => {
-        if (respEmail) {
+        if (respondedEmail) {
             navigate('/login');
         }
-    }, [navigate, respEmail]);
+    }, [navigate, respondedEmail]);
+
+    useEffect(() => {
+        dispatch(
+            setMessage({
+                message: canSend.message,
+                severity: canSend.enable ? 'info' : 'error',
+            }),
+        );
+        return () => {
+            setMessage({
+                message: '',
+                severity: 'info',
+            });
+        };
+    }, [canSend, dispatch]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -103,6 +122,18 @@ const RegistrationPage = (props: Props) => {
                                 autoComplete="new-password"
                             />
                         </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Подтвердите новый пароль"
+                                required
+                                fullWidth
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) =>
+                                    setConfirmPassword(e.currentTarget.value)
+                                }
+                            />
+                        </Grid>
                     </Grid>
                     <Button
                         onClick={() =>
@@ -115,6 +146,7 @@ const RegistrationPage = (props: Props) => {
                             })
                         }
                         fullWidth
+                        disabled={!canSend.enable}
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
@@ -127,15 +159,11 @@ const RegistrationPage = (props: Props) => {
                             </Link>
                         </Grid>
                     </Grid>
-                    {error && (
-                        <Grow in={!!error}>
-                            <Alert severity={severity}>
-                                {'data' in error
-                                    ? (error.data as MessageResponse).message
-                                    : ''}
-                            </Alert>
-                        </Grow>
-                    )}
+                    <ShowMessage
+                        message={message}
+                        error={error}
+                        severity={severity}
+                    />
                 </Box>
             </Box>
         </Container>

@@ -1,3 +1,4 @@
+import { AlertColor } from '@mui/material';
 import { User } from './User';
 
 interface UserState extends User {
@@ -8,7 +9,7 @@ interface UserState extends User {
     message: string;
     activationCode: string;
     activationCompleted: boolean;
-    severity: 'success' | 'info' | 'warning' | 'error';
+    severity: AlertColor;
 }
 
 export type { UserState };

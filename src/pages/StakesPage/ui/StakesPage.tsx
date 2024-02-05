@@ -4,7 +4,7 @@ import {
     useGetCompetitionByIdQuery,
     useUpdateCompetitionByIdMutation,
     useAddCompetitionMutation,
-} from '../../../entities/Competition';
+} from 'entities/Competition';
 
 const StakesPage = () => {
     const [competitionId, setCompetitionId] = useState('1');

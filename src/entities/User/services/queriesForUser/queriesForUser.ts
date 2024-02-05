@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi';
+import { MessageResponse } from 'shared/types/MessageResponse';
 import { UserState } from '../../model/types/UserState';
-import { MessageResponse } from '../../model/types/response/MessageResponse';
 import { ActivateDto } from '../../model/types/dto/ActivateDto';
 import { ChangePasswordDto } from '../../model/types/dto/ChangePasswordDto';
 import { SendCodeDto } from '../../model/types/dto/SendCodeDto';

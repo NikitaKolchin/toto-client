@@ -25,8 +25,8 @@ module.exports = {
                                         tabWidth: 4 
                                     }
                                 ],
-        "@conarti/feature-sliced/layers-slices": "warn",
-        "@conarti/feature-sliced/absolute-relative": "warn",
-        "@conarti/feature-sliced/public-api": "warn"
+        "@conarti/feature-sliced/layers-slices": "error",
+        "@conarti/feature-sliced/absolute-relative": "error",
+        "@conarti/feature-sliced/public-api": "error"
     },
 };

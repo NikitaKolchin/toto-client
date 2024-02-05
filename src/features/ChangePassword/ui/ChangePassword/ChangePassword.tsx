@@ -1,4 +1,4 @@
-import { Alert, Button, Grow, Stack, TextField } from '@mui/material';
+import { Button, Grow, Stack, TextField } from '@mui/material';
 import {
     setActivationCode,
     setActivationCodeSended,
@@ -6,8 +6,8 @@ import {
     useChangePasswordAlienMutation,
     useSendCodeMutation,
     setMessage,
-    MessageResponse,
 } from 'entities/User';
+import { ShowMessage } from 'shared/ui/ShowMessage';
 import { FC, useState, useEffect } from 'react';
 import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
@@ -30,19 +30,21 @@ const ChangePassword: FC = () => {
     const [sendCode, { error }] = useSendCodeMutation();
 
     useEffect(() => {
-        return () => {
-            dispatch(setActivationCodeSended(false));
-            dispatch(setMailSended(false));
-        };
-    }, [dispatch]);
-
-    useEffect(() => {
         dispatch(
             setMessage({
                 message: canSend.message,
                 severity: canSend.enable ? 'info' : 'error',
             }),
         );
+
+        return () => {
+            dispatch(setActivationCodeSended(false));
+            dispatch(setMailSended(false));
+            setMessage({
+                message: '',
+                severity: 'info',
+            });
+        };
     }, [canSend, dispatch]);
 
     useEffect(() => {
@@ -50,7 +52,6 @@ const ChangePassword: FC = () => {
             sendCode({ email });
         }
     }, [mailSended, email, sendCode]);
-    console.log(canSend);
     useEffect(() => {
         if (changePassword && !activationCodeSended) {
             dispatch(setActivationCodeSended(true));
@@ -88,15 +89,6 @@ const ChangePassword: FC = () => {
                     </Button>
                 </Grow>
             </>
-            {error && (
-                <Grow in={!!error}>
-                    <Alert severity={severity}>
-                        {'data' in error
-                            ? (error.data as MessageResponse).message
-                            : ''}
-                    </Alert>
-                </Grow>
-            )}
             {mailSended && !error && (
                 <>
                     <Grow in={mailSended}>
@@ -142,9 +134,6 @@ const ChangePassword: FC = () => {
                             autoFocus
                         />
                     </Grow>
-                    <Grow in={!!message}>
-                        <Alert severity={severity}>{message}</Alert>
-                    </Grow>
                 </>
             )}
             <Grow in={mailSended}>
@@ -155,6 +144,7 @@ const ChangePassword: FC = () => {
                     Изменить пароль
                 </Button>
             </Grow>
+            <ShowMessage message={message} severity={severity} error={error} />
         </Stack>
     );
 };
