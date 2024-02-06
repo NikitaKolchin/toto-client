@@ -54,40 +54,38 @@ const ConfirmEmail: FC<UserState> = (user) => {
     }, [activationCode, dispatch]);
 
     return (
-        <>
-            <Stack spacing={2}>
-                <Grow in={!mailSended && !user.isActivated}>
-                    <Button
-                        fullWidth
-                        onClick={() => dispatch(setMailSending(true))}
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        Направить письмо с кодом активации
-                    </Button>
-                </Grow>
-                <Grow in={mailSended}>
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        disabled={activationCodeSended}
-                        onChange={(e) =>
-                            dispatch(setActivationCode(e.currentTarget.value))
-                        }
-                        value={activationCode}
-                        id="code"
-                        label="Код"
-                        name="code"
-                        autoComplete="number"
-                        autoFocus
-                    />
-                </Grow>
-                <Grow in={!!message}>
-                    <Alert severity={severity}>{message}</Alert>
-                </Grow>
-            </Stack>
-        </>
+        <Stack spacing={2}>
+            <Grow in={!mailSended && !user.isActivated}>
+                <Button
+                    fullWidth
+                    onClick={() => dispatch(setMailSending(true))}
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Направить письмо с кодом активации
+                </Button>
+            </Grow>
+            <Grow in={mailSended}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    disabled={activationCodeSended}
+                    onChange={(e) =>
+                        dispatch(setActivationCode(e.currentTarget.value))
+                    }
+                    value={activationCode}
+                    id="code"
+                    label="Код"
+                    name="code"
+                    autoComplete="number"
+                    autoFocus
+                />
+            </Grow>
+            <Grow in={!!message}>
+                <Alert severity={severity}>{message}</Alert>
+            </Grow>
+        </Stack>
     );
 };
 
