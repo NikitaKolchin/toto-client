@@ -16,8 +16,11 @@ import { GoToStakes } from 'features/GoToStakes';
 
 const Main: FC = () => {
     const { isAuth, ...user } = useAppSelector((state) => state.user);
-
     const navigate = useNavigate();
+    const handleAllowQuery = (e: React.MouseEvent<HTMLElement>) => {
+        window.location.href = 'mailto:kolchin.nv@gmail.com';
+        e.preventDefault();
+    };
     return (
         <Container>
             <Box
@@ -100,14 +103,7 @@ const Main: FC = () => {
                             {user.isAllowed ? (
                                 ''
                             ) : (
-                                <Button
-                                    size="small"
-                                    onClick={(e) => {
-                                        window.location.href =
-                                            'mailto:kolchin.nv@gmail.com';
-                                        e.preventDefault();
-                                    }}
-                                >
+                                <Button size="small" onClick={handleAllowQuery}>
                                     Обратиться за допуском
                                 </Button>
                             )}

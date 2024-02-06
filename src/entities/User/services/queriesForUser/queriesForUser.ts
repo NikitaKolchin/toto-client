@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi';
 import { MessageResponse } from 'shared/types/MessageResponse';
-import { UserState } from '../../model/types/UserState';
+import { User } from '../../model/types/User';
 import { ActivateDto } from '../../model/types/dto/ActivateDto';
 import { ChangePasswordDto } from '../../model/types/dto/ChangePasswordDto';
 import { SendCodeDto } from '../../model/types/dto/SendCodeDto';
@@ -10,7 +10,7 @@ export const usersApi = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Users'],
     endpoints: (builder) => ({
-        getAllUsers: builder.query<UserState[], void>({
+        getAllUsers: builder.query<User[], void>({
             query: () => `users`,
             providesTags: (result) =>
                 result
@@ -22,9 +22,9 @@ export const usersApi = createApi({
                       ]
                     : [{ type: 'Users', id: 'LIST' }],
         }),
-        toggleAllow: builder.mutation<UserState, UserState['id']>({
+        toggleAllow: builder.mutation<User, User['id']>({
             query: (id) => `/users/toggleAllow/${id}`,
-            invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+            invalidatesTags: (result) => [{ type: 'Users', id: 'LIST' }],
         }),
         sendCode: builder.mutation<MessageResponse, SendCodeDto>({
             query: ({ email }) => ({
@@ -55,6 +55,7 @@ export const usersApi = createApi({
 
 export const {
     useLazyGetAllUsersQuery,
+    useGetAllUsersQuery,
     useActivateUserMutation,
     useSendCodeMutation,
     useChangePasswordAlienMutation,

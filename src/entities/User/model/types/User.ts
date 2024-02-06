@@ -1,6 +1,6 @@
 import { Role } from './Role';
 
-interface User {
+type User = {
     id: string;
     email: string;
     isAuth: boolean;
@@ -10,6 +10,6 @@ interface User {
     firstName: string;
     secondName: string;
     roles: Array<Role>;
-}
+};
 
 export type { User };
