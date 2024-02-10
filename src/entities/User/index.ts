@@ -8,14 +8,15 @@ export {
     setMessage,
 } from './model/slice/userSlice';
 export type { UserState } from './model/types/UserState';
+export type { User } from './model/types/User';
 export type { Role } from './model/types/Role';
 export { Roles } from './model/types/Role';
 export {
-    useLazyGetAllUsersQuery,
+    useGetAllUsersQuery,
     useActivateUserMutation,
     useSendCodeMutation,
     useChangePasswordAlienMutation,
-    useToggleAllowMutation,
+    useUpdateUserMutation,
     usersApi,
 } from './services/queriesForUser/queriesForUser';
 

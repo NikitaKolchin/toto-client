@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from 'shared/store/config';
-import { Container, Box, Typography, Grid } from '@mui/material';
+import { Container, Box, Grid } from '@mui/material';
 import { UserDataCard } from 'widgets/UserDataCard';
 import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
+import { Title } from 'entities/Title';
 
 const ProfileScreen: FC = () => {
     const { ...user } = useAppSelector((state) => state.user);
@@ -17,15 +18,7 @@ const ProfileScreen: FC = () => {
                     textAlign: 'center',
                 }}
             >
-                <Typography
-                    mt={6}
-                    component="h2"
-                    variant="h3"
-                    color="text.primary"
-                    gutterBottom
-                >
-                    профиль пользователя
-                </Typography>
+                <Title>профиль пользователя</Title>
             </Box>
             <Grid container spacing={5} alignItems="flex-end" mt={2}>
                 <Grid

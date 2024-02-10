@@ -13,11 +13,15 @@ import {
 } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
 import { GoToStakes } from 'features/GoToStakes';
+import { Title } from 'entities/Title';
 
 const Main: FC = () => {
     const { isAuth, ...user } = useAppSelector((state) => state.user);
-
     const navigate = useNavigate();
+    const handleAllowQuery = (e: React.MouseEvent<HTMLElement>) => {
+        window.location.href = 'mailto:kolchin.nv@gmail.com';
+        e.preventDefault();
+    };
     return (
         <Container>
             <Box
@@ -26,15 +30,7 @@ const Main: FC = () => {
                     textAlign: 'center',
                 }}
             >
-                <Typography
-                    mt={5}
-                    component="h2"
-                    variant="h3"
-                    color="text.primary"
-                    gutterBottom
-                >
-                    Ты в Тото! &#127881;
-                </Typography>
+                <Title>Ты в Тото! &#127881;</Title>
                 <Typography variant="h5" color="text.primary" component="p">
                     Ниже отражаются статусы участника Тото!
                 </Typography>
@@ -100,14 +96,7 @@ const Main: FC = () => {
                             {user.isAllowed ? (
                                 ''
                             ) : (
-                                <Button
-                                    size="small"
-                                    onClick={(e) => {
-                                        window.location.href =
-                                            'mailto:kolchin.nv@gmail.com';
-                                        e.preventDefault();
-                                    }}
-                                >
+                                <Button size="small" onClick={handleAllowQuery}>
                                     Обратиться за допуском
                                 </Button>
                             )}
