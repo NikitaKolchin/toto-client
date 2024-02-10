@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -6,8 +6,10 @@ import {
     MRT_EditActionButtons,
     MRT_TableOptions,
 } from 'material-react-table';
+import { MRT_Localization_RU } from 'material-react-table/locales/ru';
+
 import {
-    useToggleAllowMutation,
+    useUpdateUserMutation,
     useGetAllUsersQuery,
     type User,
 } from 'entities/User';
@@ -23,19 +25,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const AdminPage = () => {
     const { data, isLoading } = useGetAllUsersQuery();
-    const [toggleAllow, result] = useToggleAllowMutation();
-    async function handleChange(
-        event: ChangeEvent<HTMLInputElement>,
-    ): Promise<void> {
-        const userId = event.target.value as unknown as User['id'];
-        toggleAllow(userId);
-    }
+    const [updateUser, result] = useUpdateUserMutation();
 
     const handleSaveUser: MRT_TableOptions<User>['onEditingRowSave'] = async ({
         values,
         table,
     }) => {
-        await toggleAllow(values.id);
+        const { email, ...updatedData } = values;
+        await updateUser({ ...updatedData });
         table.setEditingRow(null); //exit editing mode
     };
     const columns = useMemo<MRT_ColumnDef<User>[]>(
@@ -49,15 +46,25 @@ const AdminPage = () => {
                 header: 'Email',
             },
             {
+                accessorKey: 'firstName', //simple recommended way to define a column
+                header: 'firstName',
+            },
+            {
                 accessorKey: 'isAllowed', //id required if you use accessorFn instead of accessorKey
                 header: 'Allow',
-                Edit: ({ row }) => (
-                    <input
-                        type="checkbox"
-                        defaultChecked={row.original.isAllowed}
-                        value={row.original.id}
-                    />
-                ),
+                type: 'boolean',
+                editSelectOptions: [
+                    { label: 'Да', value: true },
+                    { label: 'Нет', value: false },
+                ],
+                editVariant: 'select',
+                // Edit: ({ row }) => (
+                //     <input
+                //         type="checkbox"
+                //         defaultChecked={row.original.isAllowed}
+                //         onChange={(event) => setIsAllowed(event.target.checked)}
+                //     />
+                // ),
                 Cell: ({ row }) => (
                     <input
                         type="checkbox"
@@ -70,12 +77,15 @@ const AdminPage = () => {
         [],
     );
     const users: User[] = data || [];
-    console.log(users);
     const table = useMaterialReactTable({
         columns,
         data: users,
         editDisplayMode: 'modal', //default ('row', 'cell', 'table', and 'custom' are also available)
         enableEditing: true,
+        localization: MRT_Localization_RU,
+        state: {
+            isLoading, //cell skeletons and loading overlay
+        },
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveUser,
         renderEditRowDialogContent: ({
@@ -114,6 +124,7 @@ const AdminPage = () => {
             </Box>
         ),
     });
+    console.log(table.getState());
 
     return (
         <>

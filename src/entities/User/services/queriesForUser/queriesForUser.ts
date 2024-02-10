@@ -22,9 +22,13 @@ export const usersApi = createApi({
                       ]
                     : [{ type: 'Users', id: 'LIST' }],
         }),
-        toggleAllow: builder.mutation<User, User['id']>({
-            query: (id) => `/users/toggleAllow/${id}`,
-            invalidatesTags: (result) => [{ type: 'Users', id: 'LIST' }],
+        updateUser: builder.mutation<User, Partial<User>>({
+            query: (user) => ({
+                url: `users/${user.id}`,
+                method: 'PUT',
+                body: user,
+            }),
+            invalidatesTags: [{ type: 'Users', id: 'LIST' }],
         }),
         sendCode: builder.mutation<MessageResponse, SendCodeDto>({
             query: ({ email }) => ({
@@ -59,5 +63,5 @@ export const {
     useActivateUserMutation,
     useSendCodeMutation,
     useChangePasswordAlienMutation,
-    useToggleAllowMutation,
+    useUpdateUserMutation,
 } = usersApi;
