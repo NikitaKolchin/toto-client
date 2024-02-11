@@ -1,5 +1,5 @@
 import { Title } from 'entities/Title';
-import { UserEditingTable } from 'features/UserEditingTable';
+import { UserEditingTable } from 'widgets/UserEditingTable';
 
 const AdminPage = () => {
     return (
