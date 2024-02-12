@@ -1,4 +1,3 @@
-//перенести в виджеты и сделать отдельный компонент для редактирования ролей - его в фичи
 import { FC, useState } from 'react';
 import { useMemo } from 'react';
 import {
@@ -12,12 +11,9 @@ import {
     useUpdateUserMutation,
     useGetAllUsersQuery,
     type User,
-    Role,
-    useGetAllRolesQuery,
 } from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
-import { MenuItem } from '@mui/material';
 import { EditUserRoles } from 'features/EditUserRoles';
 
 const validateRequired = (value: string) => !!value.length;
@@ -30,14 +26,8 @@ function validateUser(user: User) {
     };
 }
 
-// const ROLES: Role[] = [
-//     { id: '1', value: Roles.ADMIN, description: `integrated admin` },
-//     { id: '2', value: Roles.USER, description: `user` },
-// ];
 const UserEditingTable: FC = () => {
     const { data: respondedUsers, isLoading } = useGetAllUsersQuery();
-    // const { data: respondedRoles } = useGetAllRolesQuery();
-
     const [updateUser] = useUpdateUserMutation();
     const [validationErrors, setValidationErrors] = useState<
         Record<string, string | undefined>
@@ -58,10 +48,6 @@ const UserEditingTable: FC = () => {
         table.setEditingRow(null); //exit editing mode
     };
     const users: User[] = respondedUsers || [];
-    // const allRoles: Role[] = useMemo(
-    //     () => respondedRoles || [],
-    //     [respondedRoles],
-    // );
     const columns = useMemo<MRT_ColumnDef<User>[]>(
         () => [
             {
