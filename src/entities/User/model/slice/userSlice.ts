@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { usersApi } from '../../services/queriesForUser/queriesForUser';
 import { authApi } from '../../services/queriesForAuth/queriesForAuth';
+
 import { UserState } from '../types/UserState';
 
 const initialState: UserState = {

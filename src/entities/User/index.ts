@@ -28,4 +28,9 @@ export {
     authApi,
 } from './services/queriesForAuth/queriesForAuth';
 
+export {
+    useGetAllRolesQuery,
+    rolesApi,
+} from './services/queriesForRoles/queriesForRoles';
+
 export { UserDataList } from './ui/UserDataList/UserDataList';
