@@ -17,6 +17,8 @@ import {
 } from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
+import { MenuItem } from '@mui/material';
+import { EditUserRoles } from 'features/EditUserRoles';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -34,7 +36,7 @@ function validateUser(user: User) {
 // ];
 const UserEditingTable: FC = () => {
     const { data: respondedUsers, isLoading } = useGetAllUsersQuery();
-    const { data: respondedRoles } = useGetAllRolesQuery();
+    // const { data: respondedRoles } = useGetAllRolesQuery();
 
     const [updateUser] = useUpdateUserMutation();
     const [validationErrors, setValidationErrors] = useState<
@@ -56,10 +58,10 @@ const UserEditingTable: FC = () => {
         table.setEditingRow(null); //exit editing mode
     };
     const users: User[] = respondedUsers || [];
-    const allRoles: Role[] = useMemo(
-        () => respondedRoles || [],
-        [respondedRoles],
-    );
+    // const allRoles: Role[] = useMemo(
+    //     () => respondedRoles || [],
+    //     [respondedRoles],
+    // );
     const columns = useMemo<MRT_ColumnDef<User>[]>(
         () => [
             {
@@ -127,30 +129,12 @@ const UserEditingTable: FC = () => {
                 header: 'roles',
                 Cell: ({ row }) =>
                     row.original.roles.map((role) => (
-                        <>
-                            {role.value}
-                            <br />
-                        </>
+                        <span key={role.id}>{role.value}</span>
                     )),
-                editSelectOptions: ({ row }) =>
-                    allRoles.filter(
-                        (existingRole) =>
-                            !row.original.roles.some(
-                                (assignedRole) =>
-                                    assignedRole.value === existingRole.value,
-                            ),
-                    ),
-                editVariant: 'select',
-                // Edit: ({ cell, column, row }) =>
-                //     row.original.roles.map((role) => (
-                //         <>
-                //             {role.value}
-                //             <br />
-                //         </>
-                //     )),
+                Edit: EditUserRoles,
             },
         ],
-        [allRoles, validationErrors],
+        [validationErrors],
     );
     const defaultMRTOptions = getDefaultMRTOptions<User>();
     const table = useMaterialReactTable({
