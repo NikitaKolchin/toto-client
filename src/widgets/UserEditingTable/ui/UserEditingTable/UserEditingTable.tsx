@@ -44,7 +44,7 @@ const UserEditingTable: FC = () => {
         }
         setValidationErrors({});
         const { email, ...updatedData } = values;
-        await updateUser({ ...updatedData, roles: [values.roles] });
+        await updateUser({ ...updatedData });
         table.setEditingRow(null); //exit editing mode
     };
     const users: User[] = respondedUsers || [];
@@ -53,10 +53,12 @@ const UserEditingTable: FC = () => {
             {
                 accessorKey: 'id',
                 header: 'id',
+                enableEditing: false,
             },
             {
                 accessorKey: 'email',
                 header: 'Email',
+                enableEditing: false,
             },
             {
                 accessorKey: 'firstName',
@@ -115,7 +117,10 @@ const UserEditingTable: FC = () => {
                 header: 'roles',
                 Cell: ({ row }) =>
                     row.original.roles.map((role) => (
-                        <span key={role.id}>{role.value}</span>
+                        <>
+                            <span key={role.id}>{role.value}</span>
+                            <br />
+                        </>
                     )),
                 Edit: EditUserRoles,
             },
@@ -133,6 +138,13 @@ const UserEditingTable: FC = () => {
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveUser,
         onEditingRowCancel: () => setValidationErrors({}),
+        initialState: {
+            columnVisibility: {
+                firstName: false,
+                secondName: false,
+                id: false,
+            },
+        },
     });
     return <MaterialReactTable table={table} />;
 };
