@@ -92,6 +92,7 @@ const UserEditingTable: FC = () => {
                 editVariant: 'select',
                 Cell: ({ row }) => (
                     <input
+                        key={row.id}
                         type="checkbox"
                         disabled
                         checked={row.original.isAllowed}
@@ -106,6 +107,7 @@ const UserEditingTable: FC = () => {
                 editVariant: 'select',
                 Cell: ({ row }) => (
                     <input
+                        key={`isActivated${row.id}`}
                         type="checkbox"
                         disabled
                         checked={row.original.isActivated}
@@ -117,10 +119,7 @@ const UserEditingTable: FC = () => {
                 header: 'roles',
                 Cell: ({ row }) =>
                     row.original.roles.map((role) => (
-                        <>
-                            <span key={role.id}>{role.value}</span>
-                            <br />
-                        </>
+                        <span key={role.id}>{`${role.value}\n`}</span>
                     )),
                 Edit: EditUserRoles,
             },
