@@ -14,6 +14,7 @@ import {
 import { useAppSelector } from 'shared/store/config';
 import { GoToStakes } from 'features/GoToStakes';
 import { Title } from 'entities/Title';
+import { AppRoutes } from 'shared/const/routes';
 
 const Main: FC = () => {
     const { isAuth, ...user } = useAppSelector((state) => state.user);
@@ -23,7 +24,7 @@ const Main: FC = () => {
         e.preventDefault();
     };
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Box
                 sx={{
                     flexDirection: 'column',
@@ -53,7 +54,7 @@ const Main: FC = () => {
                             ) : (
                                 <Button
                                     size="small"
-                                    onClick={() => navigate('login')}
+                                    onClick={() => navigate(AppRoutes.LOGIN)}
                                 >
                                     Войти
                                 </Button>
@@ -76,7 +77,7 @@ const Main: FC = () => {
                             ) : (
                                 <Button
                                     size="small"
-                                    onClick={() => navigate('profile')}
+                                    onClick={() => navigate(AppRoutes.PROFILE)}
                                 >
                                     Активировать
                                 </Button>

@@ -10,6 +10,8 @@ interface UserState extends User {
     activationCode: string;
     activationCompleted: boolean;
     severity: AlertColor;
+    isAuth: boolean;
+    isAllowed: boolean;
 }
 
 export type { UserState };

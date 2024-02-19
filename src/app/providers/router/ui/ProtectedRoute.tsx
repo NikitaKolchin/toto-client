@@ -2,15 +2,14 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
 import { Role } from 'entities/User';
 import { useAppSelector } from 'shared/store/config';
+import { AppRoutes } from 'shared/const/routes';
 
 type Props = {
     requiredRoles?: Partial<Role>[];
 };
 
 const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
-    const { isAuth, roles, isActivated } = useAppSelector(
-        (state) => state.user,
-    );
+    const { isAuth, roles } = useAppSelector((state) => state.user);
     const navigate = useNavigate();
 
     const hasRequiredRoles = useMemo(() => {
@@ -27,12 +26,12 @@ const ProtectedRoute: FC<Props> = ({ requiredRoles }) => {
     }, [requiredRoles, roles]);
     useEffect(() => {
         if (!isAuth) {
-            navigate('/');
+            navigate(AppRoutes.MAIN);
         }
         if (!hasRequiredRoles) {
-            navigate('/');
+            navigate(AppRoutes.MAIN);
         }
-    }, [hasRequiredRoles, isAuth, navigate, isActivated]);
+    }, [hasRequiredRoles, isAuth, navigate]);
 
     return <Outlet />;
 };

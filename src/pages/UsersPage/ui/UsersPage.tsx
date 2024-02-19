@@ -2,7 +2,7 @@ import { Container } from '@mui/material';
 import { Title } from 'entities/Title';
 import { UserEditingTable } from 'widgets/UserEditingTable';
 
-const AdminPage = () => {
+const UsersPage = () => {
     return (
         <Container>
             <Title>пользователи</Title>
@@ -11,4 +11,4 @@ const AdminPage = () => {
     );
 };
 
-export default AdminPage;
+export default UsersPage;

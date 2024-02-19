@@ -14,6 +14,7 @@ import { setMessage, useRegistrationMutation } from 'entities/User';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
 import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
 import { ShowMessage } from 'shared/ui/ShowMessage';
+import { AppRoutes } from 'shared/const/routes';
 
 const RegistrationPage = () => {
     const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ const RegistrationPage = () => {
     } = useAppSelector((state) => state.user);
     useEffect(() => {
         if (respondedEmail) {
-            navigate('/login');
+            navigate(AppRoutes.PROFILE);
         }
     }, [navigate, respondedEmail]);
 

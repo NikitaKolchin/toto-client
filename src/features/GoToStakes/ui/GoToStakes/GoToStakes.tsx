@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
+import { AppRoutes } from 'shared/const/routes';
 
 const GoToStakes: FC = () => {
     const { isAuth, isAllowed, isActivated } = useAppSelector(
@@ -13,7 +14,7 @@ const GoToStakes: FC = () => {
         <>
             {' '}
             {isAuth && isActivated && isAllowed && (
-                <Button size="large" onClick={() => navigate('/stakes')}>
+                <Button size="large" onClick={() => navigate(AppRoutes.STAKES)}>
                     Переходим к ставкам!!!
                 </Button>
             )}

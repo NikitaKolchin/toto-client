@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useLoginMutation } from 'entities/User';
 import { Loading } from 'shared/ui/Loading';
 import { ShowMessage } from 'shared/ui/ShowMessage';
+import { AppRoutes } from 'shared/const/routes';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -21,7 +22,7 @@ const LoginForm: FC = () => {
 
     useEffect(() => {
         if (response?.isAuth) {
-            navigate('/');
+            navigate(AppRoutes.MAIN);
         }
     }, [navigate, response?.isAuth]);
 

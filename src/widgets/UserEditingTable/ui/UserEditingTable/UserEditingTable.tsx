@@ -85,21 +85,6 @@ const UserEditingTable: FC = () => {
                 header: 'alias',
             },
             {
-                accessorKey: 'isAllowed',
-                header: 'Allow',
-                type: 'boolean',
-                editSelectOptions: trueFalse,
-                editVariant: 'select',
-                Cell: ({ row }) => (
-                    <input
-                        key={row.id}
-                        type="checkbox"
-                        disabled
-                        checked={row.original.isAllowed}
-                    />
-                ),
-            },
-            {
                 accessorKey: 'isActivated',
                 header: 'isActivated',
                 type: 'boolean',

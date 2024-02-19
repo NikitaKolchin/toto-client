@@ -4,16 +4,16 @@ import { authApi } from '../../services/queriesForAuth/queriesForAuth';
 
 import { UserState } from '../types/UserState';
 
-const initialState: UserState = {
+export const initialState: UserState = {
     id: '',
     email: '',
-    isAuth: false,
     isActivated: false,
-    isAllowed: false,
     alias: '',
     firstName: '',
     secondName: '',
     roles: [],
+    isAllowed: false,
+    isAuth: false,
     activationCodeSending: false,
     activationCodeSended: false,
     mailSending: false,
@@ -78,7 +78,6 @@ const userSlice = createSlice({
                 authApi.endpoints.registration.matchFulfilled,
                 (state, { payload }) => {
                     state.email = payload.email;
-                    state.isAuth = payload.isAuth;
                 },
             )
             .addMatcher(

@@ -7,19 +7,10 @@ import { StakesPage } from 'pages/StakesPage';
 import { ProfilePage } from 'pages/ProfilePage';
 import { InfoPage } from 'pages/InfoPage';
 import { ResultPage } from 'pages/ResultPage';
-import { AdminPage } from 'pages/AdminPage';
+import { UsersPage } from 'pages/UsersPage';
 import { Role, Roles } from 'entities/User';
-export enum AppRoutes {
-    MAIN = 'main',
-    LOGIN = 'login',
-    REGISTRATION = 'registration',
-    FORGOT = 'forgot',
-    STAKES = 'stakes',
-    PROFILE = 'profile',
-    INFO = 'info',
-    RESULT = 'results',
-    ADMIN = 'admin',
-}
+import { AppRoutes } from 'shared/const/routes';
+import { SettingsPage } from 'pages/SettingsPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -34,7 +25,8 @@ export const getRouteStakes = () => '/stakes';
 export const getRouteProfile = () => '/profile';
 export const getRouteInfo = () => '/info';
 export const getRouteResult = () => '/results';
-export const getRouteAdmin = () => '/admin';
+export const getRouteUsers = () => '/users';
+export const getRouteSettings = () => '/settings';
 // export const getRouteArticleEdit = (id: string) => `/articles/${id}/edit`;
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
@@ -77,9 +69,15 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
         authOnly: true,
         requiredRoles: [{ value: Roles.USER }],
     },
-    [AppRoutes.ADMIN]: {
-        path: getRouteAdmin(),
-        element: <AdminPage />,
+    [AppRoutes.USERS]: {
+        path: getRouteUsers(),
+        element: <UsersPage />,
+        authOnly: true,
+        requiredRoles: [{ value: Roles.ADMIN }],
+    },
+    [AppRoutes.SETTINGS]: {
+        path: getRouteSettings(),
+        element: <SettingsPage />,
         authOnly: true,
         requiredRoles: [{ value: Roles.ADMIN }],
     },

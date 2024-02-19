@@ -1,17 +1,19 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppSelector } from 'shared/store/config';
 import { Container, Box, Grid } from '@mui/material';
 import { UserDataCard } from 'widgets/UserDataCard';
 import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
 import { Title } from 'entities/Title';
+import { Roles } from 'entities/User';
+import { AdminCard } from 'widgets/AdminCard';
 
 const ProfileScreen: FC = () => {
     const { ...user } = useAppSelector((state) => state.user);
+    const isAdmin = user.roles.some((role) => role.value === Roles.ADMIN);
     const confirmEmailNotDisplayed =
         user.activationCompleted || !user.isActivated;
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Box
                 sx={{
                     flexDirection: 'column',
@@ -24,8 +26,8 @@ const ProfileScreen: FC = () => {
                 <Grid
                     item
                     xs={12}
-                    sm={confirmEmailNotDisplayed ? 6 : 12}
-                    md={confirmEmailNotDisplayed ? 6 : 12}
+                    sm={confirmEmailNotDisplayed || isAdmin ? 6 : 12}
+                    md={confirmEmailNotDisplayed || isAdmin ? 6 : 12}
                 >
                     <UserDataCard {...user} />
                 </Grid>
@@ -34,8 +36,12 @@ const ProfileScreen: FC = () => {
                         <ConfirmEmailCard {...user} />
                     </Grid>
                 )}
+                {isAdmin && (
+                    <Grid item xs={12} sm={6} md={6}>
+                        <AdminCard />
+                    </Grid>
+                )}
             </Grid>
-            <Link to={'../admin'}>TEST admin</Link>
         </Container>
     );
 };

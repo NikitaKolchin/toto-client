@@ -4,9 +4,14 @@ import { UserState } from '../../model/types/UserState';
 import { TokensResponse } from 'shared/types/TokensResponse';
 import { LoginDto } from '../../model/types/dto/LoginDto';
 import { RegistrationDto } from '../../model/types/dto/RegistrationDto';
+import { User } from '../../model/types/User';
+import { initialState } from '../../model/slice/userSlice';
 interface AuthResponse extends TokensResponse {
-    user: UserState;
+    user: User;
 }
+
+const isAllowed = (response: AuthResponse) =>
+    response.user.roles.some((role) => role.value === 'USER');
 export const authApi = createApi({
     reducerPath: 'AuthApi',
     baseQuery: baseQueryWithAuth,
@@ -20,12 +25,14 @@ export const authApi = createApi({
             transformResponse: (response: AuthResponse) => {
                 localStorage.setItem('token', response.accessToken);
                 return {
+                    ...initialState,
                     ...response.user,
                     isAuth: true,
+                    isAllowed: isAllowed(response),
                 };
             },
         }),
-        registration: builder.mutation<UserState, RegistrationDto>({
+        registration: builder.mutation<User, RegistrationDto>({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
                 url: `/auth/registration`,
@@ -53,8 +60,10 @@ export const authApi = createApi({
             transformResponse: (response: AuthResponse) => {
                 localStorage.setItem('token', response.accessToken);
                 return {
+                    ...initialState,
                     ...response.user,
                     isAuth: true,
+                    isAllowed: isAllowed(response),
                 };
             },
         }),

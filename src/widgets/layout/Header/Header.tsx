@@ -14,16 +14,17 @@ import { useTheme } from '@mui/material/styles';
 import { useLogoutMutation } from 'entities/User';
 import { Button } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
+import { AppRoutes } from 'shared/const/routes';
 
 type TotoMenuItem = {
     name: string;
     value: string;
 };
 const menuItems: TotoMenuItem[] = [
-    { name: 'Toto Online', value: '/' },
-    { name: 'Ставки', value: '/stakes' },
-    { name: 'Результаты', value: '/results' },
-    { name: 'Информация', value: '/info' },
+    { name: 'Toto Online', value: AppRoutes.MAIN },
+    { name: 'Ставки', value: AppRoutes.STAKES },
+    { name: 'Результаты', value: AppRoutes.RESULT },
+    { name: 'Информация', value: AppRoutes.INFO },
 ];
 
 function Header() {
@@ -59,7 +60,7 @@ function Header() {
     const handleProfile = () => {
         setAccountAnchorEl(null);
         setTimeout(() => {
-            navigate('profile');
+            navigate(AppRoutes.PROFILE);
         }, 300);
     };
 
@@ -70,7 +71,7 @@ function Header() {
 
     const handleLogin = () => {
         setAccountAnchorEl(null);
-        navigate('login');
+        navigate(AppRoutes.LOGIN);
     };
 
     const HeaderLink: FC<
