@@ -1,7 +1,7 @@
 import { useState, useMemo, useDeferredValue } from 'react';
 import { users } from './users';
 
-function SettingsPage() {
+function CompetitionsPage() {
     const [name, setName] = useState('');
     const listUsers = useMemo(() => {
         return users.filter((item) => item.name.includes(name));
@@ -27,4 +27,4 @@ function SettingsPage() {
         </div>
     );
 }
-export default SettingsPage;
+export default CompetitionsPage;

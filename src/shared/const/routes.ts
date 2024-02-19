@@ -9,6 +9,7 @@ enum AppRoutes {
     RESULT = '/results',
     USERS = '/users',
     SETTINGS = '/settings',
+    COMPETITIONS = '/competitions',
 }
 
 export { AppRoutes };

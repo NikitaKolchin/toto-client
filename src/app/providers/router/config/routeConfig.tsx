@@ -11,6 +11,8 @@ import { UsersPage } from 'pages/UsersPage';
 import { Role, Roles } from 'entities/User';
 import { AppRoutes } from 'shared/const/routes';
 import { SettingsPage } from 'pages/SettingsPage';
+import exp from 'constants';
+import { CompetitionsPage } from 'pages/CompetitionsPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -27,6 +29,7 @@ export const getRouteInfo = () => '/info';
 export const getRouteResult = () => '/results';
 export const getRouteUsers = () => '/users';
 export const getRouteSettings = () => '/settings';
+export const getRouteCompetitions = () => '/competitions';
 // export const getRouteArticleEdit = (id: string) => `/articles/${id}/edit`;
 
 export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
@@ -78,6 +81,12 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.SETTINGS]: {
         path: getRouteSettings(),
         element: <SettingsPage />,
+        authOnly: true,
+        requiredRoles: [{ value: Roles.ADMIN }],
+    },
+    [AppRoutes.COMPETITIONS]: {
+        path: getRouteCompetitions(),
+        element: <CompetitionsPage />,
         authOnly: true,
         requiredRoles: [{ value: Roles.ADMIN }],
     },

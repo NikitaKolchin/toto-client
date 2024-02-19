@@ -1,9 +1,17 @@
-import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
+import {
+    Card,
+    CardHeader,
+    CardContent,
+    CardActions,
+    Button,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
 import { AppRoutes } from 'shared/const/routes';
-import GroupIcon from '@mui/icons-material/Group';
+import UsersIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CompetitionsIcon from '@mui/icons-material/EmojiEvents';
+import classNames from './AdminCard.module.css';
 
 const AdminCard: FC = () => {
     return (
@@ -14,13 +22,28 @@ const AdminCard: FC = () => {
                 всего матчей, матчи с заполненными данными, матчи с заполненным
                 счётом
             </CardContent>
-            <CardActions>
-                <Link to={`..${AppRoutes.USERS}`}>
-                    <GroupIcon />
-                </Link>
-                <Link to={`..${AppRoutes.SETTINGS}`}>
-                    <SettingsIcon />
-                </Link>
+            <CardActions className={classNames.actions}>
+                <Button
+                    component={Link}
+                    to={`..${AppRoutes.USERS}`}
+                    startIcon={<UsersIcon />}
+                >
+                    пользователи
+                </Button>
+                <Button
+                    component={Link}
+                    to={`..${AppRoutes.SETTINGS}`}
+                    startIcon={<SettingsIcon />}
+                >
+                    настройки
+                </Button>
+                <Button
+                    component={Link}
+                    to={`..${AppRoutes.COMPETITIONS}`}
+                    startIcon={<CompetitionsIcon />}
+                >
+                    соревнования
+                </Button>
             </CardActions>
         </Card>
     );
