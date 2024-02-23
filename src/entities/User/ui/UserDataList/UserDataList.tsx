@@ -1,6 +1,6 @@
 import { Stack, Paper } from '@mui/material';
 import { FC } from 'react';
-import { User } from '../../model/types/User';
+import { User } from '../../../../shared/api/models/User';
 import { UserRoleList } from '../UserRoleList/UserRoleList';
 
 const UserDataList: FC<User> = (user) => {

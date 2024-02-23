@@ -4,7 +4,7 @@ import { Container, Box, Grid } from '@mui/material';
 import { UserDataCard } from 'widgets/UserDataCard';
 import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
 import { Title } from 'entities/Title';
-import { Roles } from 'entities/User';
+import { Roles } from 'shared/api';
 import { AdminCard } from 'widgets/AdminCard';
 
 const ProfileScreen: FC = () => {

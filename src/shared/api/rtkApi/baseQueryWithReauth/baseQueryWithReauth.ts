@@ -3,7 +3,7 @@ import type {
     FetchArgs,
     FetchBaseQueryError,
 } from '@reduxjs/toolkit/query';
-import { TokensResponse } from '../../../types/TokensResponse';
+import { TokensResponse } from '../../types/TokensResponse';
 import { baseQueryWithAuth } from '../baseQueryWithAuth/baseQueryWithAuth';
 
 const baseQueryWithReauth: BaseQueryFn<

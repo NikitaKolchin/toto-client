@@ -7,14 +7,11 @@ import {
     MRT_TableOptions,
 } from 'material-react-table';
 
-import {
-    useUpdateUserMutation,
-    useGetAllUsersQuery,
-    type User,
-} from 'entities/User';
+import { useUpdateUserMutation, useGetAllUsersQuery } from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
 import { EditUserRoles } from 'features/EditUserRoles';
+import { User } from 'shared/api';
 
 const validateRequired = (value: string) => !!value.length;
 

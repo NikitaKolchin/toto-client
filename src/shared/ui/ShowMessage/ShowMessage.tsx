@@ -2,7 +2,7 @@ import { Alert, AlertColor, Grow } from '@mui/material';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { FC } from 'react';
 import { SerializedError } from '@reduxjs/toolkit';
-import { MessageResponse } from '../../types/MessageResponse';
+import { MessageResponse } from '../../api/types/MessageResponse';
 
 type Props = {
     message?: string;

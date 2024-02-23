@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { Competition } from '../../model/types/Competition';
+import type { Competition } from 'shared/api';
 export const competitionsApi = createApi({
     reducerPath: 'competitionsApi',
     baseQuery: baseQueryWithReauth,

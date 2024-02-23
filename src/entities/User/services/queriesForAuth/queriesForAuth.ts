@@ -1,10 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithAuth } from 'shared/api/rtkApi';
+import { baseQueryWithAuth } from 'shared/api';
 import { UserState } from '../../model/types/UserState';
-import { TokensResponse } from 'shared/types/TokensResponse';
-import { LoginDto } from '../../model/types/dto/LoginDto';
-import { RegistrationDto } from '../../model/types/dto/RegistrationDto';
-import { User } from '../../model/types/User';
+import { TokensResponse } from 'shared/api';
+import { LoginDto } from 'shared/api';
+import { RegistrationDto } from 'shared/api';
+import { User } from 'shared/api';
 import { initialState } from '../../model/slice/userSlice';
 interface AuthResponse extends TokensResponse {
     user: User;

@@ -8,10 +8,9 @@ import { ProfilePage } from 'pages/ProfilePage';
 import { InfoPage } from 'pages/InfoPage';
 import { ResultPage } from 'pages/ResultPage';
 import { UsersPage } from 'pages/UsersPage';
-import { Role, Roles } from 'entities/User';
+import { Role, Roles } from 'shared/api';
 import { AppRoutes } from 'shared/const/routes';
 import { SettingsPage } from 'pages/SettingsPage';
-import exp from 'constants';
 import { CompetitionsPage } from 'pages/CompetitionsPage';
 
 export type AppRoutesProps = RouteProps & {

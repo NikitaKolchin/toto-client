@@ -1,4 +1,4 @@
-export type { Competition } from './model/types/Competition';
+export type { Competition } from '../../shared/api/models/Competition';
 export {
     useGetAllCompetitionsQuery,
     useGetCompetitionByIdQuery,

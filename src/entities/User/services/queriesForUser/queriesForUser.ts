@@ -1,10 +1,10 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from 'shared/api/rtkApi';
-import { MessageResponse } from 'shared/types/MessageResponse';
-import { User } from '../../model/types/User';
-import { ActivateDto } from '../../model/types/dto/ActivateDto';
-import { ChangePasswordDto } from '../../model/types/dto/ChangePasswordDto';
-import { SendCodeDto } from '../../model/types/dto/SendCodeDto';
+import { baseQueryWithReauth } from 'shared/api';
+import { MessageResponse } from 'shared/api';
+import { User } from 'shared/api';
+import { ActivateDto } from 'shared/api';
+import { ChangePasswordDto } from 'shared/api';
+import { SendCodeDto } from 'shared/api';
 export const usersApi = createApi({
     reducerPath: 'UsersApi',
     baseQuery: baseQueryWithReauth,

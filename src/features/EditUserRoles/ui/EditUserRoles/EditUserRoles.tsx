@@ -1,7 +1,8 @@
 import { useMediaQuery, useTheme } from '@mui/material';
-import { User, useGetAllRolesQuery } from 'entities/User';
+import { useGetAllRolesQuery } from 'entities/User';
 import { MRT_Column, MRT_Row } from 'material-react-table';
 import { FC, useMemo } from 'react';
+import { User } from 'shared/api';
 import { Loading } from 'shared/ui/Loading';
 import { ToggleList } from 'shared/ui/ToggleList';
 import { TransferList } from 'shared/ui/TransferList';
