@@ -1,5 +1,5 @@
 import { AlertColor } from '@mui/material';
-import { User } from '../../../../shared/api/models/User';
+import { User } from 'shared/api/models/User';
 
 interface UserState extends User {
     activationCodeSending: boolean;

@@ -12,6 +12,8 @@ import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
 import { EditUserRoles } from 'features/EditUserRoles';
 import { User } from 'shared/api';
+import { Checkbox, Typography } from '@mui/material';
+import { EditUserCompetitions } from 'features/EditUserCompetitions';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -88,9 +90,8 @@ const UserEditingTable: FC = () => {
                 editSelectOptions: trueFalse,
                 editVariant: 'select',
                 Cell: ({ row }) => (
-                    <input
+                    <Checkbox
                         key={`isActivated${row.id}`}
-                        type="checkbox"
                         disabled
                         checked={row.original.isActivated}
                     />
@@ -101,9 +102,22 @@ const UserEditingTable: FC = () => {
                 header: 'roles',
                 Cell: ({ row }) =>
                     row.original.roles.map((role) => (
-                        <span key={role.id}>{`${role.value}\n`}</span>
+                        <Typography
+                            key={role.id}
+                        >{`${role.value}\n`}</Typography>
                     )),
                 Edit: EditUserRoles,
+            },
+            {
+                accessorKey: 'competitions',
+                header: 'competitions',
+                Cell: ({ row }) =>
+                    row.original.competitions.map((competition) => (
+                        <Typography
+                            key={competition.id}
+                        >{`${competition.value}\n`}</Typography>
+                    )),
+                Edit: EditUserCompetitions,
             },
         ],
         [validationErrors],

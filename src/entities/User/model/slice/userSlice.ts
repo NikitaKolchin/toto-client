@@ -12,6 +12,7 @@ export const initialState: UserState = {
     firstName: '',
     secondName: '',
     roles: [],
+    competitions: [],
     isAllowed: false,
     isAuth: false,
     activationCodeSending: false,
@@ -69,6 +70,7 @@ const userSlice = createSlice({
                     state.secondName = payload.secondName;
                     state.roles = payload.roles;
                     state.email = payload.email;
+                    state.competitions = payload.competitions;
                 },
             )
             .addMatcher(authApi.endpoints.login.matchRejected, (state) => {
@@ -98,6 +100,7 @@ const userSlice = createSlice({
                     state.firstName = payload.firstName;
                     state.secondName = payload.secondName;
                     state.roles = payload.roles;
+                    state.competitions = payload.competitions;
                     state.email = payload.email;
                 },
             )
@@ -111,6 +114,7 @@ const userSlice = createSlice({
                 state.firstName = '';
                 state.secondName = '';
                 state.roles = [];
+                state.competitions = [];
                 state.activationCodeSending = false;
                 state.activationCodeSended = false;
                 state.mailSending = false;

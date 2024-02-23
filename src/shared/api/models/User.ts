@@ -1,4 +1,5 @@
-import { Role } from './Role';
+import type { Competition } from './Competition';
+import type { Role } from './Role';
 
 type User = {
     id: string;
@@ -8,6 +9,7 @@ type User = {
     firstName: string;
     secondName: string;
     roles: Array<Role>;
+    competitions: Array<Competition>;
 };
 
 export type { User };
