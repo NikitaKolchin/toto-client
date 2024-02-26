@@ -6,3 +6,4 @@ export {
     useAddCompetitionMutation,
     competitionsApi,
 } from './services/queriesForCompetitions/queriesForCompetitions';
+export { reducer as competition } from './model/slice/competitionSlice';

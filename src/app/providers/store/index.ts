@@ -1,17 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { user } from 'entities/User';
 import { theme } from 'entities/Theme';
-import { competitionsApi } from 'entities/Competition';
-import { usersApi, authApi, rolesApi } from 'entities/User';
+import { competition, competitionsApi } from 'entities/Competition';
+import { user, usersApi, authApi, rolesApi } from 'entities/User';
+import { settingsApi } from 'entities/Setting';
 
 const store = configureStore({
     reducer: {
         user,
+        competition,
         theme,
         [competitionsApi.reducerPath]: competitionsApi.reducer,
         [usersApi.reducerPath]: usersApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
         [rolesApi.reducerPath]: rolesApi.reducer,
+        [settingsApi.reducerPath]: settingsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -20,7 +22,8 @@ const store = configureStore({
             .concat(competitionsApi.middleware)
             .concat(usersApi.middleware)
             .concat(authApi.middleware)
-            .concat(rolesApi.middleware),
+            .concat(rolesApi.middleware)
+            .concat(settingsApi.middleware),
 });
 
 export default store;

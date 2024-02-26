@@ -1,8 +1,7 @@
-export type { Setting } from './model/types/Settings';
 export {
     useGetAllSettingsQuery,
     useGetSettingByIdQuery,
     useUpdateSettingByIdMutation,
     useAddSettingMutation,
-    SettingsApi,
+    settingsApi,
 } from './services/queriesForSettings/queriesForSettings';
