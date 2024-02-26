@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { Setting } from '../../model/types/Settings';
-export const SettingsApi = createApi({
-    reducerPath: 'SettingsApi',
+import { baseQueryWithReauth } from 'shared/api';
+import type { Setting } from 'shared/api/models/Setting';
+export const settingsApi = createApi({
+    reducerPath: 'settingsApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Settings'],
     endpoints: (builder) => ({
@@ -29,7 +29,7 @@ export const SettingsApi = createApi({
             Partial<Setting> & Pick<Setting, 'id'>
         >({
             query: ({ id, ...patch }) => ({
-                url: `Settings/${id}`,
+                url: `settings/${id}`,
                 method: 'PATCH',
                 body: patch,
             }),
@@ -57,4 +57,4 @@ export const {
     useGetAllSettingsQuery,
     useUpdateSettingByIdMutation,
     useAddSettingMutation,
-} = SettingsApi;
+} = settingsApi;

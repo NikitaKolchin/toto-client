@@ -1,3 +1,5 @@
+import { Competition } from './Competition';
+
 export interface Setting {
     id: number;
     contribution: number;
@@ -5,4 +7,5 @@ export interface Setting {
     difference: number;
     outcome: number;
     disabled: boolean;
+    competition: Competition;
 }

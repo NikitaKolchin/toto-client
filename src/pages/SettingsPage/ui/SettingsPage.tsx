@@ -1,30 +1,15 @@
-import { useState, useMemo, useDeferredValue } from 'react';
-import { users } from './users';
+import { Container } from '@mui/material';
+import { Title } from 'entities/Title';
+import { AdminActions } from 'features/AdminActions';
+import { SettingEditingTable } from 'widgets/SettingEditingTable';
 
 function SettingsPage() {
-    const [name, setName] = useState('');
-    const listUsers = useMemo(() => {
-        return users.filter((item) => item.name.includes(name));
-    }, [name]);
-    const deferredList = useDeferredValue(listUsers);
-
     return (
-        <div>
-            <div>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <div>
-                    {deferredList.map((item) => (
-                        <div>{item.name}</div>
-                    ))}
-                </div>
-            </div>
-        </div>
+        <Container>
+            <Title>настройки</Title>
+            <AdminActions />
+            <SettingEditingTable />
+        </Container>
     );
 }
 export default SettingsPage;
