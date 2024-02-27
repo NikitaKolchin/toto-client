@@ -7,13 +7,17 @@ import {
     MRT_TableOptions,
 } from 'material-react-table';
 
-import { useUpdateUserMutation, useGetAllUsersQuery } from 'entities/User';
+import {
+    useUpdateUserMutation,
+    useGetAllUsersQuery,
+    useGetAllRolesQuery,
+} from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
-import { EditUserRoles } from 'features/EditUserRoles';
 import { User } from 'shared/api';
 import { Checkbox, Typography } from '@mui/material';
-import { EditUserCompetitions } from 'features/EditUserCompetitions';
+import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
+import { useGetAllCompetitionsQuery } from 'entities/Competition';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -27,7 +31,12 @@ function validateUser(user: User) {
 
 const UserEditingTable: FC = () => {
     const { data: respondedUsers, isLoading } = useGetAllUsersQuery();
+    const { data: respondedRoles, isLoading: isLoadingRoles } =
+        useGetAllRolesQuery();
+
     const [updateUser] = useUpdateUserMutation();
+    const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
+        useGetAllCompetitionsQuery();
     const [validationErrors, setValidationErrors] = useState<
         Record<string, string | undefined>
     >({});
@@ -106,7 +115,13 @@ const UserEditingTable: FC = () => {
                             key={role.id}
                         >{`${role.value}\n`}</Typography>
                     )),
-                Edit: EditUserRoles,
+                Edit: ({ column, row }) =>
+                    EditMultipleValueRow<User>({
+                        column,
+                        row,
+                        data: respondedRoles,
+                        isLoading: isLoadingRoles,
+                    }),
             },
             {
                 accessorKey: 'competitions',
@@ -117,10 +132,22 @@ const UserEditingTable: FC = () => {
                             key={competition.id}
                         >{`${competition.value}\n`}</Typography>
                     )),
-                Edit: EditUserCompetitions,
+                Edit: ({ column, row }) =>
+                    EditMultipleValueRow<User>({
+                        column,
+                        row,
+                        data: respondedCompetitions,
+                        isLoading: isLoadingCompetitions,
+                    }),
             },
         ],
-        [validationErrors],
+        [
+            isLoadingCompetitions,
+            isLoadingRoles,
+            respondedCompetitions,
+            respondedRoles,
+            validationErrors,
+        ],
     );
     const defaultMRTOptions = getDefaultMRTOptions<User>();
     const table = useMaterialReactTable({

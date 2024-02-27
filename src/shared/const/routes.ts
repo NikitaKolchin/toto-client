@@ -10,6 +10,7 @@ enum AppRoutes {
     USERS = '/users',
     SETTINGS = '/settings',
     COMPETITIONS = '/competitions',
+    NATIONS = '/nations',
 }
 
 export { AppRoutes };
