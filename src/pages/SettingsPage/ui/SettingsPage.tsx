@@ -5,7 +5,7 @@ import { SettingEditingTable } from 'widgets/SettingEditingTable';
 
 function SettingsPage() {
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Title>настройки</Title>
             <AdminActions />
             <SettingEditingTable />

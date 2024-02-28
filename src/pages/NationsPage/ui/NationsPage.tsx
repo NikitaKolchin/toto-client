@@ -1,14 +1,14 @@
 import { Container } from '@mui/material';
 import { Title } from 'entities/Title';
 import { AdminActions } from 'features/AdminActions';
-import { CompetitionEditingTable } from 'widgets/CompetitionEditingTable';
+import { NationEditingTable } from 'widgets/NationEditingTable';
 
 const NationsPage = () => {
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Title>страны</Title>
             <AdminActions />
-            <CompetitionEditingTable />
+            <NationEditingTable />
         </Container>
     );
 };

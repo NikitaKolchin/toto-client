@@ -3,6 +3,7 @@ import { theme } from 'entities/Theme';
 import { competition, competitionsApi } from 'entities/Competition';
 import { user, usersApi, authApi, rolesApi } from 'entities/User';
 import { settingsApi } from 'entities/Setting';
+import { nationsApi } from 'entities/Nation';
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         [usersApi.reducerPath]: usersApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
         [rolesApi.reducerPath]: rolesApi.reducer,
+        [nationsApi.reducerPath]: nationsApi.reducer,
         [settingsApi.reducerPath]: settingsApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -23,6 +25,7 @@ const store = configureStore({
             .concat(usersApi.middleware)
             .concat(authApi.middleware)
             .concat(rolesApi.middleware)
+            .concat(nationsApi.middleware)
             .concat(settingsApi.middleware),
 });
 

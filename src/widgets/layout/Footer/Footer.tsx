@@ -9,6 +9,7 @@ const Footer = (props: Props) => {
                 marginTop: 'calc(10% + 60px)',
                 width: '100%',
                 position: 'fixed',
+                zIndex: 2,
                 bottom: 0,
             }}
             component="footer"

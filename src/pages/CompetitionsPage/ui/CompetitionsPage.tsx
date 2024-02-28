@@ -5,7 +5,7 @@ import { CompetitionEditingTable } from 'widgets/CompetitionEditingTable';
 
 const CompetitionsPage = () => {
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Title>соревнования</Title>
             <AdminActions />
             <CompetitionEditingTable />

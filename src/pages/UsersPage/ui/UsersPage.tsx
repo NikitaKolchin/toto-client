@@ -5,7 +5,7 @@ import { UserEditingTable } from 'widgets/UserEditingTable';
 
 const UsersPage = () => {
     return (
-        <Container>
+        <Container sx={{ mb: 5 }}>
             <Title>пользователи</Title>
             <AdminActions />
             <UserEditingTable />
