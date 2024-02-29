@@ -5,19 +5,23 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     MRT_TableOptions,
+    MRT_Row,
 } from 'material-react-table';
 
 import {
     useUpdateUserMutation,
     useGetAllUsersQuery,
     useGetAllRolesQuery,
+    useDeleteUserMutation,
 } from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
 import { User } from 'shared/api';
-import { Checkbox, Typography } from '@mui/material';
+import { Box, Checkbox, IconButton, Tooltip, Typography } from '@mui/material';
 import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
 import { useGetAllCompetitionsQuery } from 'entities/Competition';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -35,6 +39,7 @@ const UserEditingTable: FC = () => {
         useGetAllRolesQuery();
 
     const [updateUser] = useUpdateUserMutation();
+    const [deleteUser] = useDeleteUserMutation();
     const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
         useGetAllCompetitionsQuery();
     const [validationErrors, setValidationErrors] = useState<
@@ -54,6 +59,11 @@ const UserEditingTable: FC = () => {
         const { email, ...updatedData } = values;
         await updateUser({ ...updatedData });
         table.setEditingRow(null); //exit editing mode
+    };
+    const openDeleteConfirmModal = (row: MRT_Row<User>) => {
+        if (window.confirm('Are you sure you want to delete this user?')) {
+            deleteUser(row.original.id);
+        }
     };
     const users: User[] = respondedUsers || [];
     const columns = useMemo<MRT_ColumnDef<User>[]>(
@@ -167,6 +177,23 @@ const UserEditingTable: FC = () => {
                 id: false,
             },
         },
+        renderRowActions: ({ row, table }) => (
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Tooltip title="Edit">
+                    <IconButton onClick={() => table.setEditingRow(row)}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Delete">
+                    <IconButton
+                        color="error"
+                        onClick={() => openDeleteConfirmModal(row)}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            </Box>
+        ),
     });
     return <MaterialReactTable table={table} />;
 };

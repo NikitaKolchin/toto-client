@@ -30,6 +30,13 @@ export const usersApi = createApi({
             }),
             invalidatesTags: [{ type: 'Users', id: 'LIST' }],
         }),
+        deleteUser: builder.mutation<void, User['id']>({
+            query: (id) => ({
+                url: `users/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, id) => [{ type: 'Users', id }],
+        }),
         sendCode: builder.mutation<MessageResponse, SendCodeDto>({
             query: ({ email }) => ({
                 method: 'post',
@@ -64,4 +71,5 @@ export const {
     useSendCodeMutation,
     useChangePasswordAlienMutation,
     useUpdateUserMutation,
+    useDeleteUserMutation,
 } = usersApi;

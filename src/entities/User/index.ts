@@ -15,6 +15,7 @@ export {
     useSendCodeMutation,
     useChangePasswordAlienMutation,
     useUpdateUserMutation,
+    useDeleteUserMutation,
     usersApi,
 } from './services/queriesForUser/queriesForUser';
 
