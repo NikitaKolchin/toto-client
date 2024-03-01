@@ -179,12 +179,12 @@ const UserEditingTable: FC = () => {
         },
         renderRowActions: ({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '1rem' }}>
-                <Tooltip title="Edit">
+                <Tooltip title="Редактировать">
                     <IconButton onClick={() => table.setEditingRow(row)}>
                         <EditIcon />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Delete">
+                <Tooltip title="Удалить">
                     <IconButton
                         color="error"
                         onClick={() => openDeleteConfirmModal(row)}

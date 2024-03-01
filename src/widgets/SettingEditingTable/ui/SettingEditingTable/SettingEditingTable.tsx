@@ -40,9 +40,13 @@ const SettingEditingTable: FC = () => {
                 return;
             }
             setValidationErrors({});
+
             await updateSetting({
                 ...values,
                 contribution: Number(values.contribution),
+                direction: Number(values.direction),
+                difference: Number(values.difference),
+                outcome: Number(values.outcome),
             });
             table.setEditingRow(null); //exit editing mode
         };
@@ -72,6 +76,18 @@ const SettingEditingTable: FC = () => {
                             value: undefined,
                         }),
                 },
+            },
+            {
+                accessorKey: 'direction',
+                header: 'direction',
+            },
+            {
+                accessorKey: 'difference',
+                header: 'difference',
+            },
+            {
+                accessorKey: 'outcome',
+                header: 'outcome',
             },
             {
                 accessorKey: 'disabled',

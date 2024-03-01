@@ -5,6 +5,7 @@ export const settingsApi = createApi({
     reducerPath: 'settingsApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Settings'],
+    refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getSettingById: builder.query<Setting, string>({
             query: (id) => `Settings/${id}`,

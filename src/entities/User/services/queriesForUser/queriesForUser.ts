@@ -9,6 +9,7 @@ export const usersApi = createApi({
     reducerPath: 'UsersApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Users'],
+    refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getAllUsers: builder.query<User[], void>({
             query: () => `users`,

@@ -4,6 +4,7 @@ export {
     useGetCompetitionByIdQuery,
     useUpdateCompetitionByIdMutation,
     useAddCompetitionMutation,
+    useDeleteCompetitionByIdMutation,
     competitionsApi,
 } from './services/queriesForCompetitions/queriesForCompetitions';
 export { reducer as competition } from './model/slice/competitionSlice';

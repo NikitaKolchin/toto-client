@@ -38,6 +38,15 @@ export const competitionsApi = createApi({
                 { type: 'Competitions', id },
             ],
         }),
+        deleteCompetitionById: builder.mutation<void, Competition['id']>({
+            query: (id) => ({
+                url: `competitions/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, id) => [
+                { type: 'Competitions', id },
+            ],
+        }),
         addCompetition: builder.mutation<Competition, Partial<Competition>>({
             query(body) {
                 return {
@@ -58,4 +67,5 @@ export const {
     useGetAllCompetitionsQuery,
     useUpdateCompetitionByIdMutation,
     useAddCompetitionMutation,
+    useDeleteCompetitionByIdMutation,
 } = competitionsApi;
