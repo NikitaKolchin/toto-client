@@ -4,4 +4,4 @@ export {
     useUpdateNationByIdMutation,
     useAddNationMutation,
     nationsApi,
-} from './services/queriesForNations.ts/queriesForNations';
+} from './services/queriesForNations/queriesForNations';

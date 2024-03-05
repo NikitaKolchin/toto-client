@@ -7,6 +7,7 @@ export type { Role } from './models/Role';
 export type { Setting } from './models/Setting';
 export type { Competition } from './models/Competition';
 export type { Nation } from './models/Nation';
+export type { Match } from './models/Match';
 export type { ActivateDto } from './types/dto/ActivateDto';
 export type { ChangePasswordDto } from './types/dto/ChangePasswordDto';
 export type { LoginDto } from './types/dto/LoginDto';

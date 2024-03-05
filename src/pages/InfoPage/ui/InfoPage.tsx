@@ -1,20 +1,14 @@
-import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
+import { Title } from 'entities/Title';
+import { MatchesEditingTable } from 'widgets/MatchesEditingTable';
 
-type Props = object;
-
-const InfoPage = (props: Props) => {
-    const [error, setError] = useState(false);
-
-    const onThrow = () => setError(true);
-
-    useEffect(() => {
-        if (error) {
-            throw new Error();
-        }
-    }, [error]);
-
-    return <Button onClick={onThrow}>{'throw error'}</Button>;
+const InfoPage = () => {
+    return (
+        <Container sx={{ mb: 5 }}>
+            <Title>матчи</Title>
+            <MatchesEditingTable />
+        </Container>
+    );
 };
 
 export default InfoPage;
