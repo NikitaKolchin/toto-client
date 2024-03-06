@@ -13,6 +13,7 @@ import {
 } from 'entities/Match';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Match } from 'shared/api';
+import { useAppSelector } from 'shared/store/config';
 const validateRequired = (value: string) => !!value.length;
 
 function validateMatch(nation: Match) {
@@ -27,6 +28,8 @@ const MatchesEditingTable: FC = () => {
     const [validationErrors, setValidationErrors] = useState<
         Record<string, string | undefined>
     >({});
+    const { roles } = useAppSelector((state) => state.user);
+    const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
             console.log(values.roles);
@@ -50,7 +53,7 @@ const MatchesEditingTable: FC = () => {
             },
             {
                 accessorKey: 'home.value',
-                header: 'value',
+                header: 'хозяева',
                 muiEditTextFieldProps: {
                     required: true,
                     error: !!validationErrors?.firstName,
@@ -65,8 +68,16 @@ const MatchesEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'competition.value',
-                header: 'competition',
+                accessorKey: 'homeScore',
+                header: 'x',
+            },
+            {
+                accessorKey: 'away.value',
+                header: 'гости',
+            },
+            {
+                accessorKey: 'awayScore',
+                header: 'г',
             },
         ],
         [validationErrors],
@@ -74,6 +85,7 @@ const MatchesEditingTable: FC = () => {
     const defaultMRTOptions = getDefaultMRTOptions<Match>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
+        enableEditing: isAdmin,
         columns,
         data: matches,
         state: {
@@ -82,6 +94,11 @@ const MatchesEditingTable: FC = () => {
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveMatch,
         onEditingRowCancel: () => setValidationErrors({}),
+        initialState: {
+            columnVisibility: {
+                id: false,
+            },
+        },
     });
     return <MaterialReactTable table={table} />;
 };

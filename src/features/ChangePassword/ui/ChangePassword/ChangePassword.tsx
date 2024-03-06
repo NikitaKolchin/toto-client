@@ -8,7 +8,7 @@ import {
     setMessage,
 } from 'entities/User';
 import { ShowMessage } from 'shared/ui/ShowMessage';
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useLayoutEffect } from 'react';
 import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
 import { useAppDispatch, useAppSelector } from 'shared/store/config';
 
@@ -29,15 +29,9 @@ const ChangePassword: FC = () => {
     const [changePasswordAlien] = useChangePasswordAlienMutation();
     const [sendCode, { error }] = useSendCodeMutation();
 
-    useEffect(() => {
-        dispatch(
-            setMessage({
-                message: canSend.message,
-                severity: canSend.enable ? 'info' : 'error',
-            }),
-        );
-
+    useLayoutEffect(() => {
         return () => {
+            console.log('unmount');
             dispatch(setActivationCodeSended(false));
             dispatch(setMailSended(false));
             setMessage({
@@ -45,6 +39,15 @@ const ChangePassword: FC = () => {
                 severity: 'info',
             });
         };
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(
+            setMessage({
+                message: canSend.message,
+                severity: canSend.enable ? 'info' : 'error',
+            }),
+        );
     }, [canSend, dispatch]);
 
     useEffect(() => {
@@ -70,72 +73,64 @@ const ChangePassword: FC = () => {
         dispatch,
         activationCodeSended,
     ]);
-
+    console.log(mailSended);
     return (
         <Stack spacing={2}>
-            <>
+            <TextField
+                label="Укажите email для отправки кода"
+                autoComplete="email"
+                required
+                fullWidth
+                disabled={mailSended}
+                value={email}
+                onChange={(e) => setEmail(e.currentTarget.value)}
+            />
+            <Grow in={!mailSended && !!email}>
+                <Button onClick={() => dispatch(setMailSended(true))}>
+                    Направить код на email
+                </Button>
+            </Grow>
+
+            <Grow in={mailSended}>
                 <TextField
-                    label="Укажите email для отправки кода"
-                    autoComplete="email"
+                    label="Укажите новый пароль"
                     required
                     fullWidth
-                    disabled={mailSended}
-                    value={email}
-                    onChange={(e) => setEmail(e.currentTarget.value)}
+                    type="password"
+                    disabled={changePassword}
+                    value={password}
+                    onChange={(e) => setPassword(e.currentTarget.value)}
                 />
-                <Grow in={!mailSended && !!email}>
-                    <Button onClick={() => dispatch(setMailSended(true))}>
-                        Направить код на email
-                    </Button>
-                </Grow>
-            </>
-            {mailSended && !error && (
-                <>
-                    <Grow in={mailSended}>
-                        <TextField
-                            label="Укажите новый пароль"
-                            required
-                            fullWidth
-                            type="password"
-                            disabled={changePassword}
-                            value={password}
-                            onChange={(e) => setPassword(e.currentTarget.value)}
-                        />
-                    </Grow>
-                    <Grow in={mailSended}>
-                        <TextField
-                            label="Подтвердите новый пароль"
-                            required
-                            fullWidth
-                            type="password"
-                            disabled={changePassword}
-                            value={confirmPassword}
-                            onChange={(e) =>
-                                setConfirmPassword(e.currentTarget.value)
-                            }
-                        />
-                    </Grow>
-                    <Grow in={mailSended}>
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            disabled={activationCodeSended}
-                            onChange={(e) =>
-                                dispatch(
-                                    setActivationCode(e.currentTarget.value),
-                                )
-                            }
-                            value={activationCode}
-                            id="code"
-                            label="Код"
-                            name="code"
-                            autoComplete="number"
-                            autoFocus
-                        />
-                    </Grow>
-                </>
-            )}
+            </Grow>
+            <Grow in={mailSended}>
+                <TextField
+                    label="Подтвердите новый пароль"
+                    required
+                    fullWidth
+                    type="password"
+                    disabled={changePassword}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+                />
+            </Grow>
+            <Grow in={mailSended}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    disabled={activationCodeSended}
+                    onChange={(e) =>
+                        dispatch(setActivationCode(e.currentTarget.value))
+                    }
+                    value={activationCode}
+                    id="code"
+                    label="Код"
+                    name="code"
+                    autoComplete="number"
+                    autoFocus
+                />
+            </Grow>
+
             <Grow in={mailSended}>
                 <Button
                     disabled={changePassword || !canSend.enable}
