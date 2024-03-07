@@ -5,6 +5,7 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     MRT_TableOptions,
+    MRT_Row,
 } from 'material-react-table';
 
 import {
@@ -12,10 +13,10 @@ import {
     useGetAllNationsQuery,
 } from 'entities/Nation';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Nation } from 'shared/api';
-import { Typography } from '@mui/material';
+import { Competition, Nation } from 'shared/api';
 import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
 import { useGetAllCompetitionsQuery } from 'entities/Competition';
+import { Typography } from '@mui/material';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -78,12 +79,17 @@ const NationEditingTable: FC = () => {
             {
                 accessorKey: 'competitions',
                 header: 'competitions',
-                Cell: ({ row }) =>
-                    row.original.competitions.map((competition) => (
-                        <Typography
-                            key={competition.id}
-                        >{`${competition.value}\n`}</Typography>
-                    )),
+                filterVariant: 'select',
+                filterSelectOptions: respondedCompetitions,
+                filterFn: 'competitionsFilter',
+                Cell: ({ cell }) =>
+                    cell
+                        .getValue<Competition[]>()
+                        .map((competition) => (
+                            <Typography
+                                key={competition.id}
+                            >{`${competition.value}\n`}</Typography>
+                        )),
                 Edit: ({ column, row }) =>
                     EditMultipleValueRow<Nation>({
                         column,
@@ -106,6 +112,14 @@ const NationEditingTable: FC = () => {
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveNation,
         onEditingRowCancel: () => setValidationErrors({}),
+        filterFns: {
+            competitionsFilter: (row, columnId, filterValue) =>
+                row.original.competitions.find(
+                    (competition: Competition) =>
+                        competition.value === filterValue,
+                ) !== undefined,
+        },
+        columnFilterDisplayMode: 'popover',
         initialState: {
             columnVisibility: {
                 firstName: false,
