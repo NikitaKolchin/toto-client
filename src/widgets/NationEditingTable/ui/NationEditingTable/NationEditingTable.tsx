@@ -5,7 +5,6 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     MRT_TableOptions,
-    MRT_Row,
 } from 'material-react-table';
 
 import {
