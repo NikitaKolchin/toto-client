@@ -49,7 +49,6 @@ const UserEditingTable: FC = () => {
         values,
         table,
     }) => {
-        console.log(values.roles);
         const newValidationErrors = validateUser(values);
         if (Object.values(newValidationErrors).some((error) => error)) {
             setValidationErrors(newValidationErrors);

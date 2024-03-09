@@ -15,32 +15,18 @@ import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Match } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
 import { Checkbox } from '@mui/material';
-const validateRequired = (value: string) => !!value.length;
+import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
 
-function validateMatch(match: Match) {
-    return {
-        homeScore: !validateRequired(match.homeScore)
-            ? 'Value is Required'
-            : '',
-    };
-}
-
-const MatchesEditingTable: FC = () => {
+const MatchEditingTable: FC = () => {
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
+    const { data: nations } = useGetNationsByCurrentCompetitionQuery();
     const [updateMatch] = useUpdateMatchByIdMutation();
-    const [validationErrors, setValidationErrors] = useState<
-        Record<string, string | undefined>
-    >({});
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
-            const newValidationErrors = validateMatch(values);
-            if (Object.values(newValidationErrors).some((error) => error)) {
-                setValidationErrors(newValidationErrors);
-                return;
-            }
-            setValidationErrors({});
+            // собирай ответ руками
+            console.log(values);
             const { email, ...updatedData } = values;
             await updateMatch({ ...updatedData });
             table.setEditingRow(null); //exit editing mode
@@ -60,18 +46,8 @@ const MatchesEditingTable: FC = () => {
             {
                 accessorKey: 'home.value',
                 header: 'хозяева',
-                muiEditTextFieldProps: {
-                    required: true,
-                    error: !!validationErrors?.firstName,
-                    helperText: validationErrors?.firstName,
-                    //remove any previous validation errors when nation focuses on the input
-                    onFocus: () =>
-                        setValidationErrors({
-                            ...validationErrors,
-                            firstName: undefined,
-                        }),
-                    //optionally add validation checking for onBlur or onChange
-                },
+                editVariant: 'select',
+                editSelectOptions: nations?.map((nation) => nation.value),
             },
             {
                 accessorKey: 'homeScore',
@@ -126,7 +102,7 @@ const MatchesEditingTable: FC = () => {
                 header: 'date',
             },
         ],
-        [validationErrors],
+        [nations],
     );
     const defaultMRTOptions = getDefaultMRTOptions<Match>();
     const table = useMaterialReactTable({
@@ -139,7 +115,7 @@ const MatchesEditingTable: FC = () => {
         },
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveMatch,
-        onEditingRowCancel: () => setValidationErrors({}),
+        // onEditingRowCancel: () => setValidationErrors({}),
         initialState: {
             columnVisibility: {
                 id: false,
@@ -149,4 +125,4 @@ const MatchesEditingTable: FC = () => {
     return <MaterialReactTable table={table} />;
 };
 
-export { MatchesEditingTable };
+export { MatchEditingTable };

@@ -1,12 +1,12 @@
 import { Container } from '@mui/material';
 import { Title } from 'entities/Title';
-import { MatchesEditingTable } from 'widgets/MatchesEditingTable';
+import { MatchEditingTable } from 'widgets/MatchEditingTable';
 
 const InfoPage = () => {
     return (
         <Container sx={{ mb: 5 }}>
             <Title>матчи</Title>
-            <MatchesEditingTable />
+            <MatchEditingTable />
         </Container>
     );
 };

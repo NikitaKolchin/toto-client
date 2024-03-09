@@ -21,6 +21,18 @@ export const nationsApi = createApi({
                       ]
                     : [{ type: 'Nations', id: 'LIST' }],
         }),
+        getNationsByCurrentCompetition: builder.query<Nation[], void>({
+            query: () => `nations/getNationsByCurrentCompetition`,
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.map(
+                              ({ id }) => ({ type: 'Nations', id }) as const,
+                          ),
+                          { type: 'Nations', id: 'LIST' },
+                      ]
+                    : [{ type: 'Nations', id: 'LIST' }],
+        }),
         updateNationById: builder.mutation<
             Nation,
             Partial<Nation> & Pick<Nation, 'id'>
@@ -49,6 +61,7 @@ export const nationsApi = createApi({
 
 export const {
     useGetNationByIdQuery,
+    useGetNationsByCurrentCompetitionQuery,
     useGetAllNationsQuery,
     useUpdateNationByIdMutation,
     useAddNationMutation,
