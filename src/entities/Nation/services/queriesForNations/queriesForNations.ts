@@ -3,6 +3,7 @@ import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQ
 import type { Nation } from 'shared/api';
 export const nationsApi = createApi({
     reducerPath: 'nationsApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: baseQueryWithReauth,
     tagTypes: ['Nations'],
     endpoints: (builder) => ({

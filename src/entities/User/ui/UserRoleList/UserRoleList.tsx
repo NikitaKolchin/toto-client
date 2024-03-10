@@ -1,6 +1,6 @@
 import { Paper, Typography } from '@mui/material';
 import { FC } from 'react';
-import { Role } from '../../../../shared/api/models/Role';
+import { Role } from 'shared/api/models/Role';
 
 type Props = {
     roles: Role[];

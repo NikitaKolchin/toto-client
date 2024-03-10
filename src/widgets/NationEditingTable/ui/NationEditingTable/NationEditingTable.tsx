@@ -33,17 +33,16 @@ const NationEditingTable: FC = () => {
     const [validationErrors, setValidationErrors] = useState<
         Record<string, string | undefined>
     >({});
+
     const handleSaveNation: MRT_TableOptions<Nation>['onEditingRowSave'] =
         async ({ values, table }) => {
-            console.log(values.roles);
             const newValidationErrors = validateNation(values);
             if (Object.values(newValidationErrors).some((error) => error)) {
                 setValidationErrors(newValidationErrors);
                 return;
             }
             setValidationErrors({});
-            const { email, ...updatedData } = values;
-            await updateNation({ ...updatedData });
+            await updateNation(values);
             table.setEditingRow(null); //exit editing mode
         };
     const nations: Nation[] = respondedNations || [];
@@ -108,6 +107,7 @@ const NationEditingTable: FC = () => {
         state: {
             isLoading,
         },
+        autoResetPageIndex: false,
         getRowId: (row) => row.id,
         onEditingRowSave: handleSaveNation,
         onEditingRowCancel: () => setValidationErrors({}),

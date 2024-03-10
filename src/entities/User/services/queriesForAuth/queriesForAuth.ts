@@ -14,6 +14,7 @@ const isAllowed = (response: AuthResponse) =>
     response.user.roles.some((role) => role.value === 'USER');
 export const authApi = createApi({
     reducerPath: 'AuthApi',
+    refetchOnMountOrArgChange: true,
     baseQuery: baseQueryWithAuth,
     endpoints: (builder) => ({
         login: builder.mutation<UserState, LoginDto>({
