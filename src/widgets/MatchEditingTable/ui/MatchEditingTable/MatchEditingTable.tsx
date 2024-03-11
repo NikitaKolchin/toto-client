@@ -40,7 +40,6 @@ const MatchEditingTable: FC = () => {
                 matchNo,
                 visibility,
             } = values;
-            console.log(values);
             await updateMatch({
                 id,
                 awayScore: Number(awayScore),
@@ -137,7 +136,7 @@ const MatchEditingTable: FC = () => {
                 accessorFn: (row) => new Date(row.date),
                 id: 'date',
                 Cell: ({ cell }) =>
-                    dayjs(cell.getValue<Date>())?.format('MM/DD/YYYY'),
+                    dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY'),
                 header: 'date',
                 Edit({ column, row }) {
                     return (
@@ -149,6 +148,7 @@ const MatchEditingTable: FC = () => {
                                 }}
                                 label={column.columnDef.header}
                                 value={dayjs(row.getValue<Date>(column.id))}
+                                format="DD.MM.YYYY"
                                 slotProps={{
                                     textField: {
                                         variant: 'standard',

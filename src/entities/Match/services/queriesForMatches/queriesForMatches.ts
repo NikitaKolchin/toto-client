@@ -1,7 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
 import type { Match } from 'shared/api';
-import dayjs from 'dayjs';
 export const matchesApi = createApi({
     reducerPath: 'matchesApi',
     baseQuery: baseQueryWithReauth,
@@ -21,13 +20,13 @@ export const matchesApi = createApi({
                           { type: 'Matches', id: 'LIST' },
                       ]
                     : [{ type: 'Matches', id: 'LIST' }],
-            transformResponse: (response: Match[]) => {
-                console.log(response);
-                return response.map((match) => ({
-                    ...match,
-                    date: dayjs(match.date)?.format('MM/DD/YYYY'),
-                }));
-            },
+            // transformResponse: (response: Match[]) => {
+            //     console.log(response);
+            //     return response.map((match) => ({
+            //         ...match,
+            //         date: dayjs(match.date)?.format('DD/MM//YYYY'),
+            //     }));
+            // },
         }),
         updateMatchById: builder.mutation<
             Match,
