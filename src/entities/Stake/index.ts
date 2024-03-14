@@ -1,7 +1,7 @@
 export {
-    useGetMatchByIdQuery,
-    useGetAllMatchesQuery,
-    useUpdateMatchByIdMutation,
-    useAddMatchMutation,
-    matchesApi,
+    useGetStakeByIdQuery,
+    useGetAllStakesQuery,
+    useUpdateStakeByIdMutation,
+    useAddStakeMutation,
+    stakesApi,
 } from './services/queriesForStakes/queriesForStakes';

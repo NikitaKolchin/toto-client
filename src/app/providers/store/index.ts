@@ -5,6 +5,7 @@ import { user, usersApi, authApi, rolesApi } from 'entities/User';
 import { settingsApi } from 'entities/Setting';
 import { nationsApi } from 'entities/Nation';
 import { matchesApi } from 'entities/Match';
+import { stakesApi } from 'entities/Stake';
 
 const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
         [nationsApi.reducerPath]: nationsApi.reducer,
         [settingsApi.reducerPath]: settingsApi.reducer,
         [matchesApi.reducerPath]: matchesApi.reducer,
+        [stakesApi.reducerPath]: stakesApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -29,7 +31,8 @@ const store = configureStore({
             .concat(rolesApi.middleware)
             .concat(nationsApi.middleware)
             .concat(settingsApi.middleware)
-            .concat(matchesApi.middleware),
+            .concat(matchesApi.middleware)
+            .concat(stakesApi.middleware),
 });
 
 export default store;

@@ -8,11 +8,11 @@ import {
 } from 'material-react-table';
 
 import {
-    useUpdateMatchByIdMutation,
-    useGetAllMatchesQuery,
-} from 'entities/Match';
+    useUpdateStakeByIdMutation,
+    useGetAllStakesQuery,
+} from 'entities/Stake';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Match } from 'shared/api';
+import { Stake } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
 import { Checkbox } from '@mui/material';
 import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
@@ -23,49 +23,21 @@ import dayjs from 'dayjs';
 import { trueFalse } from 'shared/const/select';
 
 const StakeEditingTable: FC = () => {
-    const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
+    const { data: respondedStakes, isLoading } = useGetAllStakesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
-    const [updateMatch] = useUpdateMatchByIdMutation();
+    const [updateStake] = useUpdateStakeByIdMutation();
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
-    const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
+    const handleSaveStake: MRT_TableOptions<Stake>['onEditingRowSave'] =
         async ({ values, table }) => {
-            const {
-                id,
-                awayScore,
-                coefficient,
-                date,
-                enable,
-                homeScore,
-                matchNo,
-                visibility,
-            } = values;
-            await updateMatch({
-                id,
-                awayScore: Number(awayScore),
-                homeScore: Number(homeScore),
-                coefficient: Number(coefficient),
-                date,
-                matchNo: Number(matchNo),
-                enable: Boolean(enable),
-                visibility: Boolean(visibility),
-                homeId: Number(
-                    respondedNations?.find(
-                        (nation) => nation.value === values['home.value'],
-                    )?.id,
-                ),
-                awayId: Number(
-                    respondedNations?.find(
-                        (nation) => nation.value === values['away.value'],
-                    )?.id,
-                ),
-            });
+            const { id } = values;
+            await updateStake({ id });
             table.setEditingRow(null); //exit editing mode
         };
-    const matches: Match[] = respondedMatches || [];
-    console.log(matches);
+    const stakes: Stake[] = respondedStakes || [];
+    console.log(stakes);
     const nations = respondedNations?.map((nation) => nation.value);
-    const columns = useMemo<MRT_ColumnDef<Match>[]>(
+    const columns = useMemo<MRT_ColumnDef<Stake>[]>(
         () => [
             {
                 accessorKey: 'id',
@@ -73,14 +45,8 @@ const StakeEditingTable: FC = () => {
                 enableEditing: false,
             },
             {
-                accessorKey: 'matchNo',
+                accessorKey: 'stakeNo',
                 header: 'STAKE',
-            },
-            {
-                accessorKey: 'home.value',
-                header: 'хозяева',
-                editVariant: 'select',
-                editSelectOptions: nations,
             },
             {
                 accessorKey: 'homeScore',
@@ -90,12 +56,6 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'away.value',
-                header: 'гости',
-                editVariant: 'select',
-                editSelectOptions: nations,
-            },
-            {
                 accessorKey: 'awayScore',
                 header: 'г',
                 muiEditTextFieldProps: {
@@ -103,88 +63,25 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'coefficient',
-                header: 'coefficient',
-            },
-            {
-                accessorKey: 'enable',
-                header: 'enable',
-                editVariant: 'select',
-                editSelectOptions: trueFalse,
-                Cell: ({ row }) => (
-                    <Checkbox
-                        key={`enable${row.id}`}
-                        disabled
-                        checked={row.original.enable}
-                    />
-                ),
-            },
-            {
-                accessorKey: 'visibility',
-                header: 'visibility',
-                editVariant: 'select',
-                editSelectOptions: trueFalse,
-                Cell: ({ row }) => (
-                    <Checkbox
-                        key={`visibility${row.id}`}
-                        disabled
-                        checked={row.original.visibility}
-                    />
-                ),
-            },
-            {
-                accessorFn: (row) => new Date(row.date),
-                id: 'date',
-                Cell: ({ cell }) =>
-                    dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY'),
-                header: 'date',
-                Edit({ column, row }) {
-                    return (
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                onChange={(newValue) => {
-                                    row._valuesCache[column.id] =
-                                        dayjs(newValue);
-                                }}
-                                label={column.columnDef.header}
-                                value={dayjs(row.getValue<Date>(column.id))}
-                                format="DD.MM.YYYY"
-                                slotProps={{
-                                    textField: {
-                                        variant: 'standard',
-                                        required: true,
-                                    },
-                                }}
-                            />
-                        </LocalizationProvider>
-                    );
-                },
-            },
-            {
                 accessorKey: 'price',
                 header: 'Стоимость',
                 enableEditing: false,
             },
-            {
-                accessorKey: 'jackpot',
-                header: 'Джэкпот',
-                enableEditing: false,
-            },
         ],
-        [nations],
+        [],
     );
-    const defaultMRTOptions = getDefaultMRTOptions<Match>();
+    const defaultMRTOptions = getDefaultMRTOptions<Stake>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
         enableEditing: isAdmin,
         columns,
-        data: matches,
+        data: stakes,
         state: {
             isLoading,
         },
         autoResetPageIndex: false,
         getRowId: (row) => row.id?.toString(),
-        onEditingRowSave: handleSaveMatch,
+        onEditingRowSave: handleSaveStake,
         // onEditingRowCancel: () => setValidationErrors({}),
         initialState: {
             columnVisibility: {

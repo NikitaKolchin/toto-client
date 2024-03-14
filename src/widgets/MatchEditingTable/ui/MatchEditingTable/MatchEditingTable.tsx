@@ -138,27 +138,24 @@ const MatchEditingTable: FC = () => {
                 Cell: ({ cell }) =>
                     dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY'),
                 header: 'date',
-                Edit({ column, row }) {
-                    return (
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
-                                onChange={(newValue) => {
-                                    row._valuesCache[column.id] =
-                                        dayjs(newValue);
-                                }}
-                                label={column.columnDef.header}
-                                value={dayjs(row.getValue<Date>(column.id))}
-                                format="DD.MM.YYYY"
-                                slotProps={{
-                                    textField: {
-                                        variant: 'standard',
-                                        required: true,
-                                    },
-                                }}
-                            />
-                        </LocalizationProvider>
-                    );
-                },
+                Edit: ({ column, row }) => (
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            onChange={(newValue) => {
+                                row._valuesCache[column.id] = dayjs(newValue);
+                            }}
+                            label={column.columnDef.header}
+                            value={dayjs(row.getValue<Date>(column.id))}
+                            format="DD.MM.YYYY"
+                            slotProps={{
+                                textField: {
+                                    variant: 'standard',
+                                    required: true,
+                                },
+                            }}
+                        />
+                    </LocalizationProvider>
+                ),
             },
             {
                 accessorKey: 'price',

@@ -1,62 +1,62 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { Match } from 'shared/api';
-export const matchesApi = createApi({
-    reducerPath: 'matchesApi',
+import type { Stake } from 'shared/api';
+export const stakesApi = createApi({
+    reducerPath: 'stakesApi',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Matches'],
+    tagTypes: ['Stakes'],
     endpoints: (builder) => ({
-        getMatchById: builder.query<Match, string>({
-            query: (id) => `matches/${id}`,
+        getStakeById: builder.query<Stake, string>({
+            query: (id) => `stakes/${id}`,
         }),
-        getAllMatches: builder.query<Match[], void>({
-            query: () => `matches`,
+        getAllStakes: builder.query<Stake[], void>({
+            query: () => `stakes`,
             providesTags: (result) =>
                 result
                     ? [
                           ...result.map(
-                              ({ id }) => ({ type: 'Matches', id }) as const,
+                              ({ id }) => ({ type: 'Stakes', id }) as const,
                           ),
-                          { type: 'Matches', id: 'LIST' },
+                          { type: 'Stakes', id: 'LIST' },
                       ]
-                    : [{ type: 'Matches', id: 'LIST' }],
-            // transformResponse: (response: Match[]) => {
+                    : [{ type: 'Stakes', id: 'LIST' }],
+            // transformResponse: (response: Stake[]) => {
             //     console.log(response);
-            //     return response.map((match) => ({
-            //         ...match,
-            //         date: dayjs(match.date)?.format('DD/MM//YYYY'),
+            //     return response.map((stake) => ({
+            //         ...stake,
+            //         date: dayjs(stake.date)?.format('DD/MM//YYYY'),
             //     }));
             // },
         }),
-        updateMatchById: builder.mutation<
-            Match,
-            Partial<Match> & Pick<Match, 'id'>
+        updateStakeById: builder.mutation<
+            Stake,
+            Partial<Stake> & Pick<Stake, 'id'>
         >({
             query: ({ id, ...patch }) => ({
-                url: `matches/${id}`,
+                url: `stakes/${id}`,
                 method: 'PATCH',
                 body: patch,
             }),
             invalidatesTags: (result, error, { id }) => [
-                { type: 'Matches', id },
+                { type: 'Stakes', id },
             ],
         }),
-        addMatch: builder.mutation<Match, Partial<Match>>({
+        addStake: builder.mutation<Stake, Partial<Stake>>({
             query(body) {
                 return {
-                    url: `matches`,
+                    url: `stakes`,
                     method: 'POST',
                     body,
                 };
             },
-            invalidatesTags: [{ type: 'Matches', id: 'LIST' }],
+            invalidatesTags: [{ type: 'Stakes', id: 'LIST' }],
         }),
     }),
 });
 
 export const {
-    useGetMatchByIdQuery,
-    useGetAllMatchesQuery,
-    useUpdateMatchByIdMutation,
-    useAddMatchMutation,
-} = matchesApi;
+    useGetStakeByIdQuery,
+    useGetAllStakesQuery,
+    useUpdateStakeByIdMutation,
+    useAddStakeMutation,
+} = stakesApi;
