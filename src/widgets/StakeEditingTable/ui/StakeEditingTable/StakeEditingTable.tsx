@@ -14,13 +14,7 @@ import {
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Stake } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
-import { Checkbox } from '@mui/material';
 import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
-import { trueFalse } from 'shared/const/select';
 
 const StakeEditingTable: FC = () => {
     const { data: respondedStakes, isLoading } = useGetAllStakesQuery();
@@ -34,9 +28,9 @@ const StakeEditingTable: FC = () => {
             await updateStake({ id });
             table.setEditingRow(null); //exit editing mode
         };
+    // refresh type!!!!!
     const stakes: Stake[] = respondedStakes || [];
     console.log(stakes);
-    const nations = respondedNations?.map((nation) => nation.value);
     const columns = useMemo<MRT_ColumnDef<Stake>[]>(
         () => [
             {
@@ -45,8 +39,8 @@ const StakeEditingTable: FC = () => {
                 enableEditing: false,
             },
             {
-                accessorKey: 'stakeNo',
-                header: 'STAKE',
+                accessorKey: 'match.homeNation.value',
+                header: 'home',
             },
             {
                 accessorKey: 'homeScore',
@@ -56,6 +50,10 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
+                accessorKey: 'match.awayNation.value',
+                header: 'away',
+            },
+            {
                 accessorKey: 'awayScore',
                 header: 'г',
                 muiEditTextFieldProps: {
@@ -63,7 +61,7 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'price',
+                accessorKey: 'money',
                 header: 'Стоимость',
                 enableEditing: false,
             },
@@ -86,8 +84,6 @@ const StakeEditingTable: FC = () => {
         initialState: {
             columnVisibility: {
                 id: false,
-                price: false,
-                jackpot: false,
             },
         },
     });
