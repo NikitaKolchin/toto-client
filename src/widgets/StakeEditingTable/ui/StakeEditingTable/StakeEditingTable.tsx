@@ -14,11 +14,10 @@ import {
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Stake } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
-import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
+import { Typography } from '@mui/material';
 
 const StakeEditingTable: FC = () => {
     const { data: respondedStakes, isLoading } = useGetAllStakesQuery();
-    const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
     const [updateStake] = useUpdateStakeByIdMutation();
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
@@ -28,7 +27,6 @@ const StakeEditingTable: FC = () => {
             await updateStake({ id });
             table.setEditingRow(null); //exit editing mode
         };
-    // refresh type!!!!!
     const stakes: Stake[] = respondedStakes || [];
     console.log(stakes);
     const columns = useMemo<MRT_ColumnDef<Stake>[]>(
@@ -39,7 +37,7 @@ const StakeEditingTable: FC = () => {
                 enableEditing: false,
             },
             {
-                accessorKey: 'match.homeNation.value',
+                accessorKey: 'home.value',
                 header: 'home',
             },
             {
@@ -50,7 +48,7 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'match.awayNation.value',
+                accessorKey: 'away.value',
                 header: 'away',
             },
             {
@@ -61,9 +59,15 @@ const StakeEditingTable: FC = () => {
                 },
             },
             {
-                accessorKey: 'money',
+                accessorKey: 'stakes',
                 header: 'Стоимость',
                 enableEditing: false,
+                Cell: ({ row }) =>
+                    row.original.stakes.map((stake) => (
+                        <Typography
+                            key={stake.id}
+                        >{`${stake.homeScore}\n`}</Typography>
+                    )),
             },
         ],
         [],

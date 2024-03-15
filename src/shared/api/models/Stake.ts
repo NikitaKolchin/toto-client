@@ -2,6 +2,7 @@ import { Match } from './Match';
 import { User } from './User';
 
 type Stake = {
+    stakes: Stake[];
     id: number;
     matchId: number;
     homeScore: number;
