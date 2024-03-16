@@ -5,6 +5,7 @@ export type { TokensResponse } from './types/TokensResponse';
 export type { User } from './models/User';
 export type { Role } from './models/Role';
 export type { Stake } from './models/Stake';
+export type { MatchStakeApi } from './models/MatchStakeApi';
 export type { Setting } from './models/Setting';
 export type { Competition } from './models/Competition';
 export type { Nation } from './models/Nation';

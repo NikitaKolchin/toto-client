@@ -1,15 +1,9 @@
-import { Match } from './Match';
-import { User } from './User';
-
 type Stake = {
-    stakes: Stake[];
-    id: number;
-    matchId: number;
-    homeScore: number;
-    awayScore: number;
+    id: number | null;
+    matchId: number | null;
+    homeScore: number | null;
+    awayScore: number | null;
     money: number | null;
-    user: User;
-    match: Match;
 };
 
 export type { Stake };

@@ -5,7 +5,7 @@ import { user, usersApi, authApi, rolesApi } from 'entities/User';
 import { settingsApi } from 'entities/Setting';
 import { nationsApi } from 'entities/Nation';
 import { matchesApi } from 'entities/Match';
-import { stakesApi } from 'entities/Stake';
+import { stakesApi } from 'entities/MatchStake';
 
 const store = configureStore({
     reducer: {
