@@ -1,5 +1,5 @@
 export interface Competition {
-    id: string;
+    id: number;
     value: string;
     isCurrent: boolean;
     description: string;

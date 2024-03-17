@@ -114,7 +114,7 @@ const CompetitionEditingTable: FC = () => {
         state: {
             isLoading,
         },
-        getRowId: (row) => row.id,
+        getRowId: (row) => row.id.toString(),
         onEditingRowSave: handleSaveCompetition,
         onEditingRowCancel: () => setValidationErrors({}),
         onCreatingRowCancel: () => setValidationErrors({}),

@@ -13,21 +13,22 @@ import {
 } from 'entities/MatchStake';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import type { MatchStake } from 'entities/MatchStake';
-import { useAppSelector } from 'shared/store/config';
 
 const StakeEditingTable: FC = () => {
     const { data: respondedStakes, isLoading } = useGetAllMatchStakesQuery();
     const [updateStake] = useUpdateMatchStakeByIdMutation();
-    const { roles } = useAppSelector((state) => state.user);
-    const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const handleSaveStake: MRT_TableOptions<MatchStake>['onEditingRowSave'] =
         async ({ values, table }) => {
-            const { id } = values;
-            await updateStake({ id });
+            console.log(values);
+
+            await updateStake({
+                id: values.id,
+                homeScore: Number(values['stake.homeScore']),
+                awayScore: Number(values['stake.awayScore']),
+            });
             table.setEditingRow(null); //exit editing mode
         };
     const matchStakes: MatchStake[] = respondedStakes || [];
-    console.log(matchStakes);
     const columns = useMemo<MRT_ColumnDef<MatchStake>[]>(
         () => [
             {
@@ -37,7 +38,7 @@ const StakeEditingTable: FC = () => {
             },
             {
                 accessorKey: 'matchNo',
-                header: 'matchNo',
+                header: '#',
             },
             {
                 accessorKey: 'home.value',
@@ -62,33 +63,29 @@ const StakeEditingTable: FC = () => {
                 header: 'away',
                 enableEditing: false,
             },
-            {
-                accessorKey: 'awayScore',
-                header: 'г',
-            },
-            {
-                accessorKey: 'homeScore',
-                header: 'x',
-                enableEditing: false,
-            },
         ],
         [],
     );
     const defaultMRTOptions = getDefaultMRTOptions<MatchStake>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
-        enableEditing: isAdmin,
+        enableEditing: true,
         columns,
         data: matchStakes,
         state: {
             isLoading,
         },
         autoResetPageIndex: false,
-        enableExpandAll: false, //hide expand all double arrow in column header
+        enableExpandAll: true,
         getRowId: (row) => row.id?.toString(),
         onEditingRowSave: handleSaveStake,
         renderDetailPanel: ({ row }) =>
-            row.original.stake ? <> jopa</> : null,
+            row.original.homeScore !== null &&
+            row.original.awayScore !== null ? (
+                <>
+                    {row.original.homeScore} : {row.original.awayScore}
+                </>
+            ) : null,
         // onEditingRowCancel: () => setValidationErrors({}),
         initialState: {
             columnVisibility: {

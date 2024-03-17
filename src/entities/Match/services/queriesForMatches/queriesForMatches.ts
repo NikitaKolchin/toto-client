@@ -20,13 +20,6 @@ export const matchesApi = createApi({
                           { type: 'Matches', id: 'LIST' },
                       ]
                     : [{ type: 'Matches', id: 'LIST' }],
-            // transformResponse: (response: Match[]) => {
-            //     console.log(response);
-            //     return response.map((match) => ({
-            //         ...match,
-            //         date: dayjs(match.date)?.format('DD/MM//YYYY'),
-            //     }));
-            // },
         }),
         updateMatchById: builder.mutation<
             Match,

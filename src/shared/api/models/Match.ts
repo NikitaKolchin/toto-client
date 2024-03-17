@@ -7,14 +7,17 @@ type Match = {
     home: Nation;
     enable: boolean;
     visibility: boolean;
-    homeScore: number;
+    homeScore: number | null;
     away: Nation;
-    awayScore: number;
+    awayScore: number | null;
     coefficient: number;
     competition: Competition;
     date: string;
     homeId: number;
     awayId: number;
+    competitionId: Competition['id'];
+    price: number | null;
+    jackpot: number | null;
 };
 
 export type { Match };

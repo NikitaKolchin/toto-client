@@ -10,11 +10,12 @@ import {
 import {
     useUpdateMatchByIdMutation,
     useGetAllMatchesQuery,
+    useAddMatchMutation,
 } from 'entities/Match';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Match } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
-import { Checkbox } from '@mui/material';
+import { Button, Checkbox } from '@mui/material';
 import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -23,11 +24,14 @@ import dayjs from 'dayjs';
 import { trueFalse } from 'shared/const/select';
 
 const MatchEditingTable: FC = () => {
+    const competition = useAppSelector((state) => state.competition);
+    const { roles } = useAppSelector((state) => state.user);
+    const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
     const [updateMatch] = useUpdateMatchByIdMutation();
-    const { roles } = useAppSelector((state) => state.user);
-    const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
+    const [addMatch] = useAddMatchMutation();
+
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
             const {
@@ -42,8 +46,8 @@ const MatchEditingTable: FC = () => {
             } = values;
             await updateMatch({
                 id,
-                awayScore: Number(awayScore),
-                homeScore: Number(homeScore),
+                awayScore: awayScore ? Number(awayScore) : null,
+                homeScore: homeScore ? Number(homeScore) : null,
                 coefficient: Number(coefficient),
                 date,
                 matchNo: Number(matchNo),
@@ -62,8 +66,43 @@ const MatchEditingTable: FC = () => {
             });
             table.setEditingRow(null); //exit editing mode
         };
+
+    const handleCreateMatch: MRT_TableOptions<Match>['onCreatingRowSave'] =
+        async ({ values, table }) => {
+            const {
+                awayScore,
+                coefficient,
+                date,
+                enable,
+                homeScore,
+                matchNo,
+                visibility,
+            } = values;
+            await addMatch({
+                awayScore: awayScore ? Number(awayScore) : null,
+                homeScore: homeScore ? Number(homeScore) : null,
+                coefficient: Number(coefficient),
+                date,
+                matchNo: Number(matchNo),
+                enable: Boolean(enable),
+                visibility: Boolean(visibility),
+                homeId: Number(
+                    respondedNations?.find(
+                        (nation) => nation.value === values['home.value'],
+                    )?.id,
+                ),
+                awayId: Number(
+                    respondedNations?.find(
+                        (nation) => nation.value === values['away.value'],
+                    )?.id,
+                ),
+                competitionId: Number(competition.id),
+                price: null,
+                jackpot: null,
+            });
+            table.setCreatingRow(null); //exit creating mode
+        };
     const matches: Match[] = respondedMatches || [];
-    console.log(matches);
     const nations = respondedNations?.map((nation) => nation.value);
     const columns = useMemo<MRT_ColumnDef<Match>[]>(
         () => [
@@ -179,10 +218,22 @@ const MatchEditingTable: FC = () => {
         state: {
             isLoading,
         },
+        createDisplayMode: 'modal',
+        renderTopToolbarCustomActions: ({ table }) => (
+            <Button
+                variant="contained"
+                onClick={() => {
+                    table.setCreatingRow(true);
+                }}
+            >
+                Create New Match
+            </Button>
+        ),
         autoResetPageIndex: false,
         getRowId: (row) => row.id?.toString(),
         onEditingRowSave: handleSaveMatch,
-        // onEditingRowCancel: () => setValidationErrors({}),
+        // onCreatingRowCancel: () => setValidationErrors({}),
+        onCreatingRowSave: handleCreateMatch,
         initialState: {
             columnVisibility: {
                 id: false,
