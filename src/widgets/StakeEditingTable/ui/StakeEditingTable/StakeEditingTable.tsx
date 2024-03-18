@@ -35,14 +35,24 @@ const StakeEditingTable: FC = () => {
                 accessorKey: 'id',
                 header: 'id',
                 enableEditing: false,
+                visibleInShowHideMenu: false,
+                Edit: () => null,
             },
             {
                 accessorKey: 'matchNo',
+                enableEditing: false,
                 header: '#',
+                minSize: 20,
+                maxSize: 40,
+                size: 30,
             },
             {
                 accessorKey: 'home.value',
+                enableEditing: false,
                 header: 'home',
+                muiTableBodyCellProps: {
+                    align: 'left',
+                },
             },
             {
                 accessorKey: 'stake.homeScore',
@@ -87,6 +97,12 @@ const StakeEditingTable: FC = () => {
                 </>
             ) : null,
         // onEditingRowCancel: () => setValidationErrors({}),
+        displayColumnDefOptions: {
+            'mrt-row-actions': {
+                header: '',
+                visibleInShowHideMenu: false, //hide the built-in row actions column from the show hide menu
+            },
+        },
         initialState: {
             columnVisibility: {
                 id: false,
