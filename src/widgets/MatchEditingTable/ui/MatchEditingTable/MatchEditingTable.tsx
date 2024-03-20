@@ -230,16 +230,19 @@ const MatchEditingTable: FC = () => {
             isLoading,
         },
         createDisplayMode: 'modal',
-        renderTopToolbarCustomActions: ({ table }) => (
-            <Button
-                variant="contained"
-                onClick={() => {
-                    table.setCreatingRow(true);
-                }}
-            >
-                Create New Match
-            </Button>
-        ),
+        renderTopToolbarCustomActions: ({ table }) =>
+            isAdmin ? (
+                <Button
+                    variant="contained"
+                    onClick={() => {
+                        table.setCreatingRow(true);
+                    }}
+                >
+                    Create New Match
+                </Button>
+            ) : (
+                <></>
+            ),
         autoResetPageIndex: false,
         getRowId: (row) => row.id?.toString(),
         onEditingRowSave: handleSaveMatch,
