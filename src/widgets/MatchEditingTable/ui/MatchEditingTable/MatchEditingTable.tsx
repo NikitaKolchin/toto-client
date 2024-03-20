@@ -5,23 +5,27 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     MRT_TableOptions,
+    MRT_Row,
 } from 'material-react-table';
 
 import {
     useUpdateMatchByIdMutation,
     useGetAllMatchesQuery,
     useAddMatchMutation,
+    useDeleteMatchMutation,
 } from 'entities/Match';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Match } from 'shared/api';
 import { useAppSelector } from 'shared/store/config';
-import { Button, Checkbox } from '@mui/material';
+import { Box, Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { trueFalse } from 'shared/const/select';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MatchEditingTable: FC = () => {
     const competition = useAppSelector((state) => state.competition);
@@ -31,6 +35,7 @@ const MatchEditingTable: FC = () => {
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
+    const [deleteMatch] = useDeleteMatchMutation();
 
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
@@ -102,6 +107,11 @@ const MatchEditingTable: FC = () => {
             });
             table.setCreatingRow(null); //exit creating mode
         };
+    const openDeleteConfirmModal = (row: MRT_Row<Match>) => {
+        if (window.confirm('Are you sure you want to delete this match?')) {
+            deleteMatch(row.original.id);
+        }
+    };
     const matches: Match[] = respondedMatches || [];
     const nations = respondedNations?.map((nation) => nation.value);
     const columns = useMemo<MRT_ColumnDef<Match>[]>(
@@ -109,6 +119,7 @@ const MatchEditingTable: FC = () => {
             {
                 accessorKey: 'id',
                 header: 'id',
+                Edit: () => null,
                 enableEditing: false,
             },
             {
@@ -241,6 +252,23 @@ const MatchEditingTable: FC = () => {
                 jackpot: false,
             },
         },
+        renderRowActions: ({ row, table }) => (
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <Tooltip title="Редактировать">
+                    <IconButton onClick={() => table.setEditingRow(row)}>
+                        <EditIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Удалить">
+                    <IconButton
+                        color="error"
+                        onClick={() => openDeleteConfirmModal(row)}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+            </Box>
+        ),
     });
     return <MaterialReactTable table={table} />;
 };

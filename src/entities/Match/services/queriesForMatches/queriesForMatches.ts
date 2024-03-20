@@ -44,6 +44,13 @@ export const matchesApi = createApi({
             },
             invalidatesTags: [{ type: 'Matches', id: 'LIST' }],
         }),
+        deleteMatch: builder.mutation<void, Match['id']>({
+            query: (id) => ({
+                url: `matches/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: (result, error, id) => [{ type: 'Matches', id }],
+        }),
     }),
 });
 
@@ -52,4 +59,5 @@ export const {
     useGetAllMatchesQuery,
     useUpdateMatchByIdMutation,
     useAddMatchMutation,
+    useDeleteMatchMutation,
 } = matchesApi;
