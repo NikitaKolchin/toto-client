@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { MatchStakeApi, Stake } from 'shared/api';
+import type { MatchStakeApi } from 'shared/api';
 import { MatchStake } from '../../models/MatchStake';
 export const stakesApi = createApi({
     reducerPath: 'stakesApi',
