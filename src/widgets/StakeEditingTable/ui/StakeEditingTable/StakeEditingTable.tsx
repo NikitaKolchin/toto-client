@@ -79,7 +79,7 @@ const StakeEditingTable: FC = () => {
     const defaultMRTOptions = getDefaultMRTOptions<MatchStake>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
-        enableEditing: true,
+        enableEditing: (row) => row.original.enable,
         columns,
         data: matchStakes,
         state: {

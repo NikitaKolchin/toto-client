@@ -6,6 +6,7 @@ export const stakesApi = createApi({
     reducerPath: 'stakesApi',
     baseQuery: baseQueryWithReauth,
     tagTypes: ['MatchStakes'],
+    refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getMatchStakeById: builder.query<MatchStakeApi, string>({
             query: (id) => `stakes/${id}`,
