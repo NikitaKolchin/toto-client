@@ -31,7 +31,7 @@ const Main: FC = () => {
                     textAlign: 'center',
                 }}
             >
-                <Title>Ты в CD! &#127881;</Title>
+                <Title>Ты в Тото! &#127881;</Title>
                 <Typography variant="h5" color="text.primary" component="p">
                     Ниже отражаются статусы участника Тото!
                 </Typography>
