@@ -14,5 +14,8 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: | 
-          node -v
-          git --version
+          cd /srv/www/toto-client
+          git pull
+          git status
+          npm install
+          npm run build
