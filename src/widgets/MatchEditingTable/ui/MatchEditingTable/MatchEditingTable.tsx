@@ -21,7 +21,7 @@ import { Box, Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import { trueFalse } from 'shared/const/select';
 import EditIcon from '@mui/icons-material/Edit';
@@ -124,7 +124,7 @@ const MatchEditingTable: FC = () => {
             },
             {
                 accessorKey: 'matchNo',
-                header: 'matchNo',
+                header: '#',
             },
             {
                 accessorKey: 'home.value',
@@ -134,7 +134,14 @@ const MatchEditingTable: FC = () => {
             },
             {
                 accessorKey: 'homeScore',
-                header: 'x',
+                header: '',
+                muiEditTextFieldProps: {
+                    type: 'number',
+                },
+            },
+            {
+                accessorKey: 'awayScore',
+                header: '',
                 muiEditTextFieldProps: {
                     type: 'number',
                 },
@@ -146,15 +153,37 @@ const MatchEditingTable: FC = () => {
                 editSelectOptions: nations,
             },
             {
-                accessorKey: 'awayScore',
-                header: 'г',
-                muiEditTextFieldProps: {
-                    type: 'number',
-                },
+                accessorFn: (row) => new Date(row.date),
+                id: 'date',
+                Cell: ({ cell }) =>
+                    dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY HH:mm'),
+                header: 'дата',
+                Edit: ({ column, row }) => (
+                    <LocalizationProvider
+                        dateAdapter={AdapterDayjs}
+                        adapterLocale="ru"
+                    >
+                        <DateTimePicker
+                            onChange={(newValue) => {
+                                row._valuesCache[column.id] = dayjs(newValue);
+                            }}
+                            ampm={false}
+                            label={column.columnDef.header}
+                            value={dayjs(row.getValue<Date>(column.id))}
+                            format="DD.MM.YYYY HH:mm"
+                            slotProps={{
+                                textField: {
+                                    variant: 'standard',
+                                    required: true,
+                                },
+                            }}
+                        />
+                    </LocalizationProvider>
+                ),
             },
             {
                 accessorKey: 'coefficient',
-                header: 'coefficient',
+                header: 'коэффициент',
             },
             {
                 accessorKey: 'enable',
@@ -180,31 +209,6 @@ const MatchEditingTable: FC = () => {
                         disabled
                         checked={row.original.visibility}
                     />
-                ),
-            },
-            {
-                accessorFn: (row) => new Date(row.date),
-                id: 'date',
-                Cell: ({ cell }) =>
-                    dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY'),
-                header: 'date',
-                Edit: ({ column, row }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            onChange={(newValue) => {
-                                row._valuesCache[column.id] = dayjs(newValue);
-                            }}
-                            label={column.columnDef.header}
-                            value={dayjs(row.getValue<Date>(column.id))}
-                            format="DD.MM.YYYY"
-                            slotProps={{
-                                textField: {
-                                    variant: 'standard',
-                                    required: true,
-                                },
-                            }}
-                        />
-                    </LocalizationProvider>
                 ),
             },
             {
@@ -238,7 +242,7 @@ const MatchEditingTable: FC = () => {
                         table.setCreatingRow(true);
                     }}
                 >
-                    Create New Match
+                    Добавить матч
                 </Button>
             ) : (
                 <></>
@@ -272,6 +276,11 @@ const MatchEditingTable: FC = () => {
                 </Tooltip>
             </Box>
         ),
+        displayColumnDefOptions: {
+            'mrt-row-actions': {
+                header: '',
+            },
+        },
     });
     return <MaterialReactTable table={table} />;
 };
