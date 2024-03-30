@@ -159,10 +159,7 @@ const MatchEditingTable: FC = () => {
                     dayjs(cell.getValue<Date>())?.format('DD.MM.YYYY HH:mm'),
                 header: 'дата',
                 Edit: ({ column, row }) => (
-                    <LocalizationProvider
-                        dateAdapter={AdapterDayjs}
-                        adapterLocale="ru"
-                    >
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                             onChange={(newValue) => {
                                 row._valuesCache[column.id] = dayjs(newValue);

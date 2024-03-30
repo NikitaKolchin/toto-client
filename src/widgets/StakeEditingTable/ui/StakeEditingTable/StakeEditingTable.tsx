@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useMemo } from 'react';
 import {
     MaterialReactTable,
@@ -17,16 +17,24 @@ import type { MatchStake } from 'entities/MatchStake';
 const StakeEditingTable: FC = () => {
     const { data: respondedStakes, isLoading } = useGetAllMatchStakesQuery();
     const [updateStake] = useUpdateMatchStakeByIdMutation();
+    const [validationErrors, setValidationErrors] = useState('');
     const handleSaveStake: MRT_TableOptions<MatchStake>['onEditingRowSave'] =
         async ({ values, table }) => {
-            console.log(values);
-
-            await updateStake({
+            const result = await updateStake({
                 id: values.id,
                 homeScore: Number(values['stake.homeScore']),
                 awayScore: Number(values['stake.awayScore']),
             });
-            table.setEditingRow(null); //exit editing mode
+            if ('data' in result) {
+                table.setEditingRow(null);
+            } else if ('error' in result) {
+                if ('data' in result.error) {
+                    const data: { message: string } = result.error.data as {
+                        message: string;
+                    };
+                    setValidationErrors(data.message);
+                }
+            }
         };
     const matchStakes: MatchStake[] = respondedStakes || [];
     const columns = useMemo<MRT_ColumnDef<MatchStake>[]>(
@@ -59,6 +67,8 @@ const StakeEditingTable: FC = () => {
                 header: 'Ставка home',
                 muiEditTextFieldProps: {
                     type: 'number',
+                    error: !!validationErrors,
+                    helperText: validationErrors,
                 },
             },
             {
@@ -66,6 +76,8 @@ const StakeEditingTable: FC = () => {
                 header: 'Ставка away',
                 muiEditTextFieldProps: {
                     type: 'number',
+                    error: !!validationErrors,
+                    helperText: validationErrors,
                 },
             },
             {
@@ -74,7 +86,7 @@ const StakeEditingTable: FC = () => {
                 enableEditing: false,
             },
         ],
-        [],
+        [validationErrors],
     );
     const defaultMRTOptions = getDefaultMRTOptions<MatchStake>();
     const table = useMaterialReactTable({
@@ -96,7 +108,7 @@ const StakeEditingTable: FC = () => {
                     {row.original.homeScore} : {row.original.awayScore}
                 </>
             ) : null,
-        // onEditingRowCancel: () => setValidationErrors({}),
+        onEditingRowCancel: () => setValidationErrors(''),
         displayColumnDefOptions: {
             'mrt-row-actions': {
                 header: '',
