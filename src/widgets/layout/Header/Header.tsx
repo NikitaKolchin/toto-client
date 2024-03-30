@@ -73,7 +73,7 @@ function Header() {
         setAccountAnchorEl(null);
         navigate(AppRoutes.LOGIN);
     };
-
+    const secondaryMainColor = theme.palette.secondary.main;
     const HeaderLink: FC<
         PropsWithChildren<TotoMenuItem & { isAuth: boolean }>
     > = (props) => {
@@ -82,7 +82,7 @@ function Header() {
                 <Typography
                     onClick={() => navigate(props.value)}
                     variant="h6"
-                    color={theme.palette.text.secondary}
+                    color={secondaryMainColor}
                     sx={{
                         textDecoration: 'none',
                         cursor: 'pointer',
@@ -99,7 +99,7 @@ function Header() {
         return (
             <Typography
                 variant="h6"
-                color={theme.palette.text.secondary}
+                color={secondaryMainColor}
                 sx={{
                     '&:hover': {
                         textDecoration: 'underline',

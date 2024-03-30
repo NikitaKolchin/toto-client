@@ -10,7 +10,8 @@ export const lightTheme = createTheme({
         },
         text: {
             primary: colors.blue[800],
-            secondary: colors.blue[50],
+            secondary: colors.blue[400],
+            disabled: colors.blue[200],
         },
     },
 });
@@ -20,10 +21,10 @@ export const darkTheme = createTheme({
         mode: 'dark',
         secondary: { main: colors.blue[50] },
         background: {
-            paper: '#222',
+            paper: colors.grey[900],
         },
         text: {
-            primary: '#fff',
+            primary: colors.grey[50],
         },
     },
 });
