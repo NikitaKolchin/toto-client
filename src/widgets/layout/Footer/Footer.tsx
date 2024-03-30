@@ -1,8 +1,9 @@
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, useTheme } from '@mui/material';
 
 type Props = object;
 
 const Footer = (props: Props) => {
+    const theme = useTheme();
     return (
         <Paper
             sx={{
@@ -18,7 +19,7 @@ const Footer = (props: Props) => {
         >
             <Typography
                 variant="body2"
-                color="text.secondary"
+                color={theme.palette.text.primary}
                 align="center"
                 {...props}
             >
