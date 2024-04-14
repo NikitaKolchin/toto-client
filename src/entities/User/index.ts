@@ -32,4 +32,9 @@ export {
     rolesApi,
 } from './services/queriesForRoles/queriesForRoles';
 
+export {
+    useGetResultQuery,
+    resultApi,
+} from './services/queriesForResult/queriesForResult';
+
 export { UserDataList } from './ui/UserDataList/UserDataList';
