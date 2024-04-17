@@ -14,14 +14,18 @@ import { Match } from 'shared/api';
 
 const ResultTable: FC = () => {
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
-    const { data: result } = useGetResultQuery();
+    // const { data: result } = useGetResultQuery();
+    const result = [
+        { 1: '2-0', 2: '3-0' },
+        { 1: '3-0', 2: '4-0' },
+    ];
 
     const matches: Match[] = useMemo(
         () => respondedMatches || [],
         [respondedMatches],
     );
-    const userResults: Match[] = result || [];
-    const columns = useMemo<MRT_ColumnDef<Match>[]>(
+    const userResults = result || [];
+    const columns = useMemo<MRT_ColumnDef<any>[]>(
         () =>
             matches.map((match) => ({
                 accessorKey: match.matchNo.toString(),
@@ -29,7 +33,7 @@ const ResultTable: FC = () => {
             })),
         [matches],
     );
-    const defaultMRTOptions = getDefaultMRTOptions<Match>();
+    const defaultMRTOptions = getDefaultMRTOptions<any>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
         enableEditing: false,
