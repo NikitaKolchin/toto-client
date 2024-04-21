@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { theme } from 'entities/Theme';
 import { competition, competitionsApi } from 'entities/Competition';
-import { user, usersApi, authApi, rolesApi } from 'entities/User';
+import { user, usersApi, authApi, rolesApi, resultApi } from 'entities/User';
 import { settingsApi } from 'entities/Setting';
 import { nationsApi } from 'entities/Nation';
 import { matchesApi } from 'entities/Match';
@@ -20,6 +20,7 @@ const store = configureStore({
         [settingsApi.reducerPath]: settingsApi.reducer,
         [matchesApi.reducerPath]: matchesApi.reducer,
         [stakesApi.reducerPath]: stakesApi.reducer,
+        [resultApi.reducerPath]: resultApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -32,7 +33,8 @@ const store = configureStore({
             .concat(nationsApi.middleware)
             .concat(settingsApi.middleware)
             .concat(matchesApi.middleware)
-            .concat(stakesApi.middleware),
+            .concat(stakesApi.middleware)
+            .concat(resultApi.middleware),
 });
 
 export default store;

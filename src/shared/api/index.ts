@@ -4,6 +4,7 @@ export type { MessageResponse } from './types/MessageResponse';
 export type { TokensResponse } from './types/TokensResponse';
 export type { User } from './models/User';
 export type { Role } from './models/Role';
+export type { Result } from './models/Result';
 export type { Stake } from './models/Stake';
 export type { MatchStakeApi } from './models/MatchStakeApi';
 export type { Setting } from './models/Setting';

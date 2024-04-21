@@ -1,12 +1,12 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Match, baseQueryWithReauth } from 'shared/api';
+import { Result, baseQueryWithReauth } from 'shared/api';
 export const resultApi = createApi({
-    reducerPath: 'UsersApi',
+    reducerPath: 'ResultApi',
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Users'],
+    tagTypes: ['Result'],
     refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
-        getResult: builder.query<Match[], void>({
+        getResult: builder.query<Result[], void>({
             query: () => `users/result`,
         }),
     }),
