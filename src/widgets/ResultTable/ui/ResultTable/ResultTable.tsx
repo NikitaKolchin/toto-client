@@ -21,7 +21,13 @@ const ResultTable: FC = () => {
             (respondedMatches || [])
                 .map((match) => ({
                     accessorKey: match.matchNo.toString(),
-                    header: match.home.value + '-' + match.away.value,
+                    header:
+                        match.home.value +
+                        '-' +
+                        match.away.value +
+                        '(' +
+                        match.jackpot +
+                        ')',
                 }))
                 .concat({
                     accessorKey: 'alias',
