@@ -4,5 +4,6 @@ export {
     useUpdateNationByIdMutation,
     useAddNationMutation,
     useGetNationsByCurrentCompetitionQuery,
+    useUploadNationsMutation,
     nationsApi,
 } from './services/queriesForNations/queriesForNations';

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { FC, useState } from 'react';
 import { useMemo } from 'react';
 import {
@@ -5,17 +6,20 @@ import {
     useMaterialReactTable,
     type MRT_ColumnDef,
     MRT_TableOptions,
+    MRT_GlobalFilterTextField,
+    MRT_ToggleFiltersButton,
 } from 'material-react-table';
 
 import {
     useUpdateNationByIdMutation,
     useGetAllNationsQuery,
+    useUploadNationsMutation,
 } from 'entities/Nation';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Competition, Nation } from 'shared/api';
 import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
 import { useGetAllCompetitionsQuery } from 'entities/Competition';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -27,6 +31,7 @@ function validateNation(nation: Nation) {
 
 const NationEditingTable: FC = () => {
     const { data: respondedNations, isLoading } = useGetAllNationsQuery();
+    const [uploadNations] = useUploadNationsMutation();
     const [updateNation] = useUpdateNationByIdMutation();
     const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
         useGetAllCompetitionsQuery();
@@ -125,6 +130,43 @@ const NationEditingTable: FC = () => {
                 secondName: false,
                 id: false,
             },
+        },
+        renderTopToolbar: ({ table }) => {
+            const handleUpload = () => {
+                uploadNations();
+            };
+            return (
+                <Box
+                    sx={() => ({
+                        display: 'flex',
+                        gap: '0.5rem',
+                        p: '8px',
+                        justifyContent: 'space-between',
+                    })}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: '0.5rem',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <MRT_GlobalFilterTextField table={table} />
+                        <MRT_ToggleFiltersButton table={table} />
+                    </Box>
+                    <Box>
+                        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                            <Button
+                                variant="contained"
+                                disabled={nations.length > 0}
+                                onClick={handleUpload}
+                            >
+                                Upload
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            );
         },
     });
     return <MaterialReactTable table={table} />;

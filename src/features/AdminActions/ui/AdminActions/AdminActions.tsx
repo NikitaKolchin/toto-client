@@ -37,7 +37,7 @@ const AdminActions: FC = () => {
     return (
         <Box className={classNames.actions}>
             {actions.map(({ name, route, icon }) => (
-                <Button component={Link} to={route} startIcon={icon}>
+                <Button key={name} component={Link} to={route} startIcon={icon}>
                     {matchThen600 ? name : ''}
                 </Button>
             ))}

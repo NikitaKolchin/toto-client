@@ -102,7 +102,7 @@ const MatchEditingTable: FC = () => {
                     )?.id,
                 ),
                 competitionId: Number(competition.id),
-                price: null,
+                prize: null,
                 jackpot: null,
             });
             table.setCreatingRow(null); //exit creating mode
@@ -209,7 +209,7 @@ const MatchEditingTable: FC = () => {
                 ),
             },
             {
-                accessorKey: 'price',
+                accessorKey: 'prize',
                 header: 'Стоимость',
                 enableEditing: false,
             },
@@ -252,7 +252,7 @@ const MatchEditingTable: FC = () => {
         initialState: {
             columnVisibility: {
                 id: false,
-                price: false,
+                prize: false,
                 jackpot: false,
             },
         },

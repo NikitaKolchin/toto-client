@@ -7,7 +7,6 @@ type Props = {
 };
 
 const UserRoleList: FC<Props> = ({ roles }) => {
-    console.log(roles);
     return (
         <Paper>
             назначенные роли:{' '}

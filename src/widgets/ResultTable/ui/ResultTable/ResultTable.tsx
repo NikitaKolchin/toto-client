@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useMemo } from 'react';
 import {
+    MRT_Cell,
     MaterialReactTable,
     useMaterialReactTable,
     type MRT_ColumnDef,
@@ -8,32 +9,45 @@ import {
 
 import { useGetAllMatchesQuery } from 'entities/Match';
 import { useGetResultQuery } from 'entities/User';
-
+import dayjs from 'dayjs';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Result } from 'shared/api';
+import { Match, Result } from 'shared/api';
+
+const formatDate = (date: string) => {
+    return dayjs(date).format('DD.MM.YYYY HH:mm');
+};
 
 const ResultTable: FC = () => {
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: result } = useGetResultQuery();
-
+    const additionalHeaders: MRT_ColumnDef<Result>[] = useMemo(
+        () => [
+            {
+                accessorKey: 'alias',
+                header: 'Alias',
+            },
+        ],
+        [],
+    );
     const headers: MRT_ColumnDef<Result>[] = useMemo(
-        () =>
-            (respondedMatches || [])
-                .map((match) => ({
-                    accessorKey: match.matchNo.toString(),
-                    header:
-                        match.home.value +
-                        '-' +
-                        match.away.value +
-                        '(' +
-                        match.jackpot +
-                        ')',
-                }))
-                .concat({
-                    accessorKey: 'alias',
-                    header: 'Alias',
-                }),
-        [respondedMatches],
+        () => [
+            ...(respondedMatches || ([] as Match[])).map((match) => ({
+                accessorKey: `${match.matchNo.toString()}`,
+                header: `${match.home?.value} - ${match.away?.value}
+                    ${match.homeScore} - ${match.awayScore} (${
+                        match.jackpot
+                    }) (${match.prize}) (${formatDate(match.date)})`,
+                Cell: ({ cell }: { cell: MRT_Cell<Result, unknown> }) => (
+                    <>
+                        {cell.getValue<Result[number]>()?.stake}{' '}
+                        {cell.getValue<Result[number]>()?.money}{' '}
+                        {cell.getValue<Result[number]>()?.points}
+                    </>
+                ),
+            })),
+            ...additionalHeaders,
+        ],
+        [additionalHeaders, respondedMatches],
     );
     const userResults = result || [];
     const columns = useMemo<MRT_ColumnDef<Result>[]>(() => headers, [headers]);
@@ -51,7 +65,7 @@ const ResultTable: FC = () => {
         initialState: {
             columnVisibility: {
                 id: false,
-                price: false,
+                prize: false,
                 jackpot: false,
             },
         },

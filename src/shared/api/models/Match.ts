@@ -16,7 +16,7 @@ type Match = {
     homeId: number;
     awayId: number;
     competitionId: Competition['id'];
-    price: number | null;
+    prize: number | null;
     jackpot: number | null;
 };
 
