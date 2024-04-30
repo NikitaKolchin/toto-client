@@ -1,5 +1,5 @@
 import type { Competition } from './Competition';
-import { Nation } from './Nation';
+import type { Nation } from './Nation';
 
 type Match = {
     id: number;
