@@ -7,6 +7,7 @@ export type { Role } from './models/Role';
 export type { Result } from './models/Result';
 export type { Stake } from './models/Stake';
 export type { MatchStakeApi } from './models/MatchStakeApi';
+export type { ResultHeader } from './models/ResultHeader';
 export type { Setting } from './models/Setting';
 export type { Competition } from './models/Competition';
 export type { Nation } from './models/Nation';

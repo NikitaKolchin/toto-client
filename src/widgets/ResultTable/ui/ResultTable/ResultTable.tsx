@@ -7,45 +7,113 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { useGetAllMatchesQuery } from 'entities/Match';
+import { useGetAllMatchesForResultQuery } from 'entities/Match';
 import { useGetResultQuery } from 'entities/User';
-import dayjs from 'dayjs';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Match, Result } from 'shared/api';
+import { Result } from 'shared/api';
+import dayjs from 'dayjs';
+import { Box, Typography } from '@mui/material';
 
 const formatDate = (date: string) => {
     return dayjs(date).format('DD.MM.YYYY HH:mm');
 };
 
 const ResultTable: FC = () => {
-    const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
+    const { data: respondedMatches, isLoading } =
+        useGetAllMatchesForResultQuery();
     const { data: result } = useGetResultQuery();
     const additionalHeaders: MRT_ColumnDef<Result>[] = useMemo(
         () => [
             {
                 accessorKey: 'alias',
-                header: 'Alias',
+                header: 'имя',
+                muiTableBodyCellProps: {
+                    sx: {
+                        textAlign: 'left',
+                        fontWeight: 700,
+                    },
+                },
+            },
+            {
+                accessorKey: 'userPrize',
+                header: 'выиграно, ₽',
+            },
+            {
+                accessorKey: 'pointsSum',
+                header: 'очки',
             },
         ],
         [],
     );
     const headers: MRT_ColumnDef<Result>[] = useMemo(
         () => [
-            ...(respondedMatches || ([] as Match[])).map((match) => ({
-                accessorKey: `${match.matchNo.toString()}`,
-                header: `${match.home?.value} - ${match.away?.value}
-                    ${match.homeScore} - ${match.awayScore} (${
-                        match.jackpot
-                    }) (${match.prize}) (${formatDate(match.date)})`,
-                Cell: ({ cell }: { cell: MRT_Cell<Result, unknown> }) => (
-                    <>
-                        {cell.getValue<Result[number]>()?.stake}{' '}
-                        {cell.getValue<Result[number]>()?.money}{' '}
-                        {cell.getValue<Result[number]>()?.points}
-                    </>
-                ),
-            })),
             ...additionalHeaders,
+            ...(respondedMatches || []).map((match) => ({
+                accessorKey: `${match.matchNo.toString()}`,
+                header: '',
+                Header: () => (
+                    <Box
+                        display={'flex'}
+                        flexDirection={'column'}
+                        alignItems={'center'}
+                    >
+                        <Typography fontWeight={700}>
+                            {match.home?.value && match.away?.value && (
+                                <>{`${match.home?.value} - ${match.away?.value}`}</>
+                            )}
+                        </Typography>
+                        {match.stat?.homeStakes !== undefined &&
+                        match.homeScore !== null ? (
+                            <>
+                                {' '}
+                                <Typography>
+                                    {match.homeScore !== null &&
+                                        match.awayScore !== null && (
+                                            <b>{` ${match.homeScore} - ${match.awayScore} `}</b>
+                                        )}
+                                    {` (🏆 ${match.prize} ₽)`}
+                                </Typography>
+                                <Typography>
+                                    {match.stat?.homeStakes !== undefined &&
+                                        match.stat?.drawStakes !== undefined &&
+                                        match.stat?.awayStakes !==
+                                            undefined && (
+                                            <>
+                                                {' '}
+                                                {`📈${match.stat?.homeStakes} - ${match.stat?.drawStakes} - ${match.stat?.awayStakes}`}
+                                            </>
+                                        )}
+                                    {` (🎰 ${match.jackpot} ₽)`}
+                                </Typography>
+                            </>
+                        ) : (
+                            <Typography>{` (🏆 ${match.prize} ₽ ;🎰 ${match.jackpot} ₽ )`}</Typography>
+                        )}
+                        <Typography>📅{formatDate(match.date)}</Typography>
+                    </Box>
+                ),
+                Cell: ({ cell }: { cell: MRT_Cell<Result, unknown> }) =>
+                    cell.getValue<Result[number]>()?.stake && (
+                        <>
+                            {cell.getValue<Result[number]>()?.stake}{' '}
+                            {cell.getValue<Result[number]>()?.points ? (
+                                <>
+                                    {' '}
+                                    {`(${cell.getValue<Result[number]>()
+                                        ?.points}`}
+                                    {cell.getValue<Result[number]>()?.money ? (
+                                        <>{`; ${cell.getValue<Result[number]>()
+                                            ?.money}₽)`}</>
+                                    ) : (
+                                        <>{')'}</>
+                                    )}
+                                </>
+                            ) : (
+                                <></>
+                            )}
+                        </>
+                    ),
+            })),
         ],
         [additionalHeaders, respondedMatches],
     );
@@ -65,10 +133,15 @@ const ResultTable: FC = () => {
         initialState: {
             columnVisibility: {
                 id: false,
-                prize: false,
-                jackpot: false,
             },
         },
+        muiTableBodyCellProps: ({ cell }) => ({
+            sx: {
+                textAlign: 'center',
+                backgroundColor:
+                    cell.getValue<Result[number]>()?.color ?? 'transparent',
+            },
+        }),
         displayColumnDefOptions: {
             'mrt-row-actions': {
                 header: '',

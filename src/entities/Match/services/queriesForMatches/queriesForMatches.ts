@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
 import type { Match } from 'shared/api';
+import { ResultHeader } from 'shared/api';
 export const matchesApi = createApi({
     reducerPath: 'matchesApi',
     baseQuery: baseQueryWithReauth,
@@ -11,6 +12,18 @@ export const matchesApi = createApi({
         }),
         getAllMatches: builder.query<Match[], void>({
             query: () => `matches`,
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.map(
+                              ({ id }) => ({ type: 'Matches', id }) as const,
+                          ),
+                          { type: 'Matches', id: 'LIST' },
+                      ]
+                    : [{ type: 'Matches', id: 'LIST' }],
+        }),
+        getAllMatchesForResult: builder.query<ResultHeader[], void>({
+            query: () => `matches/resultHeaders`,
             providesTags: (result) =>
                 result
                     ? [
@@ -57,6 +70,7 @@ export const matchesApi = createApi({
 export const {
     useGetMatchByIdQuery,
     useGetAllMatchesQuery,
+    useGetAllMatchesForResultQuery,
     useUpdateMatchByIdMutation,
     useAddMatchMutation,
     useDeleteMatchMutation,

@@ -3,6 +3,7 @@ export {
     useGetAllMatchStakesQuery,
     useUpdateMatchStakeByIdMutation,
     useAddMatchStakeMutation,
+    useUpdateStakesResultMutation,
     stakesApi,
 } from './services/queriesForMatchStakes/queriesForMatchStakes';
 

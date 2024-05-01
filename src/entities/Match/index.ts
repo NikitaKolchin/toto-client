@@ -4,5 +4,6 @@ export {
     useUpdateMatchByIdMutation,
     useAddMatchMutation,
     useDeleteMatchMutation,
+    useGetAllMatchesForResultQuery,
     matchesApi,
 } from './services/queriesForMatches/queriesForMatches';
