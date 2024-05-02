@@ -36,7 +36,8 @@ const MatchEditingTable: FC = () => {
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
     const [deleteMatch] = useDeleteMatchMutation();
-    const getScore = (score: string) => (score === '' ? null : Number(score));
+    const getScore = (score: string) =>
+        score === '' || score === null ? null : Number(score);
 
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
