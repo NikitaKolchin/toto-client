@@ -36,6 +36,7 @@ const MatchEditingTable: FC = () => {
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
     const [deleteMatch] = useDeleteMatchMutation();
+    const getScore = (score: string) => (score === '' ? null : Number(score));
 
     const handleSaveMatch: MRT_TableOptions<Match>['onEditingRowSave'] =
         async ({ values, table }) => {
@@ -51,8 +52,8 @@ const MatchEditingTable: FC = () => {
             } = values;
             await updateMatch({
                 id,
-                awayScore: awayScore ? Number(awayScore) : null,
-                homeScore: homeScore ? Number(homeScore) : null,
+                awayScore: getScore(awayScore),
+                homeScore: getScore(homeScore),
                 coefficient: Number(coefficient),
                 date,
                 matchNo: Number(matchNo),
@@ -84,8 +85,8 @@ const MatchEditingTable: FC = () => {
                 visibility,
             } = values;
             await addMatch({
-                awayScore: awayScore ? Number(awayScore) : null,
-                homeScore: homeScore ? Number(homeScore) : null,
+                awayScore: getScore(awayScore),
+                homeScore: getScore(homeScore),
                 coefficient: Number(coefficient),
                 date,
                 matchNo: Number(matchNo),
