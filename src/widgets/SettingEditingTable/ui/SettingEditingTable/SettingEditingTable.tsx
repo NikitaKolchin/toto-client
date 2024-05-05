@@ -13,9 +13,8 @@ import {
 } from 'entities/Setting';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { trueFalse } from 'shared/const/select';
-import { Button, Checkbox } from '@mui/material';
+import { Checkbox } from '@mui/material';
 import { Setting } from 'shared/api';
-import { useUpdateStakesResultMutation } from 'entities/MatchStake';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -30,7 +29,6 @@ function validateSetting(setting: Setting) {
 const SettingEditingTable: FC = () => {
     const { data: respondedSettings, isLoading } = useGetAllSettingsQuery();
     const [updateSetting] = useUpdateSettingByIdMutation();
-    const [updateResults] = useUpdateStakesResultMutation();
     const [validationErrors, setValidationErrors] = useState<
         Record<string, string | undefined>
     >({});
@@ -120,11 +118,6 @@ const SettingEditingTable: FC = () => {
         onEditingRowSave: handleSaveSetting,
         onEditingRowCancel: () => setValidationErrors({}),
         onCreatingRowCancel: () => setValidationErrors({}),
-        renderTopToolbarCustomActions: () => (
-            <Button variant="contained" onClick={() => updateResults()}>
-                Update results
-            </Button>
-        ),
         initialState: {
             columnVisibility: {
                 id: false,

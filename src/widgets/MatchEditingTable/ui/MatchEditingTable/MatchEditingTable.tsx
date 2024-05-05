@@ -26,6 +26,7 @@ import dayjs from 'dayjs';
 import { trueFalse } from 'shared/const/select';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useUpdateStakesResultMutation } from 'entities/MatchStake';
 
 const MatchEditingTable: FC = () => {
     const competition = useAppSelector((state) => state.competition);
@@ -33,6 +34,7 @@ const MatchEditingTable: FC = () => {
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
+    const [updateResults] = useUpdateStakesResultMutation();
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
     const [deleteMatch] = useDeleteMatchMutation();
@@ -235,14 +237,20 @@ const MatchEditingTable: FC = () => {
         createDisplayMode: 'modal',
         renderTopToolbarCustomActions: ({ table }) =>
             isAdmin ? (
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        table.setCreatingRow(true);
-                    }}
-                >
-                    Добавить матч
-                </Button>
+                <Box display={'flex'} justifyContent={'flex-start'}>
+                    <Button
+                        sx={{ mr: 1 }}
+                        variant="contained"
+                        onClick={() => {
+                            table.setCreatingRow(true);
+                        }}
+                    >
+                        Добавить матч
+                    </Button>{' '}
+                    <Button variant="contained" onClick={() => updateResults()}>
+                        Обновить результаты
+                    </Button>
+                </Box>
             ) : (
                 <></>
             ),
