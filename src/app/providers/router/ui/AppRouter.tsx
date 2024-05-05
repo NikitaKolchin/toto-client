@@ -1,11 +1,16 @@
-import { Suspense, useCallback } from 'react';
+import { Suspense, useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import { AppRoutesProps, routeConfig } from '../config/routeConfig';
 import { Loading } from 'shared/ui/Loading';
 import { MainLayout } from 'widgets/layout';
+import { useCheckAuthMutation } from 'entities/User';
 
 const AppRouter = () => {
+    const [checkAuth] = useCheckAuthMutation();
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
     const renderWithWrapper = useCallback((route: AppRoutesProps) => {
         return route.authOnly ? (
             <Route
