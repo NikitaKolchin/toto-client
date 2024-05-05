@@ -80,7 +80,8 @@ function Header() {
         if (props.isAuth) {
             return (
                 <Typography
-                    onClick={() => navigate(props.value)}
+                    //TD add debounce
+                    onClick={() => setTimeout(() => navigate(props.value), 300)}
                     variant="h6"
                     color={secondaryMainColor}
                     sx={{
