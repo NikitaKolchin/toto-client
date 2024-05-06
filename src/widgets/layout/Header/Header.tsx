@@ -15,6 +15,7 @@ import { useLogoutMutation } from 'entities/User';
 import { Button } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
 import { AppRoutes } from 'shared/const/routes';
+import { useDebouncedCallback as debounce } from 'use-debounce';
 
 type TotoMenuItem = {
     name: string;
@@ -80,8 +81,7 @@ function Header() {
         if (props.isAuth) {
             return (
                 <Typography
-                    //TD add debounce
-                    onClick={() => setTimeout(() => navigate(props.value), 300)}
+                    onClick={debounce(() => navigate(props.value), 300)}
                     variant="h6"
                     color={secondaryMainColor}
                     sx={{
