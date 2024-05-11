@@ -34,7 +34,8 @@ const MatchEditingTable: FC = () => {
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
-    const [updateResults] = useUpdateStakesResultMutation();
+    const [updateResults, { isLoading: isLoadingResults }] =
+        useUpdateStakesResultMutation();
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
     const [deleteMatch] = useDeleteMatchMutation();
@@ -247,7 +248,11 @@ const MatchEditingTable: FC = () => {
                     >
                         Добавить матч
                     </Button>{' '}
-                    <Button variant="contained" onClick={() => updateResults()}>
+                    <Button
+                        variant="contained"
+                        onClick={() => updateResults()}
+                        disabled={isLoadingResults}
+                    >
                         Обновить результаты
                     </Button>
                 </Box>
