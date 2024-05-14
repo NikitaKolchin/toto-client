@@ -86,8 +86,10 @@ const ResultTable: FC = () => {
                                     {` (🎰 ${match.jackpot} ₽)`}
                                 </Typography>
                             </>
-                        ) : (
+                        ) : match.prize !== null && match.jackpot !== 0 ? (
                             <Typography>{` (🏆 ${match.prize} ₽ ;🎰 ${match.jackpot} ₽ )`}</Typography>
+                        ) : (
+                            <></>
                         )}
                         <Typography>📅{formatDate(match.date)}</Typography>
                     </Box>
