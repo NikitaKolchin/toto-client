@@ -13,6 +13,7 @@ import {
 } from 'entities/MatchStake';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import type { MatchStake } from 'entities/MatchStake';
+import { Box } from '@mui/material';
 
 const StakeEditingTable: FC = () => {
     const { data: respondedStakes, isLoading } = useGetAllMatchStakesQuery();
@@ -57,14 +58,14 @@ const StakeEditingTable: FC = () => {
             {
                 accessorKey: 'home.value',
                 enableEditing: false,
-                header: 'home',
+                header: 'хозяева',
                 muiTableBodyCellProps: {
                     align: 'left',
                 },
             },
             {
                 accessorKey: 'stake.homeScore',
-                header: 'Ставка home',
+                header: '',
                 muiEditTextFieldProps: {
                     type: 'number',
                     error: !!validationErrors,
@@ -73,7 +74,7 @@ const StakeEditingTable: FC = () => {
             },
             {
                 accessorKey: 'stake.awayScore',
-                header: 'Ставка away',
+                header: '',
                 muiEditTextFieldProps: {
                     type: 'number',
                     error: !!validationErrors,
@@ -82,7 +83,7 @@ const StakeEditingTable: FC = () => {
             },
             {
                 accessorKey: 'away.value',
-                header: 'away',
+                header: 'гости',
                 enableEditing: false,
             },
         ],
@@ -104,9 +105,10 @@ const StakeEditingTable: FC = () => {
         renderDetailPanel: ({ row }) =>
             row.original.homeScore !== null &&
             row.original.awayScore !== null ? (
-                <>
-                    {row.original.homeScore} : {row.original.awayScore}
-                </>
+                <Box ml={12}>
+                    Матч сыгран, счёт {row.original.homeScore} :{' '}
+                    {row.original.awayScore}
+                </Box>
             ) : null,
         onEditingRowCancel: () => setValidationErrors(''),
         displayColumnDefOptions: {
