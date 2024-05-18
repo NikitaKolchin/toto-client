@@ -31,7 +31,8 @@ function validateNation(nation: Nation) {
 
 const NationEditingTable: FC = () => {
     const { data: respondedNations, isLoading } = useGetAllNationsQuery();
-    const [uploadNations] = useUploadNationsMutation();
+    const [uploadNations, { isLoading: isLoadingUploadNations }] =
+        useUploadNationsMutation();
     const [updateNation] = useUpdateNationByIdMutation();
     const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
         useGetAllCompetitionsQuery();
@@ -158,7 +159,7 @@ const NationEditingTable: FC = () => {
                         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                             <Button
                                 variant="contained"
-                                disabled={nations.length > 0}
+                                disabled={isLoadingUploadNations}
                                 onClick={handleUpload}
                             >
                                 Upload
