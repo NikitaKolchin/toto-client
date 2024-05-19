@@ -13,6 +13,7 @@ import {
     useGetAllMatchesQuery,
     useAddMatchMutation,
     useDeleteMatchMutation,
+    useUploadMatchesMutation,
 } from 'entities/Match';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Match } from 'shared/api';
@@ -32,6 +33,8 @@ const MatchEditingTable: FC = () => {
     const competition = useAppSelector((state) => state.competition);
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
+    const [uploadMatches, { isLoading: isLoadingUploadMatches }] =
+        useUploadMatchesMutation();
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
     const [updateResults, { isLoading: isLoadingResults }] =
@@ -249,11 +252,19 @@ const MatchEditingTable: FC = () => {
                         Добавить матч
                     </Button>{' '}
                     <Button
+                        sx={{ mr: 1 }}
                         variant="contained"
                         onClick={() => updateResults()}
                         disabled={isLoadingResults}
                     >
                         Обновить результаты
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => uploadMatches()}
+                        disabled={isLoadingUploadMatches}
+                    >
+                        Загрузить матчи
                     </Button>
                 </Box>
             ) : (
