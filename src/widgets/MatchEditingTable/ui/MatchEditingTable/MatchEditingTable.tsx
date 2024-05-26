@@ -28,13 +28,16 @@ import { trueFalse } from 'shared/const/select';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useUpdateStakesResultMutation } from 'entities/MatchStake';
+import { ShowMessage } from 'shared/ui/ShowMessage';
 
 const MatchEditingTable: FC = () => {
     const competition = useAppSelector((state) => state.competition);
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
-    const [uploadMatches, { isLoading: isLoadingUploadMatches }] =
-        useUploadMatchesMutation();
+    const [
+        uploadMatches,
+        { isLoading: isLoadingUploadMatches, data: uploadMatchesResult },
+    ] = useUploadMatchesMutation();
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
     const [updateResults, { isLoading: isLoadingResults }] =
@@ -266,6 +269,13 @@ const MatchEditingTable: FC = () => {
                     >
                         Загрузить матчи
                     </Button>
+                    {uploadMatchesResult && (
+                        <ShowMessage
+                            error={undefined}
+                            message={uploadMatchesResult.done.toString()}
+                            severity="info"
+                        />
+                    )}
                 </Box>
             ) : (
                 <></>
