@@ -30,7 +30,7 @@ const menuItems: TotoMenuItem[] = [
 
 function Header() {
     const [logout] = useLogoutMutation();
-    const { isAuth } = useAppSelector((state) => state.user);
+    const { isAuth, isActivated } = useAppSelector((state) => state.user);
     const navigate = useNavigate();
     const theme = useTheme();
     const matchThen600 = useMediaQuery(theme.breakpoints.up('sm'));
@@ -76,9 +76,11 @@ function Header() {
     };
     const secondaryMainColor = theme.palette.secondary.main;
     const HeaderLink: FC<
-        PropsWithChildren<TotoMenuItem & { isAuth: boolean }>
+        PropsWithChildren<
+            TotoMenuItem & { isAuth: boolean; isActivated: boolean }
+        >
     > = (props) => {
-        if (props.isAuth) {
+        if (props.isAuth && props.isActivated) {
             return (
                 <Typography
                     onClick={debounce(() => navigate(props.value), 300)}
@@ -117,7 +119,7 @@ function Header() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                    {!matchThen600 && (
+                    {!matchThen600 && isAuth && isActivated && (
                         <>
                             <IconButton
                                 size="large"
@@ -173,6 +175,7 @@ function Header() {
                                 <HeaderLink
                                     key={item.value}
                                     isAuth={isAuth}
+                                    isActivated={isActivated}
                                     {...item}
                                 >
                                     {item.name}

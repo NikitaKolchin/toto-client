@@ -11,7 +11,7 @@ export const stakesApi = createApi({
         getMatchStakeById: builder.query<MatchStakeApi, string>({
             query: (id) => `stakes/${id}`,
         }),
-        updateStakesResult: builder.mutation<{ done: [] }, void>({
+        updateStakesResult: builder.mutation<{ message: string }, void>({
             query: () => `stakes/money`,
         }),
         getAllMatchStakes: builder.query<MatchStake[], void>({

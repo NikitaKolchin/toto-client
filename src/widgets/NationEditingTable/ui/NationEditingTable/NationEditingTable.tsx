@@ -20,6 +20,7 @@ import { Competition, Nation } from 'shared/api';
 import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
 import { useGetAllCompetitionsQuery } from 'entities/Competition';
 import { Box, Button, Typography } from '@mui/material';
+import { ShowMessage } from 'shared/ui/ShowMessage';
 
 const validateRequired = (value: string) => !!value.length;
 
@@ -31,8 +32,14 @@ function validateNation(nation: Nation) {
 
 const NationEditingTable: FC = () => {
     const { data: respondedNations, isLoading } = useGetAllNationsQuery();
-    const [uploadNations, { isLoading: isLoadingUploadNations }] =
-        useUploadNationsMutation();
+    const [
+        uploadNations,
+        {
+            isLoading: isLoadingUploadNations,
+            error: uploadNationsError,
+            data: uploadNationsData,
+        },
+    ] = useUploadNationsMutation();
     const [updateNation] = useUpdateNationByIdMutation();
     const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
         useGetAllCompetitionsQuery();
@@ -156,6 +163,14 @@ const NationEditingTable: FC = () => {
                         <MRT_ToggleFiltersButton table={table} />
                     </Box>
                     <Box>
+                        {(uploadNationsData || uploadNationsError) && (
+                            <ShowMessage
+                                error={uploadNationsError}
+                                message={uploadNationsData?.message}
+                                severity="info"
+                                absolute={true}
+                            />
+                        )}
                         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
                             <Button
                                 variant="contained"

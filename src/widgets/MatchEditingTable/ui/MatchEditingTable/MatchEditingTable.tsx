@@ -36,12 +36,22 @@ const MatchEditingTable: FC = () => {
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
     const [
         uploadMatches,
-        { isLoading: isLoadingUploadMatches, data: uploadMatchesResult },
+        {
+            isLoading: isLoadingUploadMatches,
+            data: uploadMatchesResult,
+            error: uploadMatchesError,
+        },
     ] = useUploadMatchesMutation();
     const { data: respondedMatches, isLoading } = useGetAllMatchesQuery();
     const { data: respondedNations } = useGetNationsByCurrentCompetitionQuery();
-    const [updateResults, { isLoading: isLoadingResults }] =
-        useUpdateStakesResultMutation();
+    const [
+        updateResults,
+        {
+            isLoading: isLoadingResults,
+            error: updateResultsError,
+            data: updateResultsData,
+        },
+    ] = useUpdateStakesResultMutation();
     const [updateMatch] = useUpdateMatchByIdMutation();
     const [addMatch] = useAddMatchMutation();
     const [deleteMatch] = useDeleteMatchMutation();
@@ -232,6 +242,7 @@ const MatchEditingTable: FC = () => {
         ],
         [nations],
     );
+    console.log('uploadMatchesError', uploadMatchesError, uploadMatchesResult);
     const defaultMRTOptions = getDefaultMRTOptions<Match>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
@@ -269,11 +280,20 @@ const MatchEditingTable: FC = () => {
                     >
                         Загрузить матчи
                     </Button>
-                    {uploadMatchesResult && (
+                    {(uploadMatchesResult || uploadMatchesError) && (
                         <ShowMessage
-                            error={undefined}
-                            message={uploadMatchesResult.done.toString()}
+                            error={uploadMatchesError}
+                            message={uploadMatchesResult?.message}
                             severity="info"
+                            absolute={true}
+                        />
+                    )}
+                    {(updateResultsData || updateResultsError) && (
+                        <ShowMessage
+                            error={updateResultsError}
+                            message={updateResultsData?.message}
+                            severity="info"
+                            absolute={true}
                         />
                     )}
                 </Box>

@@ -64,7 +64,7 @@ export const matchesApi = createApi({
             }),
             invalidatesTags: (result, error, id) => [{ type: 'Matches', id }],
         }),
-        uploadMatches: builder.mutation<{ done: boolean }, void>({
+        uploadMatches: builder.mutation<{ message: string }, void>({
             query() {
                 return {
                     url: `matches/upload`,
