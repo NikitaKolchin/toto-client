@@ -18,7 +18,7 @@ const Layout = () => {
     }, [dispatch, prefersDarkMode]);
     useEffect(() => {
         if (!isCompetitionsLoading) {
-            document.title = value || 'Toto App';
+            document.title = `Toto - ${value}` || 'Toto App';
         }
     }, [isCompetitionsLoading, value]);
     return (
