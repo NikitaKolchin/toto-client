@@ -135,6 +135,20 @@ const ResultTable: FC = () => {
             columnVisibility: {
                 id: false,
             },
+            sorting: [
+                {
+                    id: 'pointsSum',
+                    desc: true,
+                },
+                {
+                    id: 'userPrize',
+                    desc: true,
+                },
+                {
+                    id: 'alias',
+                    desc: false,
+                },
+            ],
         },
         muiTableBodyCellProps: ({ cell }) => ({
             sx: {
