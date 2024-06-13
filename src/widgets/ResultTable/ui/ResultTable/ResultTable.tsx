@@ -70,7 +70,7 @@ const ResultTable: FC = () => {
                                         match.awayScore !== null && (
                                             <b>{` ${match.homeScore} - ${match.awayScore} `}</b>
                                         )}
-                                    {` (🏆 ${match.prize} ₽)`}
+                                    {` (🏆 ${match.prize ?? ''} ₽)`}
                                 </Typography>
                                 <Typography>
                                     {match.stat?.homeStakes !== undefined &&
@@ -82,7 +82,7 @@ const ResultTable: FC = () => {
                                                 {`📈${match.stat?.homeStakes} - ${match.stat?.drawStakes} - ${match.stat?.awayStakes}`}
                                             </>
                                         )}
-                                    {` (🎰 ${match.jackpot} ₽)`}
+                                    {` (🎰 ${match.jackpot ?? ''} ₽)`}
                                 </Typography>
                             </>
                         ) : match.prize !== null && match.jackpot !== null ? (
