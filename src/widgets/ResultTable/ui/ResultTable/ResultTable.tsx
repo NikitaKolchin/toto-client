@@ -37,6 +37,8 @@ const ResultTable: FC = () => {
             {
                 accessorKey: 'userPrize',
                 header: 'выиграно, ₽',
+                Cell: ({ cell }: { cell: MRT_Cell<Result, unknown> }) =>
+                    cell.getValue<number>().toFixed(2),
             },
             {
                 accessorKey: 'pointsSum',
@@ -103,8 +105,9 @@ const ResultTable: FC = () => {
                                     {`(${cell.getValue<Result[number]>()
                                         ?.points}`}
                                     {cell.getValue<Result[number]>()?.money ? (
-                                        <>{`; ${cell.getValue<Result[number]>()
-                                            ?.money}₽)`}</>
+                                        <>{`; ${cell
+                                            .getValue<Result[number]>()
+                                            ?.money?.toFixed(2)}₽)`}</>
                                     ) : (
                                         <>{')'}</>
                                     )}
