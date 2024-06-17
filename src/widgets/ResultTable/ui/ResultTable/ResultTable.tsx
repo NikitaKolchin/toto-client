@@ -27,6 +27,7 @@ const ResultTable: FC = () => {
             {
                 accessorKey: 'alias',
                 header: 'имя',
+                maxSize: 60,
                 muiTableBodyCellProps: {
                     sx: {
                         textAlign: 'left',
