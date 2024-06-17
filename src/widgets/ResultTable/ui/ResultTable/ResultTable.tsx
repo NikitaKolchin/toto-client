@@ -127,6 +127,7 @@ const ResultTable: FC = () => {
     const defaultMRTOptions = getDefaultMRTOptions<Result>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
+        enableColumnPinning: true,
         enableEditing: false,
         columns,
         data: userResults,
