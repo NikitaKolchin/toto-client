@@ -141,6 +141,7 @@ const ResultTable: FC = () => {
             columnVisibility: {
                 id: false,
             },
+            columnPinning: { left: ['alias'] },
             sorting: [
                 {
                     id: 'pointsSum',
