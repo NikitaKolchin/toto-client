@@ -142,6 +142,7 @@ const ResultTable: FC = () => {
                 id: false,
             },
             columnPinning: { left: ['alias'] },
+            pagination: { pageSize: 25, pageIndex: 1 },
             sorting: [
                 {
                     id: 'pointsSum',
