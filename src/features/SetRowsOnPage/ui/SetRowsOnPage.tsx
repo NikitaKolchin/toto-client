@@ -5,7 +5,7 @@ const SetRowsOnPage = () => {
     const theme = useAppSelector((state) => state.theme);
 
     const dispatch = useAppDispatch();
-    const MIN = 5;
+    const MIN = 1;
     const MAX = 100;
     return (
         <TextField
