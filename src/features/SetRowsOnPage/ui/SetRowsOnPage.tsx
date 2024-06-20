@@ -1,30 +1,36 @@
-import { TextField } from '@mui/material';
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from '@mui/material';
 import { useAppSelector, useAppDispatch } from 'shared/store/config';
 import { setRowsOnPage } from 'entities/Theme';
 const SetRowsOnPage = () => {
     const theme = useAppSelector((state) => state.theme);
 
     const dispatch = useAppDispatch();
-    const MIN = 1;
-    const MAX = 100;
+    const handleChange = (event: SelectChangeEvent) => {
+        dispatch(setRowsOnPage(+event.target.value));
+    };
     return (
-        <TextField
-            sx={{ minWidth: 100 }}
-            size="small"
-            type="number"
-            label="Строк на странице"
-            InputProps={{ inputProps: { min: MIN, max: MAX } }}
-            value={theme.rowsOnPage}
-            onChange={(event) => {
-                if (+event.target.value < MIN) {
-                    dispatch(setRowsOnPage(MIN));
-                } else if (+event.target.value > MAX) {
-                    dispatch(setRowsOnPage(MAX));
-                } else {
-                    dispatch(setRowsOnPage(+event.target.value));
-                }
-            }}
-        />
+        <FormControl>
+            <InputLabel id="simple-select-label">Строк на странице</InputLabel>
+            <Select
+                size="small"
+                sx={{ minWidth: 100 }}
+                labelId="simple-select-label"
+                value={theme.rowsOnPage.toString()}
+                label="Строк на странице"
+                onChange={handleChange}
+            >
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={25}>25</MenuItem>
+                <MenuItem value={50}>50</MenuItem>
+                <MenuItem value={100}>100</MenuItem>
+            </Select>
+        </FormControl>
     );
 };
 
