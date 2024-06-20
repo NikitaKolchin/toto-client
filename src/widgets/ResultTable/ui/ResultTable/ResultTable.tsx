@@ -13,12 +13,14 @@ import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Result } from 'shared/api';
 import dayjs from 'dayjs';
 import { Box, Typography } from '@mui/material';
+import { useAppSelector } from 'shared/store/config';
 
 const formatDate = (date: string) => {
     return dayjs(date).format('DD.MM.YYYY HH:mm');
 };
 
 const ResultTable: FC = () => {
+    const theme = useAppSelector((state) => state.theme);
     const { data: respondedMatches, isLoading } =
         useGetAllMatchesForResultQuery();
     const { data: result } = useGetResultQuery();
@@ -142,7 +144,7 @@ const ResultTable: FC = () => {
                 id: false,
             },
             columnPinning: { left: ['alias'] },
-            pagination: { pageSize: 25, pageIndex: 1 },
+            pagination: { pageSize: theme.rowsOnPage, pageIndex: 1 },
             sorting: [
                 {
                     id: 'pointsSum',
