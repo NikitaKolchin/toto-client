@@ -2,6 +2,7 @@ import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
 import { FC } from 'react';
 import { ToggleTheme } from 'features/ToggleTheme';
 import { UserDataList, UserState } from 'entities/User';
+import { SetRowsOnPage } from 'features/SetRowsOnPage';
 
 const UserDataCard: FC<UserState> = (user) => {
     return (
@@ -10,8 +11,9 @@ const UserDataCard: FC<UserState> = (user) => {
             <CardContent>
                 <UserDataList {...user} />
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ flexWrap: 'wrap' }}>
                 <ToggleTheme />
+                <SetRowsOnPage />
             </CardActions>
         </Card>
     );

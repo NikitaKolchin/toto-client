@@ -14,8 +14,16 @@ import {
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import type { MatchStake } from 'entities/MatchStake';
 import { Box } from '@mui/material';
+import { useAppSelector } from 'shared/store/config';
+
+const getErrorMessage = (data: { message: string } | string): string => {
+    if (typeof data === 'string') return data;
+    else if ('message' in data) return data.message;
+    return 'error';
+};
 
 const StakeEditingTable: FC = () => {
+    const theme = useAppSelector((state) => state.theme);
     const { data: respondedStakes, isLoading } = useGetAllMatchStakesQuery();
     const [updateStake] = useUpdateMatchStakeByIdMutation();
     const [validationErrors, setValidationErrors] = useState('');
@@ -30,10 +38,11 @@ const StakeEditingTable: FC = () => {
                 table.setEditingRow(null);
             } else if ('error' in result) {
                 if ('data' in result.error) {
-                    const data: { message: string } = result.error.data as {
-                        message: string;
-                    };
-                    setValidationErrors(data.message);
+                    setValidationErrors(
+                        getErrorMessage(
+                            result.error.data as { message: string } | string,
+                        ),
+                    );
                 }
             }
         };
@@ -121,6 +130,7 @@ const StakeEditingTable: FC = () => {
             columnVisibility: {
                 id: false,
             },
+            pagination: { pageSize: theme.rowsOnPage, pageIndex: 0 },
         },
     });
     return <MaterialReactTable table={table} />;

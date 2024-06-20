@@ -31,6 +31,7 @@ import { useUpdateStakesResultMutation } from 'entities/MatchStake';
 import { ShowMessage } from 'shared/ui/ShowMessage';
 
 const MatchEditingTable: FC = () => {
+    const theme = useAppSelector((state) => state.theme);
     const competition = useAppSelector((state) => state.competition);
     const { roles } = useAppSelector((state) => state.user);
     const isAdmin = roles.find((role) => role.value === 'ADMIN') !== undefined;
@@ -311,6 +312,7 @@ const MatchEditingTable: FC = () => {
                 prize: false,
                 jackpot: false,
             },
+            pagination: { pageSize: theme.rowsOnPage, pageIndex: 0 },
         },
         renderRowActions: ({ row, table }) => (
             <Box sx={{ display: 'flex', gap: '1rem' }}>
