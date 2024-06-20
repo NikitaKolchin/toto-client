@@ -144,7 +144,7 @@ const ResultTable: FC = () => {
                 id: false,
             },
             columnPinning: { left: ['alias'] },
-            pagination: { pageSize: theme.rowsOnPage, pageIndex: 1 },
+            pagination: { pageSize: theme.rowsOnPage, pageIndex: 0 },
             sorting: [
                 {
                     id: 'pointsSum',

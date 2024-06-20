@@ -11,7 +11,7 @@ const UserDataCard: FC<UserState> = (user) => {
             <CardContent>
                 <UserDataList {...user} />
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ flexWrap: 'wrap' }}>
                 <ToggleTheme />
                 <SetRowsOnPage />
             </CardActions>
