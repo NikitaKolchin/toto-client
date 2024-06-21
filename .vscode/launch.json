@@ -7,8 +7,9 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Запустить Chrome на localhost",
+            "name": "localhost",
             "url": "http://localhost:8080",
+            "userDataDir": false,
             "webRoot": "${workspaceFolder}"
         }
     ]
