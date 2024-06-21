@@ -12,8 +12,9 @@ import { useGetResultQuery } from 'entities/User';
 import { getDefaultMRTOptions } from 'shared/DefaultTable';
 import { Result } from 'shared/api';
 import dayjs from 'dayjs';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
+import { useTheme } from '@mui/material/styles';
 
 const formatDate = (date: string) => {
     return dayjs(date).format('DD.MM.YYYY HH:mm');
@@ -21,11 +22,16 @@ const formatDate = (date: string) => {
 
 const ResultTable: FC = () => {
     const theme = useAppSelector((state) => state.theme);
+    const matchThen600 = useMediaQuery(useTheme().breakpoints.up('sm'));
     const { data: respondedMatches, isLoading } =
         useGetAllMatchesForResultQuery();
     const { data: result } = useGetResultQuery();
     const additionalHeaders: MRT_ColumnDef<Result>[] = useMemo(
         () => [
+            {
+                accessorKey: 'place',
+                header: '#',
+            },
             {
                 accessorKey: 'alias',
                 header: 'имя',
@@ -141,7 +147,7 @@ const ResultTable: FC = () => {
         getRowId: (row) => row.alias,
         initialState: {
             columnVisibility: {
-                id: false,
+                place: matchThen600,
             },
             columnPinning: { left: ['alias'] },
             pagination: { pageSize: theme.rowsOnPage, pageIndex: 0 },
