@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useMemo } from 'react';
 import {
     MRT_Cell,
@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import { useAppSelector } from 'shared/store/config';
 import { useTheme } from '@mui/material/styles';
+import { MRT_VisibilityState } from 'material-react-table';
 
 const formatDate = (date: string) => {
     return dayjs(date).format('DD.MM.YYYY HH:mm');
@@ -26,6 +27,22 @@ const ResultTable: FC = () => {
     const { data: respondedMatches, isLoading } =
         useGetAllMatchesForResultQuery();
     const { data: result } = useGetResultQuery();
+    const [columnVisibility, setColumnVisibility] =
+        useState<MRT_VisibilityState>({});
+    const dayMinusOne = (date: string) =>
+        new Date(new Date(date).setDate(new Date(date).getDate() + 1));
+    useEffect(() => {
+        setColumnVisibility(
+            (respondedMatches || []).reduce<MRT_VisibilityState>(
+                (acc, value) => {
+                    acc[`${value.matchNo.toString()}`] =
+                        dayMinusOne(value.date) > new Date();
+                    return acc;
+                },
+                {},
+            ),
+        );
+    }, [respondedMatches]);
     const additionalHeaders: MRT_ColumnDef<Result>[] = useMemo(
         () => [
             {
@@ -61,7 +78,7 @@ const ResultTable: FC = () => {
             ...additionalHeaders,
             ...(respondedMatches || []).map((match) => ({
                 accessorKey: `${match.matchNo.toString()}`,
-                header: '',
+                header: `${match.matchNo.toString()}`,
                 Header: () => (
                     <Box
                         display={'flex'}
@@ -142,7 +159,12 @@ const ResultTable: FC = () => {
         data: userResults,
         state: {
             isLoading,
+            columnVisibility: {
+                place: matchThen600,
+                ...columnVisibility,
+            },
         },
+        onColumnVisibilityChange: setColumnVisibility,
         autoResetPageIndex: false,
         getRowId: (row) => row.alias,
         initialState: {
