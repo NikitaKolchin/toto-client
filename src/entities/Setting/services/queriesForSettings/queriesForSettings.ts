@@ -8,10 +8,10 @@ export const settingsApi = createApi({
     refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getSettingById: builder.query<Setting, string>({
-            query: (id) => `Settings/${id}`,
+            query: (id) => `settings/${id}`,
         }),
         getAllSettings: builder.query<Setting[], void>({
-            query: () => `Settings`,
+            query: () => `settings`,
             providesTags: (result) =>
                 // is result available?
                 result
@@ -41,7 +41,7 @@ export const settingsApi = createApi({
         addSetting: builder.mutation<Setting, Partial<Setting>>({
             query(body) {
                 return {
-                    url: `Settings`,
+                    url: `settings`,
                     method: 'POST',
                     body,
                 };

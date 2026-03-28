@@ -37,9 +37,8 @@ const EditMultipleValueRow = <T extends MRT_RowData>({
     );
 
     const saveCompetitionsToCache = (values: string[]) => {
-        const currentCompetitions = values.map(
-            (competitionValue) =>
-                data?.find((c) => c.value === competitionValue, null),
+        const currentCompetitions = values.map((competitionValue) =>
+            data?.find((c) => c.value === competitionValue, null),
         );
         row._valuesCache[column.id as T['id']] = currentCompetitions;
     };

@@ -128,8 +128,9 @@ const ResultTable: FC = () => {
                             {cell.getValue<Result[number]>()?.points ? (
                                 <>
                                     {' '}
-                                    {`(${cell.getValue<Result[number]>()
-                                        ?.points}`}
+                                    {`(${
+                                        cell.getValue<Result[number]>()?.points
+                                    }`}
                                     {cell.getValue<Result[number]>()?.money ? (
                                         <>{`; ${Math.round(
                                             cell.getValue<Result[number]>()
