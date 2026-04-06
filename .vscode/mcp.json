@@ -1,0 +1,21 @@
+{
+  "servers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/nikitakolchin/proj/toto-client",
+        "/Users/nikitakolchin/proj/toto-server",
+        "/Users/nikitakolchin/proj/toto-core"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  }
+}
