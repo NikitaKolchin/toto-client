@@ -10,11 +10,11 @@ import {
 import {
     useGetAllMatchStakesQuery,
     useUpdateMatchStakeByIdMutation,
-} from 'entities/MatchStake';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import type { MatchStake } from 'entities/MatchStake';
+} from '@/entities/MatchStake';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import type { MatchStake } from '@/entities/MatchStake';
 import { Box } from '@mui/material';
-import { useAppSelector } from 'shared/store/config';
+import { useAppSelector } from '@/shared/store/config';
 
 const getErrorMessage = (data: { message: string } | string): string => {
     if (typeof data === 'string') return data;

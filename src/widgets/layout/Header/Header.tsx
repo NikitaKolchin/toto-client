@@ -11,10 +11,10 @@ import Menu from '@mui/material/Menu';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { To, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { useLogoutMutation } from 'entities/User';
+import { useLogoutMutation } from '@/entities/User';
 import { Button } from '@mui/material';
-import { useAppSelector } from 'shared/store/config';
-import { AppRoutes } from 'shared/const/routes';
+import { useAppSelector } from '@/shared/store/config';
+import { AppRoutes } from '@/shared/const/routes';
 import { useDebouncedCallback as debounce } from 'use-debounce';
 
 type TotoMenuItem = {

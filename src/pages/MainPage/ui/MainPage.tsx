@@ -11,10 +11,10 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import { useAppSelector } from 'shared/store/config';
-import { GoToStakes } from 'features/GoToStakes';
-import { Title } from 'entities/Title';
-import { AppRoutes } from 'shared/const/routes';
+import { useAppSelector } from '@/shared/store/config';
+import { GoToStakes } from '@/features/GoToStakes';
+import { Title } from '@/entities/Title';
+import { AppRoutes } from '@/shared/const/routes';
 
 const Main: FC = () => {
     const { isAuth, ...user } = useAppSelector((state) => state.user);

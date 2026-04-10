@@ -13,13 +13,13 @@ import {
     useGetAllUsersQuery,
     useGetAllRolesQuery,
     useDeleteUserMutation,
-} from 'entities/User';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { trueFalse } from 'shared/const/select';
-import { User } from 'shared/api';
+} from '@/entities/User';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { trueFalse } from '@/shared/const/select';
+import { User } from '@/shared/api';
 import { Box, Checkbox, IconButton, Tooltip, Typography } from '@mui/material';
-import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
-import { useGetAllCompetitionsQuery } from 'entities/Competition';
+import { EditMultipleValueRow } from '@/features/EditMultipleValueRow';
+import { useGetAllCompetitionsQuery } from '@/entities/Competition';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 

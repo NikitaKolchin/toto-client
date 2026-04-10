@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { Nation } from 'shared/api';
+import { baseQueryWithReauth } from '@/shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
+import type { Nation } from '@/shared/api';
 export const nationsApi = createApi({
     reducerPath: 'nationsApi',
     refetchOnMountOrArgChange: true,

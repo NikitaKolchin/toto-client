@@ -1,18 +1,18 @@
 import { RouteProps } from 'react-router-dom';
-import { MainPage } from 'pages/MainPage';
-import { LoginPage } from 'pages/LoginPage';
-import { RegistrationPage } from 'pages/RegistrationPage';
-import { ForgotPage } from 'pages/ForgotPage';
-import { StakesPage } from 'pages/StakesPage';
-import { ProfilePage } from 'pages/ProfilePage';
-import { InfoPage } from 'pages/InfoPage';
-import { ResultPage } from 'pages/ResultPage';
-import { UsersPage } from 'pages/UsersPage';
-import { Role, Roles } from 'shared/api';
-import { AppRoutes } from 'shared/const/routes';
-import { SettingsPage } from 'pages/SettingsPage';
-import { CompetitionsPage } from 'pages/CompetitionsPage';
-import { NationsPage } from 'pages/NationsPage';
+import { MainPage } from '@/pages/MainPage';
+import { LoginPage } from '@/pages/LoginPage';
+import { RegistrationPage } from '@/pages/RegistrationPage';
+import { ForgotPage } from '@/pages/ForgotPage';
+import { StakesPage } from '@/pages/StakesPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import { InfoPage } from '@/pages/InfoPage';
+import { ResultPage } from '@/pages/ResultPage';
+import { UsersPage } from '@/pages/UsersPage';
+import { Role, Roles } from '@/shared/api';
+import { AppRoutes } from '@/shared/const/routes';
+import { SettingsPage } from '@/pages/SettingsPage';
+import { CompetitionsPage } from '@/pages/CompetitionsPage';
+import { NationsPage } from '@/pages/NationsPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;

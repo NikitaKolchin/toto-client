@@ -2,9 +2,9 @@ import { Suspense, useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import { AppRoutesProps, routeConfig } from '../config/routeConfig';
-import { Loading } from 'shared/ui/Loading';
-import { MainLayout } from 'widgets/layout';
-import { useCheckAuthMutation } from 'entities/User';
+import { Loading } from '@/shared/ui/Loading';
+import { MainLayout } from '@/widgets/layout';
+import { useCheckAuthMutation } from '@/entities/User';
 
 const AppRouter = () => {
     const [checkAuth] = useCheckAuthMutation();

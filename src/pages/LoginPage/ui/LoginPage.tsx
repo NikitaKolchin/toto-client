@@ -9,10 +9,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useLoginMutation } from 'entities/User';
-import { Loading } from 'shared/ui/Loading';
-import { ShowMessage } from 'shared/ui/ShowMessage';
-import { AppRoutes } from 'shared/const/routes';
+import { useLoginMutation } from '@/entities/User';
+import { Loading } from '@/shared/ui/Loading';
+import { ShowMessage } from '@/shared/ui/ShowMessage';
+import { AppRoutes } from '@/shared/const/routes';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');

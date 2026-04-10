@@ -8,8 +8,8 @@ import {
     setActivationCodeSending,
     setMailSending,
     UserState,
-} from 'entities/User';
-import { useAppDispatch, useAppSelector } from 'shared/store/config';
+} from '@/entities/User';
+import { useAppDispatch, useAppSelector } from '@/shared/store/config';
 import { TextField, Button, Grow, Stack, Alert } from '@mui/material';
 
 const ConfirmEmail: FC<UserState> = (user) => {

@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { AdminActions } from 'features/AdminActions';
-import { SettingEditingTable } from 'widgets/SettingEditingTable';
+import { Title } from '@/entities/Title';
+import { AdminActions } from '@/features/AdminActions';
+import { SettingEditingTable } from '@/widgets/SettingEditingTable';
 
 function SettingsPage() {
     return (

@@ -7,13 +7,13 @@ import {
     type MRT_ColumnDef,
 } from 'material-react-table';
 
-import { useGetAllMatchesForResultQuery } from 'entities/Match';
-import { useGetResultQuery } from 'entities/User';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Result } from 'shared/api';
+import { useGetAllMatchesForResultQuery } from '@/entities/Match';
+import { useGetResultQuery } from '@/entities/User';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { Result } from '@/shared/api';
 import dayjs from 'dayjs';
 import { Box, Typography, useMediaQuery } from '@mui/material';
-import { useAppSelector } from 'shared/store/config';
+import { useAppSelector } from '@/shared/store/config';
 import { useTheme } from '@mui/material/styles';
 import { MRT_VisibilityState } from 'material-react-table';
 

@@ -1,8 +1,8 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FC, useEffect, useMemo } from 'react';
-import { Role } from 'shared/api';
-import { useAppSelector } from 'shared/store/config';
-import { AppRoutes } from 'shared/const/routes';
+import { Role } from '@/shared/api';
+import { useAppSelector } from '@/shared/store/config';
+import { AppRoutes } from '@/shared/const/routes';
 
 type Props = {
     requiredRoles?: Partial<Role>[];

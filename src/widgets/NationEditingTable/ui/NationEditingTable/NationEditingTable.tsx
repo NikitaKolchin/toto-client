@@ -14,13 +14,13 @@ import {
     useUpdateNationByIdMutation,
     useGetAllNationsQuery,
     useUploadNationsMutation,
-} from 'entities/Nation';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Competition, Nation } from 'shared/api';
-import { EditMultipleValueRow } from 'features/EditMultipleValueRow';
-import { useGetAllCompetitionsQuery } from 'entities/Competition';
+} from '@/entities/Nation';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { Competition, Nation } from '@/shared/api';
+import { EditMultipleValueRow } from '@/features/EditMultipleValueRow';
+import { useGetAllCompetitionsQuery } from '@/entities/Competition';
 import { Box, Button, Typography } from '@mui/material';
-import { ShowMessage } from 'shared/ui/ShowMessage';
+import { ShowMessage } from '@/shared/ui/ShowMessage';
 
 const validateRequired = (value: string) => !!value.length;
 

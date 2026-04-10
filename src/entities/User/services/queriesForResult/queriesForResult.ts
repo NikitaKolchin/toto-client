@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Result, baseQueryWithReauth } from 'shared/api';
+import { Result, baseQueryWithReauth } from '@/shared/api';
 export const resultApi = createApi({
     reducerPath: 'ResultApi',
     baseQuery: baseQueryWithReauth,

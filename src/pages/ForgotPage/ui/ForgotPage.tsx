@@ -1,4 +1,4 @@
-import { ChangePassword } from 'features/ChangePassword';
+import { ChangePassword } from '@/features/ChangePassword';
 
 const ForgotPage = () => <ChangePassword />;
 

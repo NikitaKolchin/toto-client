@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { AdminActions } from 'features/AdminActions';
-import { NationEditingTable } from 'widgets/NationEditingTable';
+import { Title } from '@/entities/Title';
+import { AdminActions } from '@/features/AdminActions';
+import { NationEditingTable } from '@/widgets/NationEditingTable';
 
 const NationsPage = () => {
     return (

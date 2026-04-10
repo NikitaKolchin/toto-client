@@ -13,10 +13,10 @@ import {
     useUpdateCompetitionByIdMutation,
     useDeleteCompetitionByIdMutation,
     useAddCompetitionMutation,
-} from 'entities/Competition';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { trueFalse } from 'shared/const/select';
-import type { Competition } from 'shared/api';
+} from '@/entities/Competition';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { trueFalse } from '@/shared/const/select';
+import type { Competition } from '@/shared/api';
 import { Box, Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';

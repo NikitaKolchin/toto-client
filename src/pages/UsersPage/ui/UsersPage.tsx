@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { AdminActions } from 'features/AdminActions';
-import { UserEditingTable } from 'widgets/UserEditingTable';
+import { Title } from '@/entities/Title';
+import { AdminActions } from '@/features/AdminActions';
+import { UserEditingTable } from '@/widgets/UserEditingTable';
 
 const UsersPage = () => {
     return (

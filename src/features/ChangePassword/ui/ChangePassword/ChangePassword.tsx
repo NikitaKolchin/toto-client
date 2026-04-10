@@ -6,11 +6,11 @@ import {
     useChangePasswordAlienMutation,
     useSendCodeMutation,
     setMessage,
-} from 'entities/User';
-import { ShowMessage } from 'shared/ui/ShowMessage';
+} from '@/entities/User';
+import { ShowMessage } from '@/shared/ui/ShowMessage';
 import { FC, useState, useEffect, useLayoutEffect } from 'react';
-import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
-import { useAppDispatch, useAppSelector } from 'shared/store/config';
+import { useCanSend } from '@/shared/hooks/useCanSend/useCanSend';
+import { useAppDispatch, useAppSelector } from '@/shared/store/config';
 
 const ChangePassword: FC = () => {
     const dispatch = useAppDispatch();

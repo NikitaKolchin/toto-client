@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { MatchEditingTable } from 'widgets/MatchEditingTable';
+import { Title } from '@/entities/Title';
+import { MatchEditingTable } from '@/widgets/MatchEditingTable';
 
 const InfoPage = () => {
     return (

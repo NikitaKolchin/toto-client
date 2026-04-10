@@ -5,8 +5,8 @@ import {
     Select,
     SelectChangeEvent,
 } from '@mui/material';
-import { useAppSelector, useAppDispatch } from 'shared/store/config';
-import { setRowsOnPage } from 'entities/Theme';
+import { useAppSelector, useAppDispatch } from '@/shared/store/config';
+import { setRowsOnPage } from '@/entities/Theme';
 const SetRowsOnPage = () => {
     const theme = useAppSelector((state) => state.theme);
 

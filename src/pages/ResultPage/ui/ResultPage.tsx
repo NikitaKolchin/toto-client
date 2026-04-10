@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { ResultTable } from 'widgets/ResultTable';
+import { Title } from '@/entities/Title';
+import { ResultTable } from '@/widgets/ResultTable';
 
 function ResultPage() {
     return (

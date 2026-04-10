@@ -1,4 +1,4 @@
-import { AppRoutes } from 'shared/const/routes';
+import { AppRoutes } from '@/shared/const/routes';
 import UsersIcon from '@mui/icons-material/Group';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CompetitionsIcon from '@mui/icons-material/EmojiEvents';

@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { useAppSelector } from 'shared/store/config';
+import { useAppSelector } from '@/shared/store/config';
 import { Container, Box, Grid } from '@mui/material';
-import { UserDataCard } from 'widgets/UserDataCard';
-import { ConfirmEmailCard } from 'widgets/ConfirmEmailCard';
-import { Title } from 'entities/Title';
-import { Roles } from 'shared/api';
-import { AdminCard } from 'widgets/AdminCard';
+import { UserDataCard } from '@/widgets/UserDataCard';
+import { ConfirmEmailCard } from '@/widgets/ConfirmEmailCard';
+import { Title } from '@/entities/Title';
+import { Roles } from '@/shared/api';
+import { AdminCard } from '@/widgets/AdminCard';
 
 const ProfileScreen: FC = () => {
     const { ...user } = useAppSelector((state) => state.user);

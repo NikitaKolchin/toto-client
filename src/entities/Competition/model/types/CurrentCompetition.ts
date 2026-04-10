@@ -1,4 +1,4 @@
-import { Competition } from 'shared/api';
+import { Competition } from '@/shared/api';
 
 interface CurrentCompetition {
     id: Competition['id'] | undefined;

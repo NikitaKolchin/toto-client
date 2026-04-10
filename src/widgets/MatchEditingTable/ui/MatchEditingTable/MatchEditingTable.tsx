@@ -14,21 +14,21 @@ import {
     useAddMatchMutation,
     useDeleteMatchMutation,
     useUploadMatchesMutation,
-} from 'entities/Match';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { Match } from 'shared/api';
-import { useAppSelector } from 'shared/store/config';
+} from '@/entities/Match';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { Match } from '@/shared/api';
+import { useAppSelector } from '@/shared/store/config';
 import { Box, Button, Checkbox, IconButton, Tooltip } from '@mui/material';
-import { useGetNationsByCurrentCompetitionQuery } from 'entities/Nation';
+import { useGetNationsByCurrentCompetitionQuery } from '@/entities/Nation';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
-import { trueFalse } from 'shared/const/select';
+import { trueFalse } from '@/shared/const/select';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useUpdateStakesResultMutation } from 'entities/MatchStake';
-import { ShowMessage } from 'shared/ui/ShowMessage';
+import { useUpdateStakesResultMutation } from '@/entities/MatchStake';
+import { ShowMessage } from '@/shared/ui/ShowMessage';
 
 const MatchEditingTable: FC = () => {
     const theme = useAppSelector((state) => state.theme);

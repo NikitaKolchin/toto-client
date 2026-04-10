@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardContent, CardActions } from '@mui/material';
-import { AdminActions } from 'features/AdminActions';
+import { AdminActions } from '@/features/AdminActions';
 import { FC } from 'react';
 
 const AdminCard: FC = () => {

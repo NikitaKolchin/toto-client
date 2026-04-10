@@ -1,6 +1,6 @@
 import { Container } from '@mui/material';
-import { Title } from 'entities/Title';
-import { StakeEditingTable } from 'widgets/StakeEditingTable';
+import { Title } from '@/entities/Title';
+import { StakeEditingTable } from '@/widgets/StakeEditingTable';
 
 const StakesPage = () => {
     return (

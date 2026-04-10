@@ -4,9 +4,9 @@ import Header from '../Header/Header';
 import { CssBaseline } from '@mui/material';
 import { useEffect } from 'react';
 import { useMediaQuery } from '@mui/material';
-import { useAppDispatch, useAppSelector } from 'shared/store/config';
-import { initTheme } from 'entities/Theme';
-import { useGetAllCompetitionsQuery } from 'entities/Competition';
+import { useAppDispatch, useAppSelector } from '@/shared/store/config';
+import { initTheme } from '@/entities/Theme';
+import { useGetAllCompetitionsQuery } from '@/entities/Competition';
 
 const Layout = () => {
     const dispatch = useAppDispatch();

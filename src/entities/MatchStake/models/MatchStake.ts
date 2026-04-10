@@ -1,4 +1,4 @@
-import { Match, Stake } from 'shared/api';
+import { Match, Stake } from '@/shared/api';
 
 interface MatchStake extends Match {
     stake: Stake;

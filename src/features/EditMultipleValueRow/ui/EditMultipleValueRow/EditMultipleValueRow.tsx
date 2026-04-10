@@ -1,9 +1,9 @@
 import { useMediaQuery, useTheme } from '@mui/material';
 import { MRT_Column, MRT_Row, MRT_RowData } from 'material-react-table';
 import { useMemo } from 'react';
-import { Loading } from 'shared/ui/Loading';
-import { ToggleList } from 'shared/ui/ToggleList';
-import { TransferList } from 'shared/ui/TransferList';
+import { Loading } from '@/shared/ui/Loading';
+import { ToggleList } from '@/shared/ui/ToggleList';
+import { TransferList } from '@/shared/ui/TransferList';
 
 type PropTypes<T extends MRT_RowData> = {
     column: MRT_Column<T, unknown>;

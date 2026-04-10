@@ -10,11 +10,11 @@ import {
 import {
     useGetAllSettingsQuery,
     useUpdateSettingByIdMutation,
-} from 'entities/Setting';
-import { getDefaultMRTOptions } from 'shared/DefaultTable';
-import { trueFalse } from 'shared/const/select';
+} from '@/entities/Setting';
+import { getDefaultMRTOptions } from '@/shared/DefaultTable';
+import { trueFalse } from '@/shared/const/select';
 import { Checkbox } from '@mui/material';
-import { Setting } from 'shared/api';
+import { Setting } from '@/shared/api';
 
 const validateRequired = (value: string) => !!value.length;
 

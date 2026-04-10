@@ -10,11 +10,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { setMessage, useRegistrationMutation } from 'entities/User';
-import { useAppDispatch, useAppSelector } from 'shared/store/config';
-import { useCanSend } from 'shared/hooks/useCanSend/useCanSend';
-import { ShowMessage } from 'shared/ui/ShowMessage';
-import { AppRoutes } from 'shared/const/routes';
+import { setMessage, useRegistrationMutation } from '@/entities/User';
+import { useAppDispatch, useAppSelector } from '@/shared/store/config';
+import { useCanSend } from '@/shared/hooks/useCanSend/useCanSend';
+import { ShowMessage } from '@/shared/ui/ShowMessage';
+import { AppRoutes } from '@/shared/const/routes';
 
 const RegistrationPage = () => {
     const dispatch = useAppDispatch();

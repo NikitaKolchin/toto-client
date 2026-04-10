@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQueryWithReauth } from 'shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
-import type { Match } from 'shared/api';
-import { ResultHeader } from 'shared/api';
+import { baseQueryWithReauth } from '@/shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth';
+import type { Match } from '@/shared/api';
+import { ResultHeader } from '@/shared/api';
 export const matchesApi = createApi({
     reducerPath: 'matchesApi',
     baseQuery: baseQueryWithReauth,

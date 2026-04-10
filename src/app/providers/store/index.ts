@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { theme } from 'entities/Theme';
-import { competition, competitionsApi } from 'entities/Competition';
-import { user, usersApi, authApi, rolesApi, resultApi } from 'entities/User';
-import { settingsApi } from 'entities/Setting';
-import { nationsApi } from 'entities/Nation';
-import { matchesApi } from 'entities/Match';
-import { stakesApi } from 'entities/MatchStake';
+import { theme } from '@/entities/Theme';
+import { competition, competitionsApi } from '@/entities/Competition';
+import { user, usersApi, authApi, rolesApi, resultApi } from '@/entities/User';
+import { settingsApi } from '@/entities/Setting';
+import { nationsApi } from '@/entities/Nation';
+import { matchesApi } from '@/entities/Match';
+import { stakesApi } from '@/entities/MatchStake';
 
 const store = configureStore({
     reducer: {
