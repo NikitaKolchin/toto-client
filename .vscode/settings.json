@@ -1,6 +1,16 @@
 {
-    "cSpell.words": [
-        "Джэкпот",
-        "Reauth"
-    ]
+	"cSpell.words": ["Джэкпот", "Reauth"],
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit",
+		"source.fixAll.biome": "explicit"
+	},
+	"editor.defaultFormatter": "biomejs.biome",
+	"eslint.enable": false,
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	}
 }
