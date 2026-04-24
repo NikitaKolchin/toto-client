@@ -66,6 +66,15 @@ export const nationsApi = createApi({
             },
             invalidatesTags: [{ type: 'Nations', id: 'LIST' }],
         }),
+        updateNations: builder.mutation<{ message: string }, void>({
+            query() {
+                return {
+                    url: `nations/update`,
+                    method: 'POST',
+                };
+            },
+            invalidatesTags: [{ type: 'Nations', id: 'LIST' }],
+        }),
     }),
 });
 
@@ -76,4 +85,5 @@ export const {
     useUpdateNationByIdMutation,
     useAddNationMutation,
     useUploadNationsMutation,
+    useUpdateNationsMutation,
 } = nationsApi;

@@ -29,6 +29,14 @@ function validateCompetition(competition: Competition) {
     };
 }
 
+const normalizeApiId = (value: unknown): number | undefined => {
+    if (value === null || value === undefined || value === '') {
+        return undefined;
+    }
+    const parsed = Number(value);
+    return Number.isNaN(parsed) ? undefined : parsed;
+};
+
 const CompetitionEditingTable: FC = () => {
     const { data: respondedCompetitions, isLoading } =
         useGetAllCompetitionsQuery();
@@ -47,7 +55,10 @@ const CompetitionEditingTable: FC = () => {
             }
             setValidationErrors({});
             const { email, ...updatedData } = values;
-            await updateCompetition({ ...updatedData });
+            await updateCompetition({
+                ...updatedData,
+                apiId: normalizeApiId(values.apiId),
+            });
             table.setEditingRow(null); //exit editing mode
         };
     const handleCreateCompetition: MRT_TableOptions<Competition>['onCreatingRowSave'] =
@@ -59,7 +70,10 @@ const CompetitionEditingTable: FC = () => {
             }
             setValidationErrors({});
             const { id, ...updatedData } = values;
-            await addCompetition(updatedData);
+            await addCompetition({
+                ...updatedData,
+                apiId: normalizeApiId(values.apiId),
+            });
             table.setCreatingRow(null); //exit creating mode
         };
     const openDeleteConfirmModal = (row: MRT_Row<Competition>) => {
@@ -74,6 +88,13 @@ const CompetitionEditingTable: FC = () => {
                 accessorKey: 'id',
                 header: 'id',
                 enableEditing: false,
+            },
+            {
+                accessorKey: 'apiId',
+                header: 'apiId',
+                muiEditTextFieldProps: {
+                    type: 'number',
+                },
             },
             {
                 accessorKey: 'value',

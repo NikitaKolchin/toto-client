@@ -6,7 +6,7 @@ import {
     useTheme,
 } from '@mui/material';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SerializedError } from '@reduxjs/toolkit';
 import { MessageResponse } from '../../api/types/MessageResponse';
 
@@ -33,6 +33,18 @@ const ShowMessage: FC<Props> = ({
               left: matchThen600 ? '50%' : '10%',
           }
         : {};
+    useEffect(() => {
+        setAlertVisibility(true);
+    }, [message, error]);
+
+    const inlineStyle = {
+        width: '100%',
+        marginTop: '8px',
+        marginBottom: '8px',
+        '& .MuiAlert-message': {
+            wordBreak: 'break-word',
+        },
+    };
     if (!alertVisibility) {
         return <></>;
     }
@@ -41,7 +53,7 @@ const ShowMessage: FC<Props> = ({
             <Grow in={!!message}>
                 <Alert
                     severity={severity}
-                    sx={absoluteStyle}
+                    sx={absolute ? absoluteStyle : inlineStyle}
                     onClose={() => setAlertVisibility(false)}
                 >
                     {message}
@@ -54,7 +66,7 @@ const ShowMessage: FC<Props> = ({
             <Grow in={!!error}>
                 <Alert
                     severity={'error'}
-                    sx={absoluteStyle}
+                    sx={absolute ? absoluteStyle : inlineStyle}
                     onClose={() => setAlertVisibility(false)}
                 >
                     {'data' in error

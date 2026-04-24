@@ -1,12 +1,10 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
-    setMailSended,
     setActivationCodeSended,
     useActivateUserMutation,
     useSendCodeMutation,
     setActivationCode,
     setActivationCodeSending,
-    setMailSending,
     UserState,
 } from '@/entities/User';
 import { useAppDispatch, useAppSelector } from '@/shared/store/config';
@@ -16,7 +14,6 @@ const ConfirmEmail: FC<UserState> = (user) => {
     const dispatch = useAppDispatch();
     const {
         mailSended,
-        mailSending,
         activationCodeSended,
         activationCodeSending,
         message,
@@ -24,14 +21,18 @@ const ConfirmEmail: FC<UserState> = (user) => {
         severity,
     } = useAppSelector((state) => state.user);
     const [activateUser] = useActivateUserMutation();
-    const [sendCode] = useSendCodeMutation();
+    const [sendCode, { isLoading: isSendingCode }] = useSendCodeMutation();
+    const [cooldownSec, setCooldownSec] = useState(0);
 
     useEffect(() => {
-        if (mailSending && !mailSended) {
-            sendCode({ email: user.email });
-            dispatch(setMailSended(true));
+        if (cooldownSec <= 0) {
+            return;
         }
-    }, [dispatch, mailSended, mailSending, sendCode, user.email]);
+        const interval = setInterval(() => {
+            setCooldownSec((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [cooldownSec]);
 
     useEffect(() => {
         if (activationCodeSending && !activationCodeSended) {
@@ -53,16 +54,31 @@ const ConfirmEmail: FC<UserState> = (user) => {
         }
     }, [activationCode, dispatch]);
 
+    const handleSendCode = async () => {
+        if (cooldownSec > 0 || isSendingCode) {
+            return;
+        }
+        try {
+            await sendCode({ email: user.email }).unwrap();
+            setCooldownSec(60);
+        } catch {
+            // error is handled by RTK query state/slice
+        }
+    };
+
     return (
         <Stack spacing={2}>
             <Grow in={!mailSended && !user.isActivated}>
                 <Button
                     fullWidth
-                    onClick={() => dispatch(setMailSending(true))}
+                    disabled={isSendingCode || cooldownSec > 0}
+                    onClick={handleSendCode}
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                 >
-                    Направить письмо с кодом активации
+                    {cooldownSec > 0
+                        ? `Повторная отправка через ${cooldownSec}с`
+                        : 'Направить письмо с кодом активации'}
                 </Button>
             </Grow>
             <Grow in={mailSended}>

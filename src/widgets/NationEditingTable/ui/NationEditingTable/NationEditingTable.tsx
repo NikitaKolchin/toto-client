@@ -14,6 +14,7 @@ import {
     useUpdateNationByIdMutation,
     useGetAllNationsQuery,
     useUploadNationsMutation,
+    useUpdateNationsMutation,
 } from '@/entities/Nation';
 import { getDefaultMRTOptions } from '@/shared/DefaultTable';
 import { Competition, Nation } from '@/shared/api';
@@ -40,6 +41,14 @@ const NationEditingTable: FC = () => {
             data: uploadNationsData,
         },
     ] = useUploadNationsMutation();
+    const [
+        updateNations,
+        {
+            isLoading: isLoadingUpdateNations,
+            error: updateNationsError,
+            data: updateNationsData,
+        },
+    ] = useUpdateNationsMutation();
     const [updateNation] = useUpdateNationByIdMutation();
     const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
         useGetAllCompetitionsQuery();
@@ -143,6 +152,9 @@ const NationEditingTable: FC = () => {
             const handleUpload = () => {
                 uploadNations();
             };
+            const handleUpdate = () => {
+                updateNations();
+            };
             return (
                 <Box
                     sx={() => ({
@@ -168,7 +180,13 @@ const NationEditingTable: FC = () => {
                                 error={uploadNationsError}
                                 message={uploadNationsData?.message}
                                 severity="info"
-                                absolute={true}
+                            />
+                        )}
+                        {(updateNationsData || updateNationsError) && (
+                            <ShowMessage
+                                error={updateNationsError}
+                                message={updateNationsData?.message}
+                                severity="info"
                             />
                         )}
                         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
@@ -178,6 +196,13 @@ const NationEditingTable: FC = () => {
                                 onClick={handleUpload}
                             >
                                 Upload
+                            </Button>
+                            <Button
+                                variant="contained"
+                                disabled={isLoadingUpdateNations}
+                                onClick={handleUpdate}
+                            >
+                                Update
                             </Button>
                         </Box>
                     </Box>

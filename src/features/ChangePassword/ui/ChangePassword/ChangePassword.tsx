@@ -25,9 +25,10 @@ const ChangePassword: FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [changePassword, setChangePassword] = useState(false);
+    const [cooldownSec, setCooldownSec] = useState(0);
     const canSend = useCanSend({ password, confirmPassword, activationCode });
     const [changePasswordAlien] = useChangePasswordAlienMutation();
-    const [sendCode, { error }] = useSendCodeMutation();
+    const [sendCode, { error, isLoading: isSendingCode }] = useSendCodeMutation();
 
     useLayoutEffect(() => {
         return () => {
@@ -51,10 +52,14 @@ const ChangePassword: FC = () => {
     }, [canSend, dispatch]);
 
     useEffect(() => {
-        if (mailSended) {
-            sendCode({ email });
+        if (cooldownSec <= 0) {
+            return;
         }
-    }, [mailSended, email, sendCode]);
+        const interval = setInterval(() => {
+            setCooldownSec((prev) => (prev > 0 ? prev - 1 : 0));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [cooldownSec]);
     useEffect(() => {
         if (changePassword && !activationCodeSended) {
             dispatch(setActivationCodeSended(true));
@@ -73,6 +78,20 @@ const ChangePassword: FC = () => {
         dispatch,
         activationCodeSended,
     ]);
+
+    const handleSendCode = async () => {
+        if (cooldownSec > 0 || isSendingCode) {
+            return;
+        }
+        try {
+            await sendCode({ email }).unwrap();
+            dispatch(setMailSended(true));
+            setCooldownSec(60);
+        } catch {
+            // error is handled by RTK query state/slice
+        }
+    };
+
     console.log(mailSended);
     return (
         <Stack spacing={2}>
@@ -86,8 +105,13 @@ const ChangePassword: FC = () => {
                 onChange={(e) => setEmail(e.currentTarget.value)}
             />
             <Grow in={!mailSended && !!email}>
-                <Button onClick={() => dispatch(setMailSended(true))}>
-                    Направить код на email
+                <Button
+                    disabled={isSendingCode || cooldownSec > 0}
+                    onClick={handleSendCode}
+                >
+                    {cooldownSec > 0
+                        ? `Повторная отправка через ${cooldownSec}с`
+                        : 'Направить код на email'}
                 </Button>
             </Grow>
 

@@ -256,37 +256,38 @@ const MatchEditingTable: FC = () => {
         createDisplayMode: 'modal',
         renderTopToolbarCustomActions: ({ table }) =>
             isAdmin ? (
-                <Box display={'flex'} justifyContent={'flex-start'}>
-                    <Button
-                        sx={{ mr: 1 }}
-                        variant="contained"
-                        onClick={() => {
-                            table.setCreatingRow(true);
-                        }}
-                    >
-                        Добавить матч
-                    </Button>{' '}
-                    <Button
-                        sx={{ mr: 1 }}
-                        variant="contained"
-                        onClick={() => updateResults()}
-                        disabled={isLoadingResults}
-                    >
-                        Обновить результаты
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={() => uploadMatches()}
-                        disabled={isLoadingUploadMatches}
-                    >
-                        Загрузить матчи
-                    </Button>
+                <Box>
+                    <Box display={'flex'} justifyContent={'flex-start'}>
+                        <Button
+                            sx={{ mr: 1 }}
+                            variant="contained"
+                            onClick={() => {
+                                table.setCreatingRow(true);
+                            }}
+                        >
+                            Добавить матч
+                        </Button>{' '}
+                        <Button
+                            sx={{ mr: 1 }}
+                            variant="contained"
+                            onClick={() => updateResults()}
+                            disabled={isLoadingResults}
+                        >
+                            Обновить результаты
+                        </Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => uploadMatches()}
+                            disabled={isLoadingUploadMatches}
+                        >
+                            Загрузить матчи
+                        </Button>
+                    </Box>
                     {(uploadMatchesResult || uploadMatchesError) && (
                         <ShowMessage
                             error={uploadMatchesError}
                             message={uploadMatchesResult?.message}
                             severity="info"
-                            absolute={true}
                         />
                     )}
                     {(updateResultsData || updateResultsError) && (
@@ -294,7 +295,6 @@ const MatchEditingTable: FC = () => {
                             error={updateResultsError}
                             message={updateResultsData?.message}
                             severity="info"
-                            absolute={true}
                         />
                     )}
                 </Box>
