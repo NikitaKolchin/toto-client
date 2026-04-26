@@ -1,5 +1,13 @@
 {
   "servers": {
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres:qwasdx%3D1@192.144.15.29:5432/toto"
+      ]
+    },
     "filesystem": {
       "command": "npx",
       "args": [
