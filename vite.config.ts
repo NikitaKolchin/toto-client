@@ -4,6 +4,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  build: {
+    outDir: 'build',
+  },
   server: {
     port: 8080, // Устанавливаем ваш привычный порт
     strictPort: true, // Если 8080 занят, Vite выдаст ошибку, а не откроет 8081

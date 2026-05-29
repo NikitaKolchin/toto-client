@@ -1,24 +1,74 @@
 name: cd client
-on: 
+
+on:
   push:
     branches:
-      master
+      - master
   workflow_dispatch:
+
+concurrency:
+  group: toto-client-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Build and deploy
     runs-on: ubuntu-latest
+
     steps:
-    - name: executing remote ssh commands on client using key
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        script: | 
-          cd /srv/www/toto-client
-          git pull
-          git status
-          npm install
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Build
+        run: |
+          npm ci
           npm run build
+          tar -czf toto-client-build.tar.gz -C build .
+
+      - name: Upload build artifact
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          source: toto-client-build.tar.gz
+          target: /tmp/toto-client-${{ github.sha }}
+
+      - name: Activate build
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            set -eu
+
+            APP_DIR=/srv/www/toto-client
+            RELEASE_DIR="$APP_DIR/releases/${{ github.sha }}"
+            ARCHIVE=/tmp/toto-client-${{ github.sha }}/toto-client-build.tar.gz
+
+            install -d "$RELEASE_DIR"
+            tar -xzf "$ARCHIVE" -C "$RELEASE_DIR"
+            rm -rf /tmp/toto-client-${{ github.sha }}
+
+            if [ -e "$APP_DIR/build" ] && [ ! -L "$APP_DIR/build" ]; then
+              rm -rf "$APP_DIR/build.previous"
+              mv "$APP_DIR/build" "$APP_DIR/build.previous"
+            fi
+
+            ln -sfn "releases/${{ github.sha }}" "$APP_DIR/build.next"
+            mv -Tf "$APP_DIR/build.next" "$APP_DIR/build"
+
+            find "$APP_DIR/releases" -mindepth 1 -maxdepth 1 -type d \
+              ! -name "${{ github.sha }}" -mtime +14 -exec rm -rf {} +
