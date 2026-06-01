@@ -33,7 +33,7 @@ export const authApi = createApi({
                 };
             },
         }),
-        registration: builder.mutation<User, RegistrationDto>({
+        registration: builder.mutation<UserState, RegistrationDto>({
             query: ({ email, password, alias, firstName, secondName }) => ({
                 method: 'post',
                 url: `/auth/registration`,
@@ -42,7 +42,10 @@ export const authApi = createApi({
             transformResponse: (response: AuthResponse) => {
                 localStorage.setItem('token', response.accessToken);
                 return {
+                    ...initialState,
                     ...response.user,
+                    isAuth: true,
+                    isAllowed: isAllowed(response),
                 };
             },
         }),

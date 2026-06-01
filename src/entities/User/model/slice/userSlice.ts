@@ -79,7 +79,18 @@ const userSlice = createSlice({
             .addMatcher(
                 authApi.endpoints.registration.matchFulfilled,
                 (state, { payload }) => {
+                    state.id = payload.id;
                     state.email = payload.email;
+                    state.isAuth = payload.isAuth;
+                    state.isActivated = payload.isActivated;
+                    state.isAllowed = payload.isAllowed;
+                    state.alias = payload.alias;
+                    state.firstName = payload.firstName;
+                    state.secondName = payload.secondName;
+                    state.roles = payload.roles;
+                    state.competitions = payload.competitions;
+                    state.message = 'Регистрация прошла успешно';
+                    state.severity = 'success';
                 },
             )
             .addMatcher(

@@ -1,7 +1,7 @@
-# Graph Report - toto-client  (2026-04-24)
+# Graph Report - toto-client  (2026-05-29)
 
 ## Corpus Check
-- 144 files · ~13,337 words
+- 144 files · ~13,437 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -47,23 +47,23 @@
 
 ### Community 1 - "Community 1"
 Cohesion: 0.25
-Nodes (5): getDefaultMRTOptions(), SettingEditingTable(), validateRequired(), validateSetting(), StakeEditingTable()
+Nodes (3): not(), handleCheckedLeft(), handleCheckedRight()
 
 ### Community 2 - "Community 2"
 Cohesion: 0.25
-Nodes (3): not(), handleCheckedLeft(), handleCheckedRight()
+Nodes (5): getDefaultMRTOptions(), SettingEditingTable(), validateRequired(), validateSetting(), StakeEditingTable()
 
 ### Community 4 - "Community 4"
 Cohesion: 0.52
 Nodes (5): handleCreateCompetition(), handleSaveCompetition(), normalizeApiId(), validateCompetition(), validateRequired()
 
 ### Community 5 - "Community 5"
-Cohesion: 0.33
-Nodes (1): ErrorBoundary
-
-### Community 6 - "Community 6"
 Cohesion: 0.47
 Nodes (3): handleSaveNation(), validateNation(), validateRequired()
+
+### Community 6 - "Community 6"
+Cohesion: 0.33
+Nodes (1): ErrorBoundary
 
 ### Community 7 - "Community 7"
 Cohesion: 0.6
@@ -78,7 +78,7 @@ Cohesion: 0.5
 Nodes (2): useAppDispatch(), Layout()
 
 ## Knowledge Gaps
-- **Thin community `Community 5`** (6 nodes): `ErrorBoundary`, `.componentDidCatch()`, `.constructor()`, `.getDerivedStateFromError()`, `.render()`, `ErrorBoundary.tsx`
+- **Thin community `Community 6`** (6 nodes): `ErrorBoundary`, `.componentDidCatch()`, `.constructor()`, `.getDerivedStateFromError()`, `.render()`, `ErrorBoundary.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 9`** (4 nodes): `useAppDispatch()`, `Layout()`, `index.ts`, `MainLayout.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
