@@ -13,6 +13,7 @@ import { AppRoutes } from '@/shared/const/routes';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { CompetitionsPage } from '@/pages/CompetitionsPage';
 import { NationsPage } from '@/pages/NationsPage';
+import { StatsPage } from '@/pages/StatsPage';
 
 export type AppRoutesProps = RouteProps & {
     authOnly?: boolean;
@@ -27,6 +28,7 @@ export const getRouteStakes = () => '/stakes';
 export const getRouteProfile = () => '/profile';
 export const getRouteInfo = () => '/info';
 export const getRouteResult = () => '/results';
+export const getRouteStats = () => '/stats';
 export const getRouteUsers = () => '/users';
 export const getRouteSettings = () => '/settings';
 export const getRouteCompetitions = () => '/competitions';
@@ -70,6 +72,12 @@ export const routeConfig: Record<AppRoutes, AppRoutesProps> = {
     [AppRoutes.RESULT]: {
         path: getRouteResult(),
         element: <ResultPage />,
+        authOnly: true,
+        requiredRoles: [{ value: Roles.USER }],
+    },
+    [AppRoutes.STATS]: {
+        path: getRouteStats(),
+        element: <StatsPage />,
         authOnly: true,
         requiredRoles: [{ value: Roles.USER }],
     },

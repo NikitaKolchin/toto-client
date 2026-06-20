@@ -1,5 +1,4 @@
-import { FC, useState } from 'react';
-import { useMemo } from 'react';
+import { FC, useState, useMemo } from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -13,7 +12,7 @@ import {
 } from '@/entities/MatchStake';
 import { getDefaultMRTOptions } from '@/shared/DefaultTable';
 import type { MatchStake } from '@/entities/MatchStake';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useAppSelector } from '@/shared/store/config';
 
 const getErrorMessage = (data: { message: string } | string): string => {
@@ -23,14 +22,16 @@ const getErrorMessage = (data: { message: string } | string): string => {
 };
 
 const StakeEditingTable: FC = () => {
+    const muiTheme = useTheme();
+    const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
     const theme = useAppSelector((state) => state.theme);
     const { data: respondedStakes, isLoading } = useGetAllMatchStakesQuery();
     const [updateStake] = useUpdateMatchStakeByIdMutation();
     const [validationErrors, setValidationErrors] = useState('');
     const handleSaveStake: MRT_TableOptions<MatchStake>['onEditingRowSave'] =
-        async ({ values, table }) => {
+        async ({ values, row, table }) => {
             const result = await updateStake({
-                id: values.id,
+                id: row.original.id,
                 homeScore: Number(values['stake.homeScore']),
                 awayScore: Number(values['stake.awayScore']),
             });
@@ -101,6 +102,7 @@ const StakeEditingTable: FC = () => {
     const defaultMRTOptions = getDefaultMRTOptions<MatchStake>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
+        editDisplayMode: isMobile ? 'modal' : 'row',
         enableEditing: (row) => row.original.enable,
         columns,
         data: matchStakes,
@@ -120,6 +122,16 @@ const StakeEditingTable: FC = () => {
                 </Box>
             ) : null,
         onEditingRowCancel: () => setValidationErrors(''),
+        muiTableBodyRowProps: ({ row, table }) => ({
+            onDoubleClick: () => {
+                if (row.original.enable) {
+                    table.setEditingRow(row);
+                }
+            },
+            sx: row.original.enable
+                ? { cursor: 'pointer' }
+                : { cursor: 'default', opacity: 0.5 },
+        }),
         displayColumnDefOptions: {
             'mrt-row-actions': {
                 header: '',

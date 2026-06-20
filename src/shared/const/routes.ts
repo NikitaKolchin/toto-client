@@ -7,6 +7,7 @@ enum AppRoutes {
     PROFILE = '/profile',
     INFO = '/info',
     RESULT = '/results',
+    STATS = '/stats',
     USERS = '/users',
     SETTINGS = '/settings',
     COMPETITIONS = '/competitions',

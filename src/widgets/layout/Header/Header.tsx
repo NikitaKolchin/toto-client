@@ -25,6 +25,7 @@ const menuItems: TotoMenuItem[] = [
     { name: 'Toto Online', value: AppRoutes.MAIN },
     { name: 'Ставки', value: AppRoutes.STAKES },
     { name: 'Результаты', value: AppRoutes.RESULT },
+    { name: 'Статистика', value: AppRoutes.STATS },
     { name: 'Информация', value: AppRoutes.INFO },
 ];
 

@@ -1,0 +1,807 @@
+{
+  "/home/nikita/proj/toto-client/.vscode/launch.json": {
+    "mtime": 1774720591.062843,
+    "ast_hash": "48395b27c1cbf4d58abe1a04c567b1c3",
+    "semantic_hash": "48395b27c1cbf4d58abe1a04c567b1c3"
+  },
+  "/home/nikita/proj/toto-client/.vscode/mcp.json": {
+    "mtime": 1777200364.174022,
+    "ast_hash": "b2d29094ea8f13499b59a645baee8bcb",
+    "semantic_hash": "b2d29094ea8f13499b59a645baee8bcb"
+  },
+  "/home/nikita/proj/toto-client/.vscode/settings.json": {
+    "mtime": 1777143676.9776607,
+    "ast_hash": "3c0a961b44dd012888b79caf4a20d2f5",
+    "semantic_hash": "3c0a961b44dd012888b79caf4a20d2f5"
+  },
+  "/home/nikita/proj/toto-client/biome.json": {
+    "mtime": 1777143676.9781475,
+    "ast_hash": "83890eca2b84cbd81bbcf14f08999498",
+    "semantic_hash": "83890eca2b84cbd81bbcf14f08999498"
+  },
+  "/home/nikita/proj/toto-client/package.json": {
+    "mtime": 1781955185.2842624,
+    "ast_hash": "580e31ed17da052e17fbf86144bb89ea",
+    "semantic_hash": "580e31ed17da052e17fbf86144bb89ea"
+  },
+  "/home/nikita/proj/toto-client/public/manifest.json": {
+    "mtime": 1774720591.072465,
+    "ast_hash": "b0026b35f398febbfc7eb48f4e78f05e",
+    "semantic_hash": "b0026b35f398febbfc7eb48f4e78f05e"
+  },
+  "/home/nikita/proj/toto-client/src/app/App.tsx": {
+    "mtime": 1775923458.3927608,
+    "ast_hash": "43a4bc24c8803012ce29e67367b95646",
+    "semantic_hash": "43a4bc24c8803012ce29e67367b95646"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/ErrorBoundary/index.ts": {
+    "mtime": 1774720591.0741537,
+    "ast_hash": "43b2493f7ca6600ea0ebfe0fe2ebeea5",
+    "semantic_hash": "43b2493f7ca6600ea0ebfe0fe2ebeea5"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/ErrorBoundary/ui/ErrorBoundary.tsx": {
+    "mtime": 1774720591.0744274,
+    "ast_hash": "0d18f3306df360deb9a34da05ecaa213",
+    "semantic_hash": "0d18f3306df360deb9a34da05ecaa213"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/router/config/routeConfig.tsx": {
+    "mtime": 1781955284.1353085,
+    "ast_hash": "0449ee0c0025dffebcda30c365fb53f6",
+    "semantic_hash": "0449ee0c0025dffebcda30c365fb53f6"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/router/index.ts": {
+    "mtime": 1774720591.0746942,
+    "ast_hash": "8dfbc89e329c813f7f4f7e13951262de",
+    "semantic_hash": "8dfbc89e329c813f7f4f7e13951262de"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/router/ui/AppRouter.tsx": {
+    "mtime": 1775847813.617097,
+    "ast_hash": "9294b1ffa7be49d5d167db7fab8e2e09",
+    "semantic_hash": "9294b1ffa7be49d5d167db7fab8e2e09"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/router/ui/ProtectedRoute.tsx": {
+    "mtime": 1775847813.6172767,
+    "ast_hash": "a0a6e21ec9a640b49fe7c6d33017cdec",
+    "semantic_hash": "a0a6e21ec9a640b49fe7c6d33017cdec"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/store/index.ts": {
+    "mtime": 1775923489.6838596,
+    "ast_hash": "7a45d6b8e1ffa223b79746ff9a9a9877",
+    "semantic_hash": "7a45d6b8e1ffa223b79746ff9a9a9877"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/theme/index.ts": {
+    "mtime": 1774720591.0752087,
+    "ast_hash": "9c121dc8c06df3fe513550d4ca7250c1",
+    "semantic_hash": "9c121dc8c06df3fe513550d4ca7250c1"
+  },
+  "/home/nikita/proj/toto-client/src/app/providers/theme/ui/theme.ts": {
+    "mtime": 1774720591.0757315,
+    "ast_hash": "a471536080fe74a643d7ca93811622c5",
+    "semantic_hash": "a471536080fe74a643d7ca93811622c5"
+  },
+  "/home/nikita/proj/toto-client/src/app/types/global.d.ts": {
+    "mtime": 1774720591.0757315,
+    "ast_hash": "9e5e64425f5c991519e2f6be1d18a0dc",
+    "semantic_hash": "9e5e64425f5c991519e2f6be1d18a0dc"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Competition/index.ts": {
+    "mtime": 1774720591.0762,
+    "ast_hash": "adc80594685e15c6e48a6731ab3a54d5",
+    "semantic_hash": "adc80594685e15c6e48a6731ab3a54d5"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Competition/model/slice/competitionSlice.ts": {
+    "mtime": 1774720591.076411,
+    "ast_hash": "e9f26a9a33843e15d766a1b6a8ec03eb",
+    "semantic_hash": "e9f26a9a33843e15d766a1b6a8ec03eb"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Competition/model/types/CurrentCompetition.ts": {
+    "mtime": 1775847813.6174731,
+    "ast_hash": "6d4810b8908280243ebc5133988ac786",
+    "semantic_hash": "6d4810b8908280243ebc5133988ac786"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Competition/services/queriesForCompetitions/queriesForCompetitions.ts": {
+    "mtime": 1775847813.6181295,
+    "ast_hash": "e5448388418978f8b8879541e3ff5c3d",
+    "semantic_hash": "e5448388418978f8b8879541e3ff5c3d"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Match/index.ts": {
+    "mtime": 1774720591.0769396,
+    "ast_hash": "9a074c4904cf9cce512e12f9fe3743d5",
+    "semantic_hash": "9a074c4904cf9cce512e12f9fe3743d5"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Match/services/queriesForMatches/queriesForMatches.ts": {
+    "mtime": 1775847813.6184452,
+    "ast_hash": "eb04637853fc3af12acabc0965314daa",
+    "semantic_hash": "eb04637853fc3af12acabc0965314daa"
+  },
+  "/home/nikita/proj/toto-client/src/entities/MatchStake/index.ts": {
+    "mtime": 1774720591.0774179,
+    "ast_hash": "f16aac26b4293098da363dedfdcba7cc",
+    "semantic_hash": "f16aac26b4293098da363dedfdcba7cc"
+  },
+  "/home/nikita/proj/toto-client/src/entities/MatchStake/models/MatchStake.ts": {
+    "mtime": 1775847813.618683,
+    "ast_hash": "5b860f4d6b58011cf9fa145dd52b02aa",
+    "semantic_hash": "5b860f4d6b58011cf9fa145dd52b02aa"
+  },
+  "/home/nikita/proj/toto-client/src/entities/MatchStake/services/queriesForMatchStakes/queriesForMatchStakes.ts": {
+    "mtime": 1775847813.6189275,
+    "ast_hash": "d9db01f18db45abab9a3a064ca89edc5",
+    "semantic_hash": "d9db01f18db45abab9a3a064ca89edc5"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Nation/index.ts": {
+    "mtime": 1777143676.999691,
+    "ast_hash": "0ce1e371f5e51fb3e7d9ff4e2fe8139b",
+    "semantic_hash": "0ce1e371f5e51fb3e7d9ff4e2fe8139b"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Nation/services/queriesForNations/queriesForNations.ts": {
+    "mtime": 1777143676.999691,
+    "ast_hash": "d6122849c6256efad0ae21df9815c899",
+    "semantic_hash": "d6122849c6256efad0ae21df9815c899"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Setting/index.ts": {
+    "mtime": 1774720591.0786245,
+    "ast_hash": "fada36cd282f8980e11c3f487f2f0311",
+    "semantic_hash": "fada36cd282f8980e11c3f487f2f0311"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Setting/services/queriesForSettings/queriesForSettings.ts": {
+    "mtime": 1775847813.6194456,
+    "ast_hash": "aca814722799b03c1857911179acd504",
+    "semantic_hash": "aca814722799b03c1857911179acd504"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Theme/index.ts": {
+    "mtime": 1774720591.079104,
+    "ast_hash": "293436f19899ad947c51390aa864ec96",
+    "semantic_hash": "293436f19899ad947c51390aa864ec96"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Theme/model/slice/themeSlice.ts": {
+    "mtime": 1774720591.079567,
+    "ast_hash": "d3fc139146180be36a7e9c46ece36485",
+    "semantic_hash": "d3fc139146180be36a7e9c46ece36485"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Title/index.ts": {
+    "mtime": 1774720591.079567,
+    "ast_hash": "7c8d6fdf0873f001ba9e73c1271ece71",
+    "semantic_hash": "7c8d6fdf0873f001ba9e73c1271ece71"
+  },
+  "/home/nikita/proj/toto-client/src/entities/Title/ui/Title/Title.tsx": {
+    "mtime": 1774720591.0800176,
+    "ast_hash": "2bc4d46b75c40074af649a0de70131d1",
+    "semantic_hash": "2bc4d46b75c40074af649a0de70131d1"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/index.ts": {
+    "mtime": 1774720591.0800176,
+    "ast_hash": "facbc0f12be3da2e692f63b2fc87ac13",
+    "semantic_hash": "facbc0f12be3da2e692f63b2fc87ac13"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/model/slice/userSlice.ts": {
+    "mtime": 1780766612.8913112,
+    "ast_hash": "14977357eae23b71ee59ed749f2121e5",
+    "semantic_hash": "14977357eae23b71ee59ed749f2121e5"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/model/types/UserState.ts": {
+    "mtime": 1775847813.6197064,
+    "ast_hash": "87b737214984208588a8adf90f6e571f",
+    "semantic_hash": "87b737214984208588a8adf90f6e571f"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/services/queriesForAuth/queriesForAuth.ts": {
+    "mtime": 1780766612.8921833,
+    "ast_hash": "6e036d842bdc6ea178936b78114f1ed2",
+    "semantic_hash": "6e036d842bdc6ea178936b78114f1ed2"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/services/queriesForResult/queriesForResult.ts": {
+    "mtime": 1775847813.6197064,
+    "ast_hash": "6e198e1afde4a4c0957735b11e87892a",
+    "semantic_hash": "6e198e1afde4a4c0957735b11e87892a"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/services/queriesForRoles/queriesForRoles.ts": {
+    "mtime": 1775847813.6203654,
+    "ast_hash": "d69cefe394e38acde44ba6ec51e3f962",
+    "semantic_hash": "d69cefe394e38acde44ba6ec51e3f962"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/services/queriesForUser/queriesForUser.ts": {
+    "mtime": 1775847813.6205711,
+    "ast_hash": "946815a79fa72b71a657d11d4e9d3d2c",
+    "semantic_hash": "946815a79fa72b71a657d11d4e9d3d2c"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/ui/UserDataList/UserDataList.tsx": {
+    "mtime": 1775847813.6207979,
+    "ast_hash": "527aca340d9c7c73593c75d1d0114e96",
+    "semantic_hash": "527aca340d9c7c73593c75d1d0114e96"
+  },
+  "/home/nikita/proj/toto-client/src/entities/User/ui/UserRoleList/UserRoleList.tsx": {
+    "mtime": 1775847813.6207979,
+    "ast_hash": "bce3cc71b6297a0d39d2796341bd339d",
+    "semantic_hash": "bce3cc71b6297a0d39d2796341bd339d"
+  },
+  "/home/nikita/proj/toto-client/src/features/AdminActions/index.ts": {
+    "mtime": 1774720591.0825827,
+    "ast_hash": "e9f60ec5192d234cf783c712534a3385",
+    "semantic_hash": "e9f60ec5192d234cf783c712534a3385"
+  },
+  "/home/nikita/proj/toto-client/src/features/AdminActions/ui/AdminActions/AdminActions.tsx": {
+    "mtime": 1775847813.6207979,
+    "ast_hash": "03c4dea0e7c169bd2600f0ae3ce78f73",
+    "semantic_hash": "03c4dea0e7c169bd2600f0ae3ce78f73"
+  },
+  "/home/nikita/proj/toto-client/src/features/ChangePassword/index.ts": {
+    "mtime": 1774720591.0829878,
+    "ast_hash": "2ac6d7c2b0a53b7d77674946dea0330b",
+    "semantic_hash": "2ac6d7c2b0a53b7d77674946dea0330b"
+  },
+  "/home/nikita/proj/toto-client/src/features/ChangePassword/ui/ChangePassword/ChangePassword.tsx": {
+    "mtime": 1777143677.0002022,
+    "ast_hash": "7784e3551a67149b8b5c3e334056ea4a",
+    "semantic_hash": "7784e3551a67149b8b5c3e334056ea4a"
+  },
+  "/home/nikita/proj/toto-client/src/features/ConfirmEmail/index.ts": {
+    "mtime": 1774720591.0833282,
+    "ast_hash": "d66ed87e1802f6017e21c18ef81705a7",
+    "semantic_hash": "d66ed87e1802f6017e21c18ef81705a7"
+  },
+  "/home/nikita/proj/toto-client/src/features/ConfirmEmail/ui/ConfirmEmail/ConfirmEmail.tsx": {
+    "mtime": 1777143677.0003328,
+    "ast_hash": "e3ec807adeb823e17691f3be3263e0b4",
+    "semantic_hash": "e3ec807adeb823e17691f3be3263e0b4"
+  },
+  "/home/nikita/proj/toto-client/src/features/EditMultipleValueRow/index.ts": {
+    "mtime": 1774720591.0838165,
+    "ast_hash": "cee2c595b8023cf816d91aec00469efb",
+    "semantic_hash": "cee2c595b8023cf816d91aec00469efb"
+  },
+  "/home/nikita/proj/toto-client/src/features/EditMultipleValueRow/ui/EditMultipleValueRow/EditMultipleValueRow.tsx": {
+    "mtime": 1775847813.6212883,
+    "ast_hash": "a444f630dbf34f750a3e1294108dd70f",
+    "semantic_hash": "a444f630dbf34f750a3e1294108dd70f"
+  },
+  "/home/nikita/proj/toto-client/src/features/GoToStakes/index.ts": {
+    "mtime": 1774720591.0843344,
+    "ast_hash": "2c37db987c5484365ba1f805c0a07966",
+    "semantic_hash": "2c37db987c5484365ba1f805c0a07966"
+  },
+  "/home/nikita/proj/toto-client/src/features/GoToStakes/ui/GoToStakes/GoToStakes.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "27f24b19e395f4eec1b55bd718a233cf",
+    "semantic_hash": "27f24b19e395f4eec1b55bd718a233cf"
+  },
+  "/home/nikita/proj/toto-client/src/features/SetRowsOnPage/index.ts": {
+    "mtime": 1774720591.0847726,
+    "ast_hash": "2671e993c39f22fd1c9d1697c4c1dc1f",
+    "semantic_hash": "2671e993c39f22fd1c9d1697c4c1dc1f"
+  },
+  "/home/nikita/proj/toto-client/src/features/SetRowsOnPage/ui/SetRowsOnPage.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "4b18031f76055b4439a660d805000146",
+    "semantic_hash": "4b18031f76055b4439a660d805000146"
+  },
+  "/home/nikita/proj/toto-client/src/features/ToggleTheme/index.ts": {
+    "mtime": 1774720591.0852559,
+    "ast_hash": "583d024a7332321f108d56d7cf24f801",
+    "semantic_hash": "583d024a7332321f108d56d7cf24f801"
+  },
+  "/home/nikita/proj/toto-client/src/features/ToggleTheme/ui/ToggleTheme/ToggleTheme.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "b76cf3a11279b37d864ff37b8baa090a",
+    "semantic_hash": "b76cf3a11279b37d864ff37b8baa090a"
+  },
+  "/home/nikita/proj/toto-client/src/index.tsx": {
+    "mtime": 1774720591.085602,
+    "ast_hash": "f2ab40a0f1321565b28debc52e48ba08",
+    "semantic_hash": "f2ab40a0f1321565b28debc52e48ba08"
+  },
+  "/home/nikita/proj/toto-client/src/pages/CompetitionsPage/index.ts": {
+    "mtime": 1774720591.0860538,
+    "ast_hash": "c1708b904fe6617b0bf65fa939e1173a",
+    "semantic_hash": "c1708b904fe6617b0bf65fa939e1173a"
+  },
+  "/home/nikita/proj/toto-client/src/pages/CompetitionsPage/ui/CompetitionsPage.async.tsx": {
+    "mtime": 1774720591.0862603,
+    "ast_hash": "4a082d92cf360630c058b38922911648",
+    "semantic_hash": "4a082d92cf360630c058b38922911648"
+  },
+  "/home/nikita/proj/toto-client/src/pages/CompetitionsPage/ui/CompetitionsPage.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "518865dd2d4ebc9abcfb1738434b330f",
+    "semantic_hash": "518865dd2d4ebc9abcfb1738434b330f"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ForgotPage/index.ts": {
+    "mtime": 1774720591.0863998,
+    "ast_hash": "b7a4af5764a83809bc107e8e2f830243",
+    "semantic_hash": "b7a4af5764a83809bc107e8e2f830243"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ForgotPage/ui/ForgotPage.async.tsx": {
+    "mtime": 1774720591.0867143,
+    "ast_hash": "9175f0965158e7d53533b5a5d9e5ad16",
+    "semantic_hash": "9175f0965158e7d53533b5a5d9e5ad16"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ForgotPage/ui/ForgotPage.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "488deae32231382ac806c20ded69d31d",
+    "semantic_hash": "488deae32231382ac806c20ded69d31d"
+  },
+  "/home/nikita/proj/toto-client/src/pages/InfoPage/index.ts": {
+    "mtime": 1774720591.0868647,
+    "ast_hash": "7e49a7ee7911bf1f5be31a3b70ba8f84",
+    "semantic_hash": "7e49a7ee7911bf1f5be31a3b70ba8f84"
+  },
+  "/home/nikita/proj/toto-client/src/pages/InfoPage/ui/InfoPage.async.tsx": {
+    "mtime": 1774720591.087179,
+    "ast_hash": "ff65d0bd9ae90f6521b04e6117e1748f",
+    "semantic_hash": "ff65d0bd9ae90f6521b04e6117e1748f"
+  },
+  "/home/nikita/proj/toto-client/src/pages/InfoPage/ui/InfoPage.tsx": {
+    "mtime": 1775847813.6213555,
+    "ast_hash": "78180d006402486d07ff6db77b491197",
+    "semantic_hash": "78180d006402486d07ff6db77b491197"
+  },
+  "/home/nikita/proj/toto-client/src/pages/LoginPage/index.ts": {
+    "mtime": 1774720591.0873222,
+    "ast_hash": "45b848d82fb05c610d22653d8c9f9c84",
+    "semantic_hash": "45b848d82fb05c610d22653d8c9f9c84"
+  },
+  "/home/nikita/proj/toto-client/src/pages/LoginPage/ui/LoginPage.async.tsx": {
+    "mtime": 1774720591.0876663,
+    "ast_hash": "58c46c1337d1a76195ac085be83eb947",
+    "semantic_hash": "58c46c1337d1a76195ac085be83eb947"
+  },
+  "/home/nikita/proj/toto-client/src/pages/LoginPage/ui/LoginPage.tsx": {
+    "mtime": 1777143677.0003328,
+    "ast_hash": "79a727c1c63bc730de99f12d5a5d0eb3",
+    "semantic_hash": "79a727c1c63bc730de99f12d5a5d0eb3"
+  },
+  "/home/nikita/proj/toto-client/src/pages/MainPage/index.ts": {
+    "mtime": 1774720591.0878406,
+    "ast_hash": "faf958f5a0b9b621c4d3b42db6b1106c",
+    "semantic_hash": "faf958f5a0b9b621c4d3b42db6b1106c"
+  },
+  "/home/nikita/proj/toto-client/src/pages/MainPage/ui/MainPage.async.tsx": {
+    "mtime": 1774720591.0884302,
+    "ast_hash": "ef4b24870524dd8c5a1c6730747a491b",
+    "semantic_hash": "ef4b24870524dd8c5a1c6730747a491b"
+  },
+  "/home/nikita/proj/toto-client/src/pages/MainPage/ui/MainPage.tsx": {
+    "mtime": 1775847813.6225598,
+    "ast_hash": "b426f3072882867194b27d8078af865a",
+    "semantic_hash": "b426f3072882867194b27d8078af865a"
+  },
+  "/home/nikita/proj/toto-client/src/pages/NationsPage/index.ts": {
+    "mtime": 1774720591.0885823,
+    "ast_hash": "301e533d9db150b503a028017005b0b6",
+    "semantic_hash": "301e533d9db150b503a028017005b0b6"
+  },
+  "/home/nikita/proj/toto-client/src/pages/NationsPage/ui/NationsPage.async.tsx": {
+    "mtime": 1774720591.0890298,
+    "ast_hash": "fa00d2add373542de5eda41464f0c8be",
+    "semantic_hash": "fa00d2add373542de5eda41464f0c8be"
+  },
+  "/home/nikita/proj/toto-client/src/pages/NationsPage/ui/NationsPage.tsx": {
+    "mtime": 1775847813.6225598,
+    "ast_hash": "739e8916cdd0e753af564052c9ed41de",
+    "semantic_hash": "739e8916cdd0e753af564052c9ed41de"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ProfilePage/index.ts": {
+    "mtime": 1774720591.0892634,
+    "ast_hash": "f47e641c10da48cd1e0d09cdad870d51",
+    "semantic_hash": "f47e641c10da48cd1e0d09cdad870d51"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ProfilePage/ui/ProfilePage.async.tsx": {
+    "mtime": 1774720591.089663,
+    "ast_hash": "3b0f09df591fc6e01641f6f32e1fd6d6",
+    "semantic_hash": "3b0f09df591fc6e01641f6f32e1fd6d6"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ProfilePage/ui/ProfilePage.tsx": {
+    "mtime": 1775847813.6225598,
+    "ast_hash": "13db9d820f48ccde57bcf59230fb2893",
+    "semantic_hash": "13db9d820f48ccde57bcf59230fb2893"
+  },
+  "/home/nikita/proj/toto-client/src/pages/RegistrationPage/index.ts": {
+    "mtime": 1774720591.0898442,
+    "ast_hash": "73f576ad92fbc0c9f16dab6538459e88",
+    "semantic_hash": "73f576ad92fbc0c9f16dab6538459e88"
+  },
+  "/home/nikita/proj/toto-client/src/pages/RegistrationPage/ui/RegistrationPage.async.tsx": {
+    "mtime": 1774720591.0902908,
+    "ast_hash": "04da21cc205649ed2a398b0740611b6f",
+    "semantic_hash": "04da21cc205649ed2a398b0740611b6f"
+  },
+  "/home/nikita/proj/toto-client/src/pages/RegistrationPage/ui/RegistrationPage.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "f62c9d5ac679bb779cf2814820e661f4",
+    "semantic_hash": "f62c9d5ac679bb779cf2814820e661f4"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ResultPage/index.ts": {
+    "mtime": 1774720591.0904677,
+    "ast_hash": "ac1273312bb190519cd1fb75c154e555",
+    "semantic_hash": "ac1273312bb190519cd1fb75c154e555"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ResultPage/ui/ResultPage.async.tsx": {
+    "mtime": 1774720591.0907798,
+    "ast_hash": "896bba1c2d69afdd2af5f4f4512c1a4c",
+    "semantic_hash": "896bba1c2d69afdd2af5f4f4512c1a4c"
+  },
+  "/home/nikita/proj/toto-client/src/pages/ResultPage/ui/ResultPage.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "6cbf855934ce217052d99a2f7d575f1f",
+    "semantic_hash": "6cbf855934ce217052d99a2f7d575f1f"
+  },
+  "/home/nikita/proj/toto-client/src/pages/SettingsPage/index.ts": {
+    "mtime": 1774720591.0909197,
+    "ast_hash": "12b17a673ac942fd908bd916630c11fc",
+    "semantic_hash": "12b17a673ac942fd908bd916630c11fc"
+  },
+  "/home/nikita/proj/toto-client/src/pages/SettingsPage/ui/SettingsPage.async.tsx": {
+    "mtime": 1774720591.0912654,
+    "ast_hash": "2ccc9acb2a67304a3e77d4ee4212d344",
+    "semantic_hash": "2ccc9acb2a67304a3e77d4ee4212d344"
+  },
+  "/home/nikita/proj/toto-client/src/pages/SettingsPage/ui/SettingsPage.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "a9e83d26c7b49baa84ed9bee6809eb2c",
+    "semantic_hash": "a9e83d26c7b49baa84ed9bee6809eb2c"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StakesPage/index.ts": {
+    "mtime": 1774720591.0914187,
+    "ast_hash": "fcd065029b83a05bda83f89aad3f9669",
+    "semantic_hash": "fcd065029b83a05bda83f89aad3f9669"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StakesPage/ui/StakesPage.async.tsx": {
+    "mtime": 1774720591.0917401,
+    "ast_hash": "b4059c05a751ee1800538bd3a3aef464",
+    "semantic_hash": "b4059c05a751ee1800538bd3a3aef464"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StakesPage/ui/StakesPage.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "9e2c48722f58ed8b8b407f4085aea7b2",
+    "semantic_hash": "9e2c48722f58ed8b8b407f4085aea7b2"
+  },
+  "/home/nikita/proj/toto-client/src/pages/UsersPage/index.ts": {
+    "mtime": 1774720591.091883,
+    "ast_hash": "df4eb2b858a7f82445b7ecf891c103c1",
+    "semantic_hash": "df4eb2b858a7f82445b7ecf891c103c1"
+  },
+  "/home/nikita/proj/toto-client/src/pages/UsersPage/ui/UsersPage.async.tsx": {
+    "mtime": 1774720591.0921934,
+    "ast_hash": "71b8f7441a5619a6b309146194ca45f1",
+    "semantic_hash": "71b8f7441a5619a6b309146194ca45f1"
+  },
+  "/home/nikita/proj/toto-client/src/pages/UsersPage/ui/UsersPage.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "4287334564d56fafea3959ef8fcc61bf",
+    "semantic_hash": "4287334564d56fafea3959ef8fcc61bf"
+  },
+  "/home/nikita/proj/toto-client/src/shared/DefaultTable/index.ts": {
+    "mtime": 1774720591.0925415,
+    "ast_hash": "489bf35b5ed4d2ab5df527b67b5ddaeb",
+    "semantic_hash": "489bf35b5ed4d2ab5df527b67b5ddaeb"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/index.ts": {
+    "mtime": 1774720591.0925415,
+    "ast_hash": "9debbfae28fc86cca5bbe6b2c5beef9a",
+    "semantic_hash": "9debbfae28fc86cca5bbe6b2c5beef9a"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Competition.ts": {
+    "mtime": 1777143677.0003328,
+    "ast_hash": "9bc6eed7f608fa3d44cf91c158d3ceba",
+    "semantic_hash": "9bc6eed7f608fa3d44cf91c158d3ceba"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Match.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "4c8e6ca5db9f35cfefe593a80ddd711f",
+    "semantic_hash": "4c8e6ca5db9f35cfefe593a80ddd711f"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/MatchStakeApi.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "c0dbb2afc6e101faf783a5d572f285e8",
+    "semantic_hash": "c0dbb2afc6e101faf783a5d572f285e8"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Nation.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "f695bcad398791c450f5a871ec50fa3d",
+    "semantic_hash": "f695bcad398791c450f5a871ec50fa3d"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Result.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "6a0a1351eaa0a6c002ff01ae7ec3b82b",
+    "semantic_hash": "6a0a1351eaa0a6c002ff01ae7ec3b82b"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/ResultHeader.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "37b39d8e3cec9c6bb14402b4c7cec9af",
+    "semantic_hash": "37b39d8e3cec9c6bb14402b4c7cec9af"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Role.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "5a7709419124dc30af70dba8f4cf19d9",
+    "semantic_hash": "5a7709419124dc30af70dba8f4cf19d9"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Setting.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "444a9b8349bcd8dcd3095082d2886f03",
+    "semantic_hash": "444a9b8349bcd8dcd3095082d2886f03"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/Stake.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "98c831ba0ecc0b3fb35888d09a7cea16",
+    "semantic_hash": "98c831ba0ecc0b3fb35888d09a7cea16"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/models/User.ts": {
+    "mtime": 1774720591.0931141,
+    "ast_hash": "a81391e220265a985f71c952c8207565",
+    "semantic_hash": "a81391e220265a985f71c952c8207565"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/rtkApi/baseQueryWithAuth/baseQueryWithAuth.ts": {
+    "mtime": 1774720591.093998,
+    "ast_hash": "2a11d97af7ea49c8841fc70ab692d729",
+    "semantic_hash": "2a11d97af7ea49c8841fc70ab692d729"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/rtkApi/baseQueryWithReauth/baseQueryWithReauth.ts": {
+    "mtime": 1779027422.3803284,
+    "ast_hash": "4a708234d44a74565706e90f2c808008",
+    "semantic_hash": "4a708234d44a74565706e90f2c808008"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/MessageResponse.ts": {
+    "mtime": 1774720591.093998,
+    "ast_hash": "4b0e2b993786869afe0a2dabbeca9c67",
+    "semantic_hash": "4b0e2b993786869afe0a2dabbeca9c67"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/TokensResponse.ts": {
+    "mtime": 1774720591.0945594,
+    "ast_hash": "d37060a6790f001cee5b91463fd73207",
+    "semantic_hash": "d37060a6790f001cee5b91463fd73207"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/dto/ActivateDto.ts": {
+    "mtime": 1774720591.0945594,
+    "ast_hash": "a2e720676cd4f6fdf66c592a946cbc28",
+    "semantic_hash": "a2e720676cd4f6fdf66c592a946cbc28"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/dto/ChangePasswordDto.ts": {
+    "mtime": 1774720591.0948248,
+    "ast_hash": "d89df6343ca01b74fb1e65fa26acaf54",
+    "semantic_hash": "d89df6343ca01b74fb1e65fa26acaf54"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/dto/LoginDto.ts": {
+    "mtime": 1774720591.0948248,
+    "ast_hash": "4692aee316824fe75643dc957a71fbb3",
+    "semantic_hash": "4692aee316824fe75643dc957a71fbb3"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/dto/RegistrationDto.ts": {
+    "mtime": 1774720591.0948248,
+    "ast_hash": "ca695c5b20d77ffcf4f42b3fd9b8a551",
+    "semantic_hash": "ca695c5b20d77ffcf4f42b3fd9b8a551"
+  },
+  "/home/nikita/proj/toto-client/src/shared/api/types/dto/SendCodeDto.ts": {
+    "mtime": 1774720591.0948248,
+    "ast_hash": "ea32582ddd551302bb87dc692e0a85e9",
+    "semantic_hash": "ea32582ddd551302bb87dc692e0a85e9"
+  },
+  "/home/nikita/proj/toto-client/src/shared/const/routes.ts": {
+    "mtime": 1781955273.8151991,
+    "ast_hash": "0afce7b81c14a9e220ed4390d7631f85",
+    "semantic_hash": "0afce7b81c14a9e220ed4390d7631f85"
+  },
+  "/home/nikita/proj/toto-client/src/shared/const/select.ts": {
+    "mtime": 1774720591.095369,
+    "ast_hash": "314b38db09676005715c998fa552d1b5",
+    "semantic_hash": "314b38db09676005715c998fa552d1b5"
+  },
+  "/home/nikita/proj/toto-client/src/shared/hooks/useCanSend/useCanSend.ts": {
+    "mtime": 1774720591.0955644,
+    "ast_hash": "894fe417070845b3a259687f8c50e044",
+    "semantic_hash": "894fe417070845b3a259687f8c50e044"
+  },
+  "/home/nikita/proj/toto-client/src/shared/lib/helpers.ts": {
+    "mtime": 1774720591.0955644,
+    "ast_hash": "b268bc8cf1464b52b5db14f87f1c2bd1",
+    "semantic_hash": "b268bc8cf1464b52b5db14f87f1c2bd1"
+  },
+  "/home/nikita/proj/toto-client/src/shared/store/config/index.ts": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "68bbe75bfce77d973e4a38bf86852d01",
+    "semantic_hash": "68bbe75bfce77d973e4a38bf86852d01"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/Loading/Loading.tsx": {
+    "mtime": 1774720591.0963817,
+    "ast_hash": "b8c53665df9167c39142f5883c8a3ce3",
+    "semantic_hash": "b8c53665df9167c39142f5883c8a3ce3"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/Loading/index.ts": {
+    "mtime": 1774720591.0965364,
+    "ast_hash": "baa068f96f073d40009137310e3fb07b",
+    "semantic_hash": "baa068f96f073d40009137310e3fb07b"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/ShowMessage/ShowMessage.tsx": {
+    "mtime": 1777143677.0003328,
+    "ast_hash": "36d4a641a8bd018afe56603c9d609ff0",
+    "semantic_hash": "36d4a641a8bd018afe56603c9d609ff0"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/ShowMessage/index.ts": {
+    "mtime": 1774720591.096815,
+    "ast_hash": "311b0bdc1ba4884c8bbbf1e920ec4ac2",
+    "semantic_hash": "311b0bdc1ba4884c8bbbf1e920ec4ac2"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/ToggleList/ToggleList.tsx": {
+    "mtime": 1774720591.096815,
+    "ast_hash": "0bca69b4181dd8b16fded9ed416a5be1",
+    "semantic_hash": "0bca69b4181dd8b16fded9ed416a5be1"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/ToggleList/index.ts": {
+    "mtime": 1774720591.097141,
+    "ast_hash": "61518f2c9b70b75b90a0956088b74092",
+    "semantic_hash": "61518f2c9b70b75b90a0956088b74092"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/TransferList/TransferList.tsx": {
+    "mtime": 1774720591.097141,
+    "ast_hash": "e3e815b4a7453291fcf5a61ae3d58b2f",
+    "semantic_hash": "e3e815b4a7453291fcf5a61ae3d58b2f"
+  },
+  "/home/nikita/proj/toto-client/src/shared/ui/TransferList/index.ts": {
+    "mtime": 1774720591.0974066,
+    "ast_hash": "6061080fbc3fa03b9de5a994ab55b95a",
+    "semantic_hash": "6061080fbc3fa03b9de5a994ab55b95a"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/AdminCard/index.ts": {
+    "mtime": 1774720591.0975955,
+    "ast_hash": "689a002f477aba423b7aa7c19382eba3",
+    "semantic_hash": "689a002f477aba423b7aa7c19382eba3"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/AdminCard/ui/AdminCard/AdminCard.tsx": {
+    "mtime": 1775847813.6229732,
+    "ast_hash": "5489c87ced892b6fb7f9d1e0763822cd",
+    "semantic_hash": "5489c87ced892b6fb7f9d1e0763822cd"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/CompetitionEditingTable/index.ts": {
+    "mtime": 1774720591.0977805,
+    "ast_hash": "0f2486c18497613b886ed2874e7aebc4",
+    "semantic_hash": "0f2486c18497613b886ed2874e7aebc4"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/CompetitionEditingTable/ui/CompetitionEditingTable/CompetitionEditingTable.tsx": {
+    "mtime": 1777143677.0007815,
+    "ast_hash": "ba7c0ffe3992b368f4ce71242a232d58",
+    "semantic_hash": "ba7c0ffe3992b368f4ce71242a232d58"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/ConfirmEmailCard/index.ts": {
+    "mtime": 1774720591.0982563,
+    "ast_hash": "7b5ec91b7b18841ff76d90b8af313d35",
+    "semantic_hash": "7b5ec91b7b18841ff76d90b8af313d35"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/ConfirmEmailCard/ui/ConfirmEmailCard/ConfirmEmailCard.tsx": {
+    "mtime": 1775847813.6235995,
+    "ast_hash": "83055d432ea77186db4104b356540df6",
+    "semantic_hash": "83055d432ea77186db4104b356540df6"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/MatchEditingTable/index.ts": {
+    "mtime": 1774720591.0989392,
+    "ast_hash": "caa5f581a59582b1cce4c376590016ef",
+    "semantic_hash": "caa5f581a59582b1cce4c376590016ef"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/MatchEditingTable/ui/MatchEditingTable/MatchEditingTable.tsx": {
+    "mtime": 1781961231.631027,
+    "ast_hash": "9b415d7b1959b742dc3e1fd05175c613",
+    "semantic_hash": "9b415d7b1959b742dc3e1fd05175c613"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/NationEditingTable/index.ts": {
+    "mtime": 1774720591.0993972,
+    "ast_hash": "b07d5fbb0dacd3c23742cf34c21a7cec",
+    "semantic_hash": "b07d5fbb0dacd3c23742cf34c21a7cec"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/NationEditingTable/ui/NationEditingTable/NationEditingTable.tsx": {
+    "mtime": 1777143677.0010765,
+    "ast_hash": "76e6893c281c088d311cf2023ded4f80",
+    "semantic_hash": "76e6893c281c088d311cf2023ded4f80"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/ResultTable/index.ts": {
+    "mtime": 1774720591.0999744,
+    "ast_hash": "a438da8e579ffe5212d0758285028c7f",
+    "semantic_hash": "a438da8e579ffe5212d0758285028c7f"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/ResultTable/ui/ResultTable/ResultTable.tsx": {
+    "mtime": 1775847813.624081,
+    "ast_hash": "5c637893160c584ee4d424169b6ff24e",
+    "semantic_hash": "5c637893160c584ee4d424169b6ff24e"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/SettingEditingTable/index.ts": {
+    "mtime": 1774720591.1004977,
+    "ast_hash": "a804f06ea1b562508889206818bdf3d0",
+    "semantic_hash": "a804f06ea1b562508889206818bdf3d0"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/SettingEditingTable/ui/SettingEditingTable/SettingEditingTable.tsx": {
+    "mtime": 1779027422.3805323,
+    "ast_hash": "95169e65620c64fd4c5d947e1ce2a5d4",
+    "semantic_hash": "95169e65620c64fd4c5d947e1ce2a5d4"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/StakeEditingTable/index.ts": {
+    "mtime": 1774720591.1011548,
+    "ast_hash": "44d3496858f6732487f3e092db9f03a1",
+    "semantic_hash": "44d3496858f6732487f3e092db9f03a1"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/StakeEditingTable/ui/StakeEditingTable/StakeEditingTable.tsx": {
+    "mtime": 1781962585.3925774,
+    "ast_hash": "72e0f2eb68ac1de3a02999032f25f481",
+    "semantic_hash": "72e0f2eb68ac1de3a02999032f25f481"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/UserDataCard/index.ts": {
+    "mtime": 1774720591.101757,
+    "ast_hash": "c21f2601c268af053480c9b02b6a06b2",
+    "semantic_hash": "c21f2601c268af053480c9b02b6a06b2"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/UserDataCard/ui/UserDataCard/UserDataCard.tsx": {
+    "mtime": 1775847813.624324,
+    "ast_hash": "c106d1df37e11fd3ecac5e754037d7fa",
+    "semantic_hash": "c106d1df37e11fd3ecac5e754037d7fa"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/UserEditingTable/index.ts": {
+    "mtime": 1774720591.1023333,
+    "ast_hash": "cd27e87359c65da2720fe6d0c735d07e",
+    "semantic_hash": "cd27e87359c65da2720fe6d0c735d07e"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/UserEditingTable/ui/UserEditingTable/UserEditingTable.tsx": {
+    "mtime": 1775847813.6245544,
+    "ast_hash": "d98eca2f9bc9526adc2229848020ef47",
+    "semantic_hash": "d98eca2f9bc9526adc2229848020ef47"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/layout/Footer/Footer.tsx": {
+    "mtime": 1774720591.1031725,
+    "ast_hash": "7946ff4bf6b32459bd6b8ff3b58a601e",
+    "semantic_hash": "7946ff4bf6b32459bd6b8ff3b58a601e"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/layout/Header/Header.tsx": {
+    "mtime": 1781955287.878348,
+    "ast_hash": "0f63c1d8be491fd63110b8e938fe1c25",
+    "semantic_hash": "0f63c1d8be491fd63110b8e938fe1c25"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/layout/MainLayout/MainLayout.tsx": {
+    "mtime": 1779027422.3806787,
+    "ast_hash": "586b43ce986b978427324c88e0556f51",
+    "semantic_hash": "586b43ce986b978427324c88e0556f51"
+  },
+  "/home/nikita/proj/toto-client/src/widgets/layout/index.ts": {
+    "mtime": 1774720591.1031725,
+    "ast_hash": "865227c283a64c495ef22f04109bb3fb",
+    "semantic_hash": "865227c283a64c495ef22f04109bb3fb"
+  },
+  "/home/nikita/proj/toto-client/tsconfig.json": {
+    "mtime": 1777143677.0010765,
+    "ast_hash": "255644bc4225d26aac8967c0add30f44",
+    "semantic_hash": "255644bc4225d26aac8967c0add30f44"
+  },
+  "/home/nikita/proj/toto-client/vite.config.ts": {
+    "mtime": 1780766612.8926692,
+    "ast_hash": "f2119557cf398ef715b84ffdb64f2686",
+    "semantic_hash": "f2119557cf398ef715b84ffdb64f2686"
+  },
+  "/home/nikita/proj/toto-client/.github/workflows/main.yml": {
+    "mtime": 1780766612.8853111,
+    "ast_hash": "856745b52fe2f35d0281693372072f63",
+    "semantic_hash": "856745b52fe2f35d0281693372072f63"
+  },
+  "/home/nikita/proj/toto-client/AGENTS.md": {
+    "mtime": 1775758226.1380763,
+    "ast_hash": "371e4569468e55f6e06180dd98ee32e4",
+    "semantic_hash": "371e4569468e55f6e06180dd98ee32e4"
+  },
+  "/home/nikita/proj/toto-client/README.md": {
+    "mtime": 1774720591.0634036,
+    "ast_hash": "86383a836e7b0e5da6a44f05e17db606",
+    "semantic_hash": "86383a836e7b0e5da6a44f05e17db606"
+  },
+  "/home/nikita/proj/toto-client/index.html": {
+    "mtime": 1774729354.6874244,
+    "ast_hash": "fe521738d55855a168b69e0db0defe80",
+    "semantic_hash": "fe521738d55855a168b69e0db0defe80"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StatsPage/index.ts": {
+    "mtime": 1781955226.4966986,
+    "ast_hash": "0c4238565836d650cdf40501e722c4ed",
+    "semantic_hash": "0c4238565836d650cdf40501e722c4ed"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StatsPage/ui/StatsPage.async.tsx": {
+    "mtime": 1781955226.0166934,
+    "ast_hash": "2de60a06cec348544487cced41068bd8",
+    "semantic_hash": "2de60a06cec348544487cced41068bd8"
+  },
+  "/home/nikita/proj/toto-client/src/pages/StatsPage/ui/StatsPage.tsx": {
+    "mtime": 1781959649.1827772,
+    "ast_hash": "0272a3c391da52f19ea6eda77bc07664",
+    "semantic_hash": "0272a3c391da52f19ea6eda77bc07664"
+  }
+}
