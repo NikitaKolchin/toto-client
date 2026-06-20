@@ -347,7 +347,7 @@ function StatsPage() {
                         ]}
                         width={chartWidthFund}
                         height={chartHeight}
-                        hideLegend
+                        slotProps={{ legend: { hidden: true } }}
                     />
                 </Paper>
 
@@ -382,7 +382,7 @@ function StatsPage() {
                         ]}
                         width={chartWidth}
                         height={chartHeight}
-                        hideLegend
+                        slotProps={{ legend: { hidden: true } }}
                     />
                 </Paper>
             </Box>
