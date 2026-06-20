@@ -197,8 +197,8 @@ function calcRankHistory(results: Result[], headers: ResultHeader[]) {
         .map((r) => r.alias)
         .sort((a, b) => (results.find((r) => r.alias === b)?.pointsSum ?? 0) - (results.find((r) => r.alias === a)?.pointsSum ?? 0));
 
-    const topUsers = userAliases.slice(0, 15);
-    const matchLabels = ['Старт', ...sortedHeaders.map((h) => `#${h.matchNo}`)];
+    const topUsers = userAliases;
+    const matchLabels = ['Старт', ...sortedHeaders.map((h) => `${h.home.value} - ${h.away.value} ${h.homeScore}:${h.awayScore}`)];
 
     const rankData: { [alias: string]: (number | null)[] } = {};
     for (const alias of topUsers) {
@@ -244,7 +244,7 @@ function calcRankHistory(results: Result[], headers: ResultHeader[]) {
         showMark: false,
     }));
 
-    return { series, xLabels: matchLabels };
+    return { series, xLabels: matchLabels, allAliases: topUsers };
 }
 
 function StatsPage() {
@@ -469,32 +469,49 @@ function StatsPage() {
                             color="text.secondary"
                             gutterBottom
                         >
-                            Изменение позиций участников (топ-15) от матча к
+                            Изменение позиций участников от матча к
                             матчу
                         </Typography>
-                        <LineChart
-                            series={rankHistory.series}
-                            xAxis={[
-                                {
-                                    data: rankHistory.xLabels,
-                                    scaleType: 'band',
-                                    tickLabelStyle: {
-                                        angle: 60,
-                                        fontSize: 10,
+                        <Box display="flex" flexDirection="row">
+                            <LineChart
+                                series={rankHistory.series}
+                                margin={{ left: 60, right: 20 }}
+                                slotProps={{
+                                    legend: { hidden: true },
+                                }}
+                                xAxis={[
+                                    {
+                                        data: rankHistory.xLabels,
+                                        scaleType: 'band',
+                                        tickLabelStyle: {
+                                            angle: 60,
+                                            fontSize: 10,
+                                        },
                                     },
-                                },
-                            ]}
-                            yAxis={[
-                                {
-                                    min: 1,
-                                    max: Math.min(rankHistory.series.length, 15),
-                                    reverse: true,
-                                    label: 'Место',
-                                },
-                            ]}
-                            width={isMobile ? 340 : 1100}
-                            height={400}
-                        />
+                                ]}
+                                yAxis={[
+                                    {
+                                        min: 1,
+                                        max: 10,
+                                        reverse: true,
+                                        label: 'Место',
+                                    },
+                                ]}
+                                width={isMobile ? 340 : 950}
+                                height={600}
+                            />
+                            <Box ml={2} mt={4}>
+                                <Typography variant="caption" fontWeight="bold" gutterBottom display="block">
+                                    Топ-10
+                                </Typography>
+                                {rankHistory.allAliases.slice(0, 10).map((alias, i) => (
+                                    <Box key={alias} display="flex" alignItems="center" gap={0.5} mb={0.5}>
+                                        <ColorDot color={LINE_COLORS[i % LINE_COLORS.length]} />
+                                        <Typography variant="caption">{alias}</Typography>
+                                    </Box>
+                                ))}
+                            </Box>
+                        </Box>
                     </Paper>
                 </Box>
             )}
