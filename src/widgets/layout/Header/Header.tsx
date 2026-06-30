@@ -83,7 +83,7 @@ function Header() {
 		setAccountAnchorEl(null);
 		navigate(AppRoutes.LOGIN);
 	};
-	const primaryMainColor = theme.palette.primary.main;
+	const primaryTextColor = theme.palette.text.primary;
 	const secondaryMainColor = theme.palette.secondary.main;
 	const HeaderLink: FC<
 		PropsWithChildren<TotoMenuItem & { isAuth: boolean; isActivated: boolean }>
@@ -222,7 +222,7 @@ function Header() {
 										primary={item.name}
 										slotProps={{
 											primary: {
-												color: primaryMainColor,
+												color: primaryTextColor,
 												textTransform: "lowercase",
 											},
 										}}
