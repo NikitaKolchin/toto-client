@@ -10,6 +10,9 @@ export const settingsApi = createApi({
         getSettingById: builder.query<Setting, string>({
             query: (id) => `settings/${id}`,
         }),
+        getCurrentSetting: builder.query<Setting, void>({
+            query: () => `settings/current`,
+        }),
         getAllSettings: builder.query<Setting[], void>({
             query: () => `settings`,
             providesTags: (result) =>
@@ -55,6 +58,7 @@ export const settingsApi = createApi({
 
 export const {
     useGetSettingByIdQuery,
+    useGetCurrentSettingQuery,
     useGetAllSettingsQuery,
     useUpdateSettingByIdMutation,
     useAddSettingMutation,

@@ -1,7 +1,8 @@
 export {
-    useGetAllSettingsQuery,
-    useGetSettingByIdQuery,
-    useUpdateSettingByIdMutation,
-    useAddSettingMutation,
-    settingsApi,
-} from './services/queriesForSettings/queriesForSettings';
+	settingsApi,
+	useAddSettingMutation,
+	useGetAllSettingsQuery,
+	useGetCurrentSettingQuery,
+	useGetSettingByIdQuery,
+	useUpdateSettingByIdMutation,
+} from "./services/queriesForSettings/queriesForSettings";
