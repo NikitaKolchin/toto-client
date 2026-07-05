@@ -243,7 +243,6 @@ const MatchEditingTable: FC = () => {
         ],
         [nations],
     );
-    console.log('uploadMatchesError', uploadMatchesError, uploadMatchesResult);
     const defaultMRTOptions = getDefaultMRTOptions<Match>();
     const table = useMaterialReactTable({
         ...defaultMRTOptions,
