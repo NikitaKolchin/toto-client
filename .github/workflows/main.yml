@@ -4,19 +4,134 @@ on:
   push:
     branches:
       - master
+  pull_request:
   workflow_dispatch:
 
 concurrency:
-  group: toto-client-deploy
+  group: toto-client-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
+  e2e:
+    name: E2E tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: toto_e2e
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d toto_e2e"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      # Одноразовый аккаунт в одноразовой БД — первый зарегистрированный
+      # пользователь автоматически получает роли ADMIN и USER (AuthService#assignDefaultRoles)
+      E2E_EMAIL: e2e@toto.local
+      E2E_PASSWORD: e2e-secret
+      E2E_BASE_URL: http://localhost:8080
+
+    steps:
+      - name: Checkout client
+        uses: actions/checkout@v4
+
+      - name: Checkout core
+        uses: actions/checkout@v4
+        with:
+          repository: NikitaKolchin/toto-core
+          # toto-core приватный, GITHUB_TOKEN на него прав не имеет.
+          # Нужен fine-grained PAT с Contents: Read.
+          token: ${{ secrets.CORE_REPO_TOKEN }}
+          path: toto-core
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+          cache-dependency-path: toto-core/pom.xml
+
+      - name: Build core jar
+        working-directory: toto-core
+        run: |
+          chmod +x mvnw
+          ./mvnw -B package -DskipTests
+
+      - name: Start core
+        env:
+          # Профиль local-mock подменяет football-data.org локальной заглушкой
+          SPRING_PROFILES_ACTIVE: local-mock
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/toto_e2e
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+          SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+        run: |
+          nohup java -jar toto-core/target/toto-core-0.0.1-SNAPSHOT.jar > core.log 2>&1 &
+          echo $! > core.pid
+
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000/api/status >/dev/null 2>&1; then
+              echo "core is up"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "core failed to start"
+          cat core.log
+          exit 1
+
+      - name: Seed test user
+        run: |
+          curl -fsS -X POST http://localhost:3000/api/auth/registration \
+            -H 'Content-Type: application/json' \
+            -d "$(printf '{"email":"%s","password":"%s","firstName":"E2E","secondName":"Tester","alias":"e2e"}' \
+                  "$E2E_EMAIL" "$E2E_PASSWORD")" \
+            -o /dev/null
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm run e2e
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Dump core log
+        if: failure()
+        run: cat core.log
+
   deploy:
     name: Build and deploy
     runs-on: ubuntu-latest
+    needs: e2e
+    if: github.event_name != 'pull_request'
 
     steps:
       - name: Checkout
