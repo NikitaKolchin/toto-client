@@ -10,8 +10,9 @@ export const settingsApi = createApi({
         getSettingById: builder.query<Setting, string>({
             query: (id) => `settings/${id}`,
         }),
-        getCurrentSetting: builder.query<Setting, void>({
-            query: () => `settings/current`,
+        getCurrentSetting: builder.query<Setting, number | undefined>({
+            query: (competitionId) =>
+                competitionId ? `settings/current?competitionId=${competitionId}` : 'settings/current',
         }),
         getAllSettings: builder.query<Setting[], void>({
             query: () => `settings`,

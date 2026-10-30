@@ -4,4 +4,6 @@ export interface Competition {
     value: string;
     isCurrent: boolean;
     description: string;
+    code?: string;
+    status?: 'DRAFT' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 }

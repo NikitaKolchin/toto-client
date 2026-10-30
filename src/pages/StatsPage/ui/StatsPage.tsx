@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { LineChart, PieChart } from "@mui/x-charts";
 import { useMemo, useRef } from "react";
+import { useCompetitionId } from "@/entities/Competition";
 import { useGetAllMatchesForResultQuery } from "@/entities/Match";
 import { useGetCurrentSettingQuery } from "@/entities/Setting";
 import { Title } from "@/entities/Title";
@@ -283,10 +284,16 @@ function calcRankHistory(results: Result[], headers: ResultHeader[]) {
 function StatsPage() {
 	const theme = useTheme();
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+	const competitionId = useCompetitionId();
 
-	const { data: results = [] } = useGetResultQuery();
-	const { data: headers = [] } = useGetAllMatchesForResultQuery();
-	const { data: setting } = useGetCurrentSettingQuery();
+	const skip = competitionId === undefined;
+	const { data: results = [] } = useGetResultQuery(competitionId, { skip });
+	const { data: headers = [] } = useGetAllMatchesForResultQuery(competitionId, {
+		skip,
+	});
+	const { data: setting } = useGetCurrentSettingQuery(competitionId, {
+		skip,
+	});
 
 	const contribution = setting?.contribution ?? 1000;
 	const chartWidth = isMobile ? 320 : 520;

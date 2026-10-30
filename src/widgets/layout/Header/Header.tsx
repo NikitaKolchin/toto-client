@@ -1,6 +1,6 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Button, Drawer } from "@mui/material";
+import { Button, Drawer, FormControl, InputLabel, Select } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -13,8 +13,20 @@ import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { type FC, type PropsWithChildren, useState } from "react";
-import { type To, useLocation, useNavigate } from "react-router-dom";
+import {
+	type FC,
+	type PropsWithChildren,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+	useCompetitionId,
+	useGetAllCompetitionsQuery,
+	useGetSelectedCompetitionIdQuery,
+	useSelectCompetitionMutation,
+} from "@/entities/Competition";
 import { useLogoutMutation } from "@/entities/User";
 import { AppRoutes } from "@/shared/const/routes";
 import { useAppSelector } from "@/shared/store/config";
@@ -34,6 +46,17 @@ const menuItems: TotoMenuItem[] = [
 function Header() {
 	const [logout] = useLogoutMutation();
 	const { isAuth, isActivated } = useAppSelector((state) => state.user);
+	const { data: competitions = [], isLoading: isCompetitionsLoading } =
+		useGetAllCompetitionsQuery(undefined, {
+			skip: !isAuth,
+		});
+	const {
+		data: selectedCompetitionId,
+		isLoading: isSelectedCompetitionLoading,
+	} = useGetSelectedCompetitionIdQuery(undefined, {
+		skip: !isAuth,
+	});
+	const [selectCompetition] = useSelectCompetitionMutation();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const theme = useTheme();
@@ -42,6 +65,87 @@ function Header() {
 		null,
 	);
 	const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
+	const competitionId = useCompetitionId();
+	const activeCompetitions = useMemo(
+		() =>
+			competitions.filter(
+				(competition) =>
+					competition.status === "ACTIVE" || competition.isCurrent,
+			),
+		[competitions],
+	);
+	const selectableCompetitions = useMemo(
+		() =>
+			[...competitions].sort((left, right) => {
+				const leftActive = left.status === "ACTIVE" || left.isCurrent ? 0 : 1;
+				const rightActive =
+					right.status === "ACTIVE" || right.isCurrent ? 0 : 1;
+				return leftActive - rightActive;
+			}),
+		[competitions],
+	);
+	const fallbackCompetitions =
+		activeCompetitions.length > 0 ? activeCompetitions : selectableCompetitions;
+
+	const withCompetitionSearch = (path: string) => {
+		const searchParams = new URLSearchParams(location.search);
+		const currentCompetitionId = searchParams.get("competitionId");
+		return currentCompetitionId
+			? `${path}?${new URLSearchParams({
+					competitionId: currentCompetitionId,
+				}).toString()}`
+			: path;
+	};
+
+	useEffect(() => {
+		if (
+			!isAuth ||
+			isCompetitionsLoading ||
+			isSelectedCompetitionLoading ||
+			competitionId !== undefined ||
+			fallbackCompetitions.length === 0
+		) {
+			return;
+		}
+
+		const fallbackId =
+			selectedCompetitionId != null &&
+			fallbackCompetitions.some(
+				(competition) => competition.id === selectedCompetitionId,
+			)
+				? selectedCompetitionId
+				: fallbackCompetitions[0].id;
+
+		if (fallbackId !== selectedCompetitionId) {
+			selectCompetition(fallbackId);
+		}
+
+		const searchParams = new URLSearchParams(location.search);
+		searchParams.set("competitionId", String(fallbackId));
+		navigate(
+			{ pathname: location.pathname, search: searchParams.toString() },
+			{ replace: true },
+		);
+	}, [
+		fallbackCompetitions,
+		competitionId,
+		isAuth,
+		isCompetitionsLoading,
+		isSelectedCompetitionLoading,
+		location.pathname,
+		location.search,
+		navigate,
+		selectCompetition,
+		selectedCompetitionId,
+	]);
+
+	const handleCompetitionChange = async (nextCompetitionId: number) => {
+		const result = await selectCompetition(nextCompetitionId);
+		if (!("data" in result)) return;
+		const searchParams = new URLSearchParams(location.search);
+		searchParams.set("competitionId", String(nextCompetitionId));
+		navigate({ pathname: location.pathname, search: searchParams.toString() });
+	};
 
 	const handleMainMenu = () => {
 		setIsMainMenuOpen((current) => !current);
@@ -51,11 +155,11 @@ function Header() {
 		setIsMainMenuOpen(false);
 	};
 
-	const handleMainMenuNavigate = (value: To) => {
+	const handleMainMenuNavigate = (value: string) => {
 		handleCloseMainMenu();
 
 		if (location.pathname !== value) {
-			navigate(value);
+			navigate(withCompetitionSearch(value));
 		}
 	};
 
@@ -70,7 +174,7 @@ function Header() {
 	const handleProfile = () => {
 		setAccountAnchorEl(null);
 		if (location.pathname !== AppRoutes.PROFILE) {
-			navigate(AppRoutes.PROFILE);
+			navigate(withCompetitionSearch(AppRoutes.PROFILE));
 		}
 	};
 
@@ -93,7 +197,7 @@ function Header() {
 				<Typography
 					onClick={() => {
 						if (location.pathname !== props.value) {
-							navigate(props.value);
+							navigate(withCompetitionSearch(props.value));
 						}
 					}}
 					variant="h6"
@@ -151,6 +255,33 @@ function Header() {
 							alignItems: "center",
 						}}
 					>
+						{isAuth && isActivated && selectableCompetitions.length > 0 && (
+							<FormControl size="small" sx={{ minWidth: 180, mr: 2 }}>
+								<InputLabel id="competition-selector-label" color="secondary">
+									Турнир
+								</InputLabel>
+								<Select
+									labelId="competition-selector-label"
+									label="Турнир"
+									value={competitionId ?? selectedCompetitionId ?? ""}
+									onChange={(event) =>
+										handleCompetitionChange(Number(event.target.value))
+									}
+									sx={{
+										color: "secondary.main",
+										".MuiOutlinedInput-notchedOutline": {
+											borderColor: "secondary.main",
+										},
+									}}
+								>
+									{selectableCompetitions.map((competition) => (
+										<MenuItem key={competition.id} value={competition.id}>
+											{competition.value}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						)}
 						{matchThen600 &&
 							menuItems.map((item) => (
 								<HeaderLink
