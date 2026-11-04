@@ -1,10 +1,10 @@
 export {
-    useGetNationByIdQuery,
-    useGetAllNationsQuery,
-    useUpdateNationByIdMutation,
-    useAddNationMutation,
-    useGetNationsByCurrentCompetitionQuery,
-    useUploadNationsMutation,
-    useUpdateNationsMutation,
-    nationsApi,
-} from './services/queriesForNations/queriesForNations';
+	useGetNationByIdQuery,
+	useGetAllNationsQuery,
+	useUpdateNationByIdMutation,
+	useAddNationMutation,
+	useGetNationsByCompetitionQuery,
+	useUploadNationsMutation,
+	useUpdateNationsMutation,
+	nationsApi,
+} from "./services/queriesForNations/queriesForNations";

@@ -1,6 +1,6 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Button, Drawer } from "@mui/material";
+import { Button, Drawer, FormControl, InputLabel, Select } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -13,9 +13,22 @@ import { useTheme } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { type FC, type PropsWithChildren, useState } from "react";
-import { type To, useLocation, useNavigate } from "react-router-dom";
+import {
+	type FC,
+	type PropsWithChildren,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+	useCompetitionId,
+	useGetAllCompetitionsQuery,
+	useGetSelectedCompetitionIdQuery,
+	useSelectCompetitionMutation,
+} from "@/entities/Competition";
 import { useLogoutMutation } from "@/entities/User";
+import { type Competition, Roles } from "@/shared/api";
 import { AppRoutes } from "@/shared/const/routes";
 import { useAppSelector } from "@/shared/store/config";
 
@@ -31,9 +44,37 @@ const menuItems: TotoMenuItem[] = [
 	{ name: "Информация", value: AppRoutes.INFO },
 ];
 
+const statusLabels: Record<NonNullable<Competition["status"]>, string> = {
+	DRAFT: "черновик",
+	ACTIVE: "идёт",
+	FINISHED: "завершён",
+	ARCHIVED: "архив",
+};
+
+const statusOrder = (status: Competition["status"]) =>
+	status === "ACTIVE"
+		? 0
+		: status === "FINISHED"
+			? 1
+			: status === "DRAFT"
+				? 2
+				: 3;
+
 function Header() {
 	const [logout] = useLogoutMutation();
-	const { isAuth, isActivated } = useAppSelector((state) => state.user);
+	const { isAuth, isActivated, roles } = useAppSelector((state) => state.user);
+	const isAdmin = roles.some((role) => role.value === Roles.ADMIN);
+	const { data: competitions = [], isLoading: isCompetitionsLoading } =
+		useGetAllCompetitionsQuery(undefined, {
+			skip: !isAuth,
+		});
+	const {
+		data: selectedCompetitionId,
+		isLoading: isSelectedCompetitionLoading,
+	} = useGetSelectedCompetitionIdQuery(undefined, {
+		skip: !isAuth,
+	});
+	const [selectCompetition] = useSelectCompetitionMutation();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const theme = useTheme();
@@ -42,6 +83,75 @@ function Header() {
 		null,
 	);
 	const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
+	const competitionId = useCompetitionId();
+	// Игроку доступны открытые турниры (ACTIVE/FINISHED), администратору — все.
+	const selectableCompetitions = useMemo(
+		() =>
+			competitions
+				.filter(
+					(competition) =>
+						isAdmin ||
+						competition.status === "ACTIVE" ||
+						competition.status === "FINISHED",
+				)
+				.sort(
+					(left, right) => statusOrder(left.status) - statusOrder(right.status),
+				),
+		[competitions, isAdmin],
+	);
+	const isKnownCompetition = (id: number | null | undefined) =>
+		id != null &&
+		selectableCompetitions.some((competition) => competition.id === id);
+
+	const withCompetitionSearch = (path: string) => {
+		const searchParams = new URLSearchParams(location.search);
+		const currentCompetitionId = searchParams.get("competitionId");
+		return currentCompetitionId
+			? `${path}?${new URLSearchParams({
+					competitionId: currentCompetitionId,
+				}).toString()}`
+			: path;
+	};
+
+	// URL без турнира (или с неизвестным турниром) получает выбор пользователя,
+	// а если его нет — первый открытый турнир. Сохранённый выбор перезаписывается
+	// только когда его нет или он больше недоступен.
+	useEffect(() => {
+		if (
+			!isAuth ||
+			isCompetitionsLoading ||
+			isSelectedCompetitionLoading ||
+			selectableCompetitions.length === 0 ||
+			isKnownCompetition(competitionId)
+		) {
+			return;
+		}
+
+		const fallbackId = isKnownCompetition(selectedCompetitionId)
+			? (selectedCompetitionId as number)
+			: selectableCompetitions[0].id;
+
+		if (isActivated && fallbackId !== selectedCompetitionId) {
+			selectCompetition(fallbackId);
+		}
+
+		const searchParams = new URLSearchParams(location.search);
+		searchParams.set("competitionId", String(fallbackId));
+		navigate(
+			{ pathname: location.pathname, search: searchParams.toString() },
+			{ replace: true },
+		);
+	});
+
+	// Турнир задаётся URL сразу; сохранение выбора на сервере — только для удобства.
+	const handleCompetitionChange = (nextCompetitionId: number) => {
+		const searchParams = new URLSearchParams(location.search);
+		searchParams.set("competitionId", String(nextCompetitionId));
+		navigate({ pathname: location.pathname, search: searchParams.toString() });
+		if (isActivated) {
+			selectCompetition(nextCompetitionId);
+		}
+	};
 
 	const handleMainMenu = () => {
 		setIsMainMenuOpen((current) => !current);
@@ -51,11 +161,11 @@ function Header() {
 		setIsMainMenuOpen(false);
 	};
 
-	const handleMainMenuNavigate = (value: To) => {
+	const handleMainMenuNavigate = (value: string) => {
 		handleCloseMainMenu();
 
 		if (location.pathname !== value) {
-			navigate(value);
+			navigate(withCompetitionSearch(value));
 		}
 	};
 
@@ -70,7 +180,7 @@ function Header() {
 	const handleProfile = () => {
 		setAccountAnchorEl(null);
 		if (location.pathname !== AppRoutes.PROFILE) {
-			navigate(AppRoutes.PROFILE);
+			navigate(withCompetitionSearch(AppRoutes.PROFILE));
 		}
 	};
 
@@ -93,7 +203,7 @@ function Header() {
 				<Typography
 					onClick={() => {
 						if (location.pathname !== props.value) {
-							navigate(props.value);
+							navigate(withCompetitionSearch(props.value));
 						}
 					}}
 					variant="h6"
@@ -151,6 +261,36 @@ function Header() {
 							alignItems: "center",
 						}}
 					>
+						{isAuth && isActivated && selectableCompetitions.length > 0 && (
+							<FormControl size="small" sx={{ minWidth: 180, mr: 2 }}>
+								<InputLabel id="competition-selector-label" color="secondary">
+									Турнир
+								</InputLabel>
+								<Select
+									labelId="competition-selector-label"
+									label="Турнир"
+									value={isKnownCompetition(competitionId) ? competitionId : ""}
+									onChange={(event) =>
+										handleCompetitionChange(Number(event.target.value))
+									}
+									sx={{
+										color: "secondary.main",
+										".MuiOutlinedInput-notchedOutline": {
+											borderColor: "secondary.main",
+										},
+									}}
+								>
+									{selectableCompetitions.map((competition) => (
+										<MenuItem key={competition.id} value={competition.id}>
+											{competition.value}
+											{competition.status && competition.status !== "ACTIVE"
+												? ` (${statusLabels[competition.status]})`
+												: ""}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						)}
 						{matchThen600 &&
 							menuItems.map((item) => (
 								<HeaderLink
