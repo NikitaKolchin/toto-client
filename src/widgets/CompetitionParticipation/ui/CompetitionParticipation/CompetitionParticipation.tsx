@@ -21,10 +21,13 @@ const CompetitionParticipation: FC = () => {
 		useGetAllCompetitionsQuery(undefined, {
 			skip: !isAuth,
 		});
-	const { data: participation, isLoading } = useGetMyParticipationQuery(
-		competitionId as number,
-		{ skip: !isAuth || competitionId === undefined },
-	);
+	const {
+		data: participation,
+		isLoading,
+		isError,
+	} = useGetMyParticipationQuery(competitionId as number, {
+		skip: !isAuth || competitionId === undefined,
+	});
 	const competition = competitions.find((item) => item.id === competitionId);
 
 	return (
@@ -47,14 +50,26 @@ const CompetitionParticipation: FC = () => {
 						<Typography variant="body2" color="text.secondary">
 							Проверяем участие…
 						</Typography>
+					) : isError ? (
+						<Typography variant="body2" color="error">
+							Не удалось проверить участие
+						</Typography>
 					) : (
-						<Chip
-							size="small"
-							color={participation?.active ? "success" : "default"}
-							label={
-								participation?.active ? "Вы участвуете" : "Вы не участвуете"
-							}
-						/>
+						<Stack spacing={1} alignItems="flex-start">
+							<Chip
+								size="small"
+								color={participation?.active ? "success" : "default"}
+								label={
+									participation?.active ? "Вы участвуете" : "Вы не участвуете"
+								}
+							/>
+							{!participation?.active && (
+								<Typography variant="body2" color="text.secondary">
+									Чтобы делать ставки, попросите администратора добавить вас в
+									участники турнира.
+								</Typography>
+							)}
+						</Stack>
 					)}
 				</Stack>
 			</CardContent>

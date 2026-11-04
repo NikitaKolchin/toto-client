@@ -61,7 +61,9 @@ export const stakesApi = createApi({
 				method: "PATCH",
 				body: patch,
 			}),
-			invalidatesTags: (result, error, { id }) => [{ type: "MatchStakes", id }],
+			invalidatesTags: (_result, _error, { id }) => [
+				{ type: "MatchStakes", id },
+			],
 		}),
 		addMatchStake: builder.mutation<MatchStakeApi, Partial<MatchStakeApi>>({
 			query(body) {

@@ -1,4 +1,4 @@
-import { Checkbox } from "@mui/material";
+import { Box, Checkbox } from "@mui/material";
 import {
 	MaterialReactTable,
 	type MRT_ColumnDef,
@@ -7,6 +7,7 @@ import {
 } from "material-react-table";
 import { type FC, useMemo, useState } from "react";
 import { useGetAllCompetitionsQuery } from "@/entities/Competition";
+import { ShowMessage } from "@/shared/ui/ShowMessage";
 import {
 	useGetAllSettingsQuery,
 	useUpdateSettingByIdMutation,
@@ -28,7 +29,9 @@ function validateSetting(setting: Setting) {
 const SettingEditingTable: FC = () => {
 	const { data: respondedSettings, isLoading } = useGetAllSettingsQuery();
 	const { data: respondedCompetitions } = useGetAllCompetitionsQuery();
-	const [updateSetting] = useUpdateSettingByIdMutation();
+	// После старта турнира сервер отклоняет изменение правил начисления (409).
+	const [updateSetting, { error: updateError }] =
+		useUpdateSettingByIdMutation();
 	const [validationErrors, setValidationErrors] = useState<
 		Record<string, string | undefined>
 	>({});
@@ -41,14 +44,16 @@ const SettingEditingTable: FC = () => {
 			}
 			setValidationErrors({});
 
-			await updateSetting({
+			const result = await updateSetting({
 				...values,
 				contribution: Number(values.contribution),
 				direction: Number(values.direction),
 				difference: Number(values.difference),
 				outcome: Number(values.outcome),
 			});
-			table.setEditingRow(null); //exit editing mode
+			if ("data" in result) {
+				table.setEditingRow(null); //exit editing mode
+			}
 		};
 	const settings: Setting[] = respondedSettings || [];
 	const competitionsById = new Map(
@@ -137,7 +142,12 @@ const SettingEditingTable: FC = () => {
 			},
 		},
 	});
-	return <MaterialReactTable table={table} />;
+	return (
+		<Box>
+			{updateError && <ShowMessage error={updateError} severity="error" />}
+			<MaterialReactTable table={table} />
+		</Box>
+	);
 };
 
 export { SettingEditingTable };

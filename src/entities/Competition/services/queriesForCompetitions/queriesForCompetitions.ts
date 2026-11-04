@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from "@/shared/api/rtkApi/baseQueryWithReauth/bas
 export const competitionsApi = createApi({
 	reducerPath: "competitionsApi",
 	baseQuery: baseQueryWithReauth,
-	tagTypes: ["Competitions"],
+	tagTypes: ["Competitions", "SelectedCompetition", "Participation"],
 	endpoints: (builder) => ({
 		getCompetitionById: builder.query<Competition, string>({
 			query: (id) => `competitions/${id}`,
@@ -26,6 +26,7 @@ export const competitionsApi = createApi({
 		}),
 		getSelectedCompetitionId: builder.query<number | null, void>({
 			query: () => "users/selected-competition",
+			providesTags: ["SelectedCompetition"],
 		}),
 		selectCompetition: builder.mutation<void, number>({
 			query: (competitionId) => ({
@@ -33,12 +34,48 @@ export const competitionsApi = createApi({
 				method: "PUT",
 				body: { competitionId },
 			}),
+			// Кеш выбора обновляется сразу, иначе переход по ссылке без competitionId
+			// вернул бы пользователя к прежнему турниру.
+			async onQueryStarted(competitionId, { dispatch, queryFulfilled }) {
+				const patch = dispatch(
+					competitionsApi.util.updateQueryData(
+						"getSelectedCompetitionId",
+						undefined,
+						() => competitionId,
+					),
+				);
+				try {
+					await queryFulfilled;
+				} catch {
+					patch.undo();
+				}
+			},
 		}),
 		getMyParticipation: builder.query<
 			{ competitionId: number; userId: number; active: boolean },
 			number
 		>({
 			query: (competitionId) => `competitions/${competitionId}/participants/me`,
+			providesTags: (_result, _error, competitionId) => [
+				{ type: "Participation", id: competitionId },
+			],
+		}),
+		changeCompetitionStatus: builder.mutation<
+			Competition,
+			{
+				id: Competition["id"];
+				action: "activate" | "finish" | "archive";
+				force?: boolean;
+			}
+		>({
+			query: ({ id, action, force }) => ({
+				url: `competitions/${id}/${action}${force ? "?force=true" : ""}`,
+				method: "POST",
+			}),
+			invalidatesTags: (_result, _error, { id }) => [
+				{ type: "Competitions", id },
+				{ type: "Competitions", id: "LIST" },
+			],
 		}),
 		updateCompetitionById: builder.mutation<
 			Competition,
@@ -49,7 +86,7 @@ export const competitionsApi = createApi({
 				method: "PATCH",
 				body: patch,
 			}),
-			invalidatesTags: (result, error, { id }) => [
+			invalidatesTags: (_result, _error, { id }) => [
 				{ type: "Competitions", id },
 			],
 		}),
@@ -58,7 +95,10 @@ export const competitionsApi = createApi({
 				url: `competitions/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: (result, error, id) => [{ type: "Competitions", id }],
+			invalidatesTags: (_result, _error, id) => [
+				{ type: "Competitions", id },
+				{ type: "Competitions", id: "LIST" },
+			],
 		}),
 		addCompetition: builder.mutation<Competition, Partial<Competition>>({
 			query(body) {
@@ -81,6 +121,7 @@ export const {
 	useGetSelectedCompetitionIdQuery,
 	useSelectCompetitionMutation,
 	useGetMyParticipationQuery,
+	useChangeCompetitionStatusMutation,
 	useUpdateCompetitionByIdMutation,
 	useAddCompetitionMutation,
 	useDeleteCompetitionByIdMutation,

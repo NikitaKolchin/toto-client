@@ -44,7 +44,7 @@ export const matchesApi = createApi({
 				method: "PATCH",
 				body: patch,
 			}),
-			invalidatesTags: (result, error, { id }) => [{ type: "Matches", id }],
+			invalidatesTags: (_result, _error, { id }) => [{ type: "Matches", id }],
 		}),
 		addMatch: builder.mutation<Match, Partial<Match>>({
 			query(body) {
@@ -66,7 +66,7 @@ export const matchesApi = createApi({
 					: `matches/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: (result, error, { id }) => [{ type: "Matches", id }],
+			invalidatesTags: (_result, _error, { id }) => [{ type: "Matches", id }],
 		}),
 		uploadMatches: builder.mutation<{ message: string }, number | undefined>({
 			query(competitionId) {

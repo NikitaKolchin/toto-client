@@ -28,6 +28,7 @@ import {
 	useSelectCompetitionMutation,
 } from "@/entities/Competition";
 import { useLogoutMutation } from "@/entities/User";
+import { type Competition, Roles } from "@/shared/api";
 import { AppRoutes } from "@/shared/const/routes";
 import { useAppSelector } from "@/shared/store/config";
 
@@ -43,9 +44,26 @@ const menuItems: TotoMenuItem[] = [
 	{ name: "Информация", value: AppRoutes.INFO },
 ];
 
+const statusLabels: Record<NonNullable<Competition["status"]>, string> = {
+	DRAFT: "черновик",
+	ACTIVE: "идёт",
+	FINISHED: "завершён",
+	ARCHIVED: "архив",
+};
+
+const statusOrder = (status: Competition["status"]) =>
+	status === "ACTIVE"
+		? 0
+		: status === "FINISHED"
+			? 1
+			: status === "DRAFT"
+				? 2
+				: 3;
+
 function Header() {
 	const [logout] = useLogoutMutation();
-	const { isAuth, isActivated } = useAppSelector((state) => state.user);
+	const { isAuth, isActivated, roles } = useAppSelector((state) => state.user);
+	const isAdmin = roles.some((role) => role.value === Roles.ADMIN);
 	const { data: competitions = [], isLoading: isCompetitionsLoading } =
 		useGetAllCompetitionsQuery(undefined, {
 			skip: !isAuth,
@@ -66,26 +84,24 @@ function Header() {
 	);
 	const [isMainMenuOpen, setIsMainMenuOpen] = useState(false);
 	const competitionId = useCompetitionId();
-	const activeCompetitions = useMemo(
-		() =>
-			competitions.filter(
-				(competition) =>
-					competition.status === "ACTIVE" || competition.isCurrent,
-			),
-		[competitions],
-	);
+	// Игроку доступны открытые турниры (ACTIVE/FINISHED), администратору — все.
 	const selectableCompetitions = useMemo(
 		() =>
-			[...competitions].sort((left, right) => {
-				const leftActive = left.status === "ACTIVE" || left.isCurrent ? 0 : 1;
-				const rightActive =
-					right.status === "ACTIVE" || right.isCurrent ? 0 : 1;
-				return leftActive - rightActive;
-			}),
-		[competitions],
+			competitions
+				.filter(
+					(competition) =>
+						isAdmin ||
+						competition.status === "ACTIVE" ||
+						competition.status === "FINISHED",
+				)
+				.sort(
+					(left, right) => statusOrder(left.status) - statusOrder(right.status),
+				),
+		[competitions, isAdmin],
 	);
-	const fallbackCompetitions =
-		activeCompetitions.length > 0 ? activeCompetitions : selectableCompetitions;
+	const isKnownCompetition = (id: number | null | undefined) =>
+		id != null &&
+		selectableCompetitions.some((competition) => competition.id === id);
 
 	const withCompetitionSearch = (path: string) => {
 		const searchParams = new URLSearchParams(location.search);
@@ -97,26 +113,25 @@ function Header() {
 			: path;
 	};
 
+	// URL без турнира (или с неизвестным турниром) получает выбор пользователя,
+	// а если его нет — первый открытый турнир. Сохранённый выбор перезаписывается
+	// только когда его нет или он больше недоступен.
 	useEffect(() => {
 		if (
 			!isAuth ||
 			isCompetitionsLoading ||
 			isSelectedCompetitionLoading ||
-			competitionId !== undefined ||
-			fallbackCompetitions.length === 0
+			selectableCompetitions.length === 0 ||
+			isKnownCompetition(competitionId)
 		) {
 			return;
 		}
 
-		const fallbackId =
-			selectedCompetitionId != null &&
-			fallbackCompetitions.some(
-				(competition) => competition.id === selectedCompetitionId,
-			)
-				? selectedCompetitionId
-				: fallbackCompetitions[0].id;
+		const fallbackId = isKnownCompetition(selectedCompetitionId)
+			? (selectedCompetitionId as number)
+			: selectableCompetitions[0].id;
 
-		if (fallbackId !== selectedCompetitionId) {
+		if (isActivated && fallbackId !== selectedCompetitionId) {
 			selectCompetition(fallbackId);
 		}
 
@@ -126,25 +141,16 @@ function Header() {
 			{ pathname: location.pathname, search: searchParams.toString() },
 			{ replace: true },
 		);
-	}, [
-		fallbackCompetitions,
-		competitionId,
-		isAuth,
-		isCompetitionsLoading,
-		isSelectedCompetitionLoading,
-		location.pathname,
-		location.search,
-		navigate,
-		selectCompetition,
-		selectedCompetitionId,
-	]);
+	});
 
-	const handleCompetitionChange = async (nextCompetitionId: number) => {
-		const result = await selectCompetition(nextCompetitionId);
-		if (!("data" in result)) return;
+	// Турнир задаётся URL сразу; сохранение выбора на сервере — только для удобства.
+	const handleCompetitionChange = (nextCompetitionId: number) => {
 		const searchParams = new URLSearchParams(location.search);
 		searchParams.set("competitionId", String(nextCompetitionId));
 		navigate({ pathname: location.pathname, search: searchParams.toString() });
+		if (isActivated) {
+			selectCompetition(nextCompetitionId);
+		}
 	};
 
 	const handleMainMenu = () => {
@@ -263,7 +269,7 @@ function Header() {
 								<Select
 									labelId="competition-selector-label"
 									label="Турнир"
-									value={competitionId ?? selectedCompetitionId ?? ""}
+									value={isKnownCompetition(competitionId) ? competitionId : ""}
 									onChange={(event) =>
 										handleCompetitionChange(Number(event.target.value))
 									}
@@ -277,6 +283,9 @@ function Header() {
 									{selectableCompetitions.map((competition) => (
 										<MenuItem key={competition.id} value={competition.id}>
 											{competition.value}
+											{competition.status && competition.status !== "ACTIVE"
+												? ` (${statusLabels[competition.status]})`
+												: ""}
 										</MenuItem>
 									))}
 								</Select>

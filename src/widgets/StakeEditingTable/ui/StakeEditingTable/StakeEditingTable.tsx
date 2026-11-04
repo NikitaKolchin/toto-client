@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Alert, Box, useMediaQuery, useTheme } from "@mui/material";
 import {
 	MaterialReactTable,
 	type MRT_ColumnDef,
@@ -6,7 +6,11 @@ import {
 	useMaterialReactTable,
 } from "material-react-table";
 import { type FC, useMemo, useState } from "react";
-import { useCompetitionId } from "@/entities/Competition";
+import {
+	useCompetitionId,
+	useGetAllCompetitionsQuery,
+	useGetMyParticipationQuery,
+} from "@/entities/Competition";
 import type { MatchStake } from "@/entities/MatchStake";
 import {
 	useGetAllMatchStakesQuery,
@@ -30,6 +34,21 @@ const StakeEditingTable: FC = () => {
 		competitionId,
 		{ skip: competitionId === undefined },
 	);
+	const { data: competitions = [] } = useGetAllCompetitionsQuery();
+	const { data: participation } = useGetMyParticipationQuery(
+		competitionId ?? 0,
+		{ skip: competitionId === undefined },
+	);
+	const competition = competitions.find((item) => item.id === competitionId);
+	// Сервер принимает ставки только от активного участника ACTIVE-турнира.
+	const readOnlyReason =
+		competition && competition.status !== "ACTIVE"
+			? "Турнир не принимает ставки"
+			: participation && !participation.active
+				? "Вы не участвуете в этом турнире — ставки доступны только для просмотра"
+				: undefined;
+	const canStake = (enable: boolean) =>
+		enable && participation?.active === true && readOnlyReason === undefined;
 	const [updateStake] = useUpdateMatchStakeByIdMutation();
 	const [validationErrors, setValidationErrors] = useState("");
 	const handleSaveStake: MRT_TableOptions<MatchStake>["onEditingRowSave"] =
@@ -106,7 +125,7 @@ const StakeEditingTable: FC = () => {
 	const table = useMaterialReactTable({
 		...defaultMRTOptions,
 		editDisplayMode: isMobile ? "modal" : "row",
-		enableEditing: (row) => row.original.enable,
+		enableEditing: (row) => canStake(row.original.enable),
 		columns,
 		data: matchStakes,
 		state: {
@@ -125,11 +144,11 @@ const StakeEditingTable: FC = () => {
 		onEditingRowCancel: () => setValidationErrors(""),
 		muiTableBodyRowProps: ({ row, table }) => ({
 			onDoubleClick: () => {
-				if (row.original.enable) {
+				if (canStake(row.original.enable)) {
 					table.setEditingRow(row);
 				}
 			},
-			sx: row.original.enable
+			sx: canStake(row.original.enable)
 				? { cursor: "pointer" }
 				: { cursor: "default", opacity: 0.5 },
 		}),
@@ -146,7 +165,16 @@ const StakeEditingTable: FC = () => {
 			pagination: { pageSize: theme.rowsOnPage, pageIndex: 0 },
 		},
 	});
-	return <MaterialReactTable table={table} />;
+	return (
+		<>
+			{readOnlyReason && (
+				<Alert severity="info" sx={{ mb: 1 }}>
+					{readOnlyReason}
+				</Alert>
+			)}
+			<MaterialReactTable table={table} />
+		</>
+	);
 };
 
 export { StakeEditingTable };

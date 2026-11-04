@@ -22,7 +22,7 @@ import {
 	useUploadMatchesMutation,
 } from "@/entities/Match";
 import { useUpdateStakesResultMutation } from "@/entities/MatchStake";
-import { useGetAllNationsQuery } from "@/entities/Nation";
+import { useGetNationsByCompetitionQuery } from "@/entities/Nation";
 import type { Match } from "@/shared/api";
 import { trueFalse } from "@/shared/const/select";
 import { getDefaultMRTOptions } from "@/shared/DefaultTable";
@@ -42,11 +42,17 @@ const MatchEditingTable: FC = () => {
 			error: uploadMatchesError,
 		},
 	] = useUploadMatchesMutation();
-	const { data: respondedMatches, isLoading } = useGetAllMatchesQuery(
-		competitionId,
+	const {
+		data: respondedMatches,
+		isLoading,
+		refetch: refetchMatches,
+	} = useGetAllMatchesQuery(competitionId, {
+		skip: competitionId === undefined,
+	});
+	const { data: competitionNations = [] } = useGetNationsByCompetitionQuery(
+		competitionId ?? 0,
 		{ skip: competitionId === undefined },
 	);
-	const { data: respondedNations } = useGetAllNationsQuery();
 	const [
 		updateResults,
 		{
@@ -58,12 +64,6 @@ const MatchEditingTable: FC = () => {
 	const [updateMatch] = useUpdateMatchByIdMutation();
 	const [addMatch] = useAddMatchMutation();
 	const [deleteMatch] = useDeleteMatchMutation();
-	const competitionNations =
-		respondedNations?.filter((nation) =>
-			nation.competitions?.some(
-				(competition) => competition.id === competitionId,
-			),
-		) ?? [];
 	const getScore = (score: string) =>
 		score === "" || score === null ? null : Number(score);
 
@@ -286,7 +286,11 @@ const MatchEditingTable: FC = () => {
 						<Button
 							sx={{ mr: 1 }}
 							variant="contained"
-							onClick={() => updateResults(competitionId)}
+							onClick={async () => {
+								// Пересчёт меняет призы и джекпоты матчей — перечитываем таблицу.
+								const result = await updateResults(competitionId);
+								if ("data" in result) refetchMatches();
+							}}
 							disabled={isLoadingResults || competitionId === undefined}
 						>
 							Обновить результаты

@@ -1,1 +1,1 @@
-export { CompetitionParticipation } from './ui/CompetitionParticipation/CompetitionParticipation';
+export { CompetitionParticipation } from "./ui/CompetitionParticipation/CompetitionParticipation";
