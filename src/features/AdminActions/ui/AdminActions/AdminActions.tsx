@@ -1,5 +1,5 @@
 import CompetitionsIcon from "@mui/icons-material/EmojiEvents";
-import NationsIcon from "@mui/icons-material/Flag";
+import TeamsIcon from "@mui/icons-material/Flag";
 import UsersIcon from "@mui/icons-material/Group";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
@@ -25,9 +25,9 @@ const actions = [
 		icon: <CompetitionsIcon />,
 	},
 	{
-		name: "страны",
-		route: `..${AppRoutes.NATIONS}`,
-		icon: <NationsIcon />,
+		name: "команды",
+		route: `..${AppRoutes.TEAMS}`,
+		icon: <TeamsIcon />,
 	},
 ];
 

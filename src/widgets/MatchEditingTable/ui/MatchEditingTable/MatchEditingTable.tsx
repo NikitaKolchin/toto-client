@@ -22,7 +22,7 @@ import {
 	useUploadMatchesMutation,
 } from "@/entities/Match";
 import { useUpdateStakesResultMutation } from "@/entities/MatchStake";
-import { useGetNationsByCompetitionQuery } from "@/entities/Nation";
+import { useGetTeamsByCompetitionQuery } from "@/entities/Team";
 import type { Match } from "@/shared/api";
 import { trueFalse } from "@/shared/const/select";
 import { getDefaultMRTOptions } from "@/shared/DefaultTable";
@@ -49,7 +49,7 @@ const MatchEditingTable: FC = () => {
 	} = useGetAllMatchesQuery(competitionId, {
 		skip: competitionId === undefined,
 	});
-	const { data: competitionNations = [] } = useGetNationsByCompetitionQuery(
+	const { data: competitionTeams = [] } = useGetTeamsByCompetitionQuery(
 		competitionId ?? 0,
 		{ skip: competitionId === undefined },
 	);
@@ -93,14 +93,12 @@ const MatchEditingTable: FC = () => {
 			enable: Boolean(enable),
 			visibility: Boolean(visibility),
 			homeId: Number(
-				competitionNations.find(
-					(nation) => nation.value === values["home.value"],
-				)?.id,
+				competitionTeams.find((team) => team.value === values["home.value"])
+					?.id,
 			),
 			awayId: Number(
-				competitionNations.find(
-					(nation) => nation.value === values["away.value"],
-				)?.id,
+				competitionTeams.find((team) => team.value === values["away.value"])
+					?.id,
 			),
 		});
 		table.setEditingRow(null); //exit editing mode
@@ -127,14 +125,12 @@ const MatchEditingTable: FC = () => {
 				enable: Boolean(enable),
 				visibility: Boolean(visibility),
 				homeId: Number(
-					competitionNations.find(
-						(nation) => nation.value === values["home.value"],
-					)?.id,
+					competitionTeams.find((team) => team.value === values["home.value"])
+						?.id,
 				),
 				awayId: Number(
-					competitionNations.find(
-						(nation) => nation.value === values["away.value"],
-					)?.id,
+					competitionTeams.find((team) => team.value === values["away.value"])
+						?.id,
 				),
 				competitionId,
 				prize: null,
@@ -151,7 +147,7 @@ const MatchEditingTable: FC = () => {
 		}
 	};
 	const matches: Match[] = respondedMatches || [];
-	const nations = competitionNations.map((nation) => nation.value);
+	const teams = competitionTeams.map((team) => team.value);
 	const columns = useMemo<MRT_ColumnDef<Match>[]>(
 		() => [
 			{
@@ -168,7 +164,7 @@ const MatchEditingTable: FC = () => {
 				accessorKey: "home.value",
 				header: "хозяева",
 				editVariant: "select",
-				editSelectOptions: nations,
+				editSelectOptions: teams,
 			},
 			{
 				accessorKey: "homeScore",
@@ -188,7 +184,7 @@ const MatchEditingTable: FC = () => {
 				accessorKey: "away.value",
 				header: "гости",
 				editVariant: "select",
-				editSelectOptions: nations,
+				editSelectOptions: teams,
 			},
 			{
 				accessorFn: (row) => new Date(row.date),
@@ -257,7 +253,7 @@ const MatchEditingTable: FC = () => {
 				enableEditing: false,
 			},
 		],
-		[nations],
+		[teams],
 	);
 	const defaultMRTOptions = getDefaultMRTOptions<Match>();
 	const table = useMaterialReactTable({

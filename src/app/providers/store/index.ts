@@ -6,8 +6,8 @@ import {
 import { competitionsApi } from "@/entities/Competition";
 import { matchesApi } from "@/entities/Match";
 import { stakesApi } from "@/entities/MatchStake";
-import { nationsApi } from "@/entities/Nation";
 import { settingsApi } from "@/entities/Setting";
+import { teamsApi } from "@/entities/Team";
 import { theme } from "@/entities/Theme";
 import { authApi, resultApi, rolesApi, user, usersApi } from "@/entities/User";
 
@@ -16,7 +16,7 @@ const apis = [
 	usersApi,
 	authApi,
 	rolesApi,
-	nationsApi,
+	teamsApi,
 	settingsApi,
 	matchesApi,
 	stakesApi,
@@ -46,7 +46,7 @@ const store = configureStore({
 		[usersApi.reducerPath]: usersApi.reducer,
 		[authApi.reducerPath]: authApi.reducer,
 		[rolesApi.reducerPath]: rolesApi.reducer,
-		[nationsApi.reducerPath]: nationsApi.reducer,
+		[teamsApi.reducerPath]: teamsApi.reducer,
 		[settingsApi.reducerPath]: settingsApi.reducer,
 		[matchesApi.reducerPath]: matchesApi.reducer,
 		[stakesApi.reducerPath]: stakesApi.reducer,
@@ -61,7 +61,7 @@ const store = configureStore({
 			.concat(usersApi.middleware)
 			.concat(authApi.middleware)
 			.concat(rolesApi.middleware)
-			.concat(nationsApi.middleware)
+			.concat(teamsApi.middleware)
 			.concat(settingsApi.middleware)
 			.concat(matchesApi.middleware)
 			.concat(stakesApi.middleware)

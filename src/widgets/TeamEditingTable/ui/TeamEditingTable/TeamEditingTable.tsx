@@ -15,63 +15,65 @@ import {
 	useGetAllCompetitionsQuery,
 } from "@/entities/Competition";
 import {
-	useGetAllNationsQuery,
-	useUpdateNationByIdMutation,
-	useUpdateNationsMutation,
-	useUploadNationsMutation,
-} from "@/entities/Nation";
+	useGetAllTeamsQuery,
+	useUpdateTeamByIdMutation,
+	useUpdateTeamsMutation,
+	useUploadTeamsMutation,
+} from "@/entities/Team";
 import { EditMultipleValueRow } from "@/features/EditMultipleValueRow";
-import type { Competition, Nation } from "@/shared/api";
+import type { Competition, Team } from "@/shared/api";
 import { getDefaultMRTOptions } from "@/shared/DefaultTable";
 import { ShowMessage } from "@/shared/ui/ShowMessage";
 
 const validateRequired = (value: string) => !!value.length;
 
-function validateNation(nation: Nation) {
+function validateTeam(team: Team) {
 	return {
-		firstName: !validateRequired(nation.value) ? "Value is Required" : "",
+		firstName: !validateRequired(team.value) ? "Value is Required" : "",
 	};
 }
 
-const NationEditingTable: FC = () => {
+const TeamEditingTable: FC = () => {
 	const competitionId = useCompetitionId();
-	const { data: respondedNations, isLoading } = useGetAllNationsQuery();
+	const { data: respondedTeams, isLoading } = useGetAllTeamsQuery();
 	const [
-		uploadNations,
+		uploadTeams,
 		{
-			isLoading: isLoadingUploadNations,
-			error: uploadNationsError,
-			data: uploadNationsData,
+			isLoading: isLoadingUploadTeams,
+			error: uploadTeamsError,
+			data: uploadTeamsData,
 		},
-	] = useUploadNationsMutation();
+	] = useUploadTeamsMutation();
 	const [
-		updateNations,
+		updateTeams,
 		{
-			isLoading: isLoadingUpdateNations,
-			error: updateNationsError,
-			data: updateNationsData,
+			isLoading: isLoadingUpdateTeams,
+			error: updateTeamsError,
+			data: updateTeamsData,
 		},
-	] = useUpdateNationsMutation();
-	const [updateNation] = useUpdateNationByIdMutation();
+	] = useUpdateTeamsMutation();
+	const [updateTeam] = useUpdateTeamByIdMutation();
 	const { data: respondedCompetitions, isLoading: isLoadingCompetitions } =
 		useGetAllCompetitionsQuery();
 	const [validationErrors, setValidationErrors] = useState<
 		Record<string, string | undefined>
 	>({});
 
-	const handleSaveNation: MRT_TableOptions<Nation>["onEditingRowSave"] =
-		async ({ values, table }) => {
-			const newValidationErrors = validateNation(values);
-			if (Object.values(newValidationErrors).some((error) => error)) {
-				setValidationErrors(newValidationErrors);
-				return;
-			}
-			setValidationErrors({});
-			await updateNation(values);
-			table.setEditingRow(null); //exit editing mode
-		};
-	const nations: Nation[] = respondedNations || [];
-	const columns = useMemo<MRT_ColumnDef<Nation>[]>(
+	const handleSaveTeam: MRT_TableOptions<Team>["onEditingRowSave"] = async ({
+		values,
+		table,
+	}) => {
+		const newValidationErrors = validateTeam(values);
+		if (Object.values(newValidationErrors).some((error) => error)) {
+			setValidationErrors(newValidationErrors);
+			return;
+		}
+		setValidationErrors({});
+		await updateTeam(values);
+		table.setEditingRow(null); //exit editing mode
+	};
+	const teams: Team[] = respondedTeams || [];
+	const columns = useMemo<MRT_ColumnDef<Team>[]>(
 		() => [
 			{
 				accessorKey: "id",
@@ -85,7 +87,7 @@ const NationEditingTable: FC = () => {
 					required: true,
 					error: !!validationErrors?.firstName,
 					helperText: validationErrors?.firstName,
-					//remove any previous validation errors when nation focuses on the input
+					//remove any previous validation errors when team focuses on the input
 					onFocus: () =>
 						setValidationErrors({
 							...validationErrors,
@@ -114,7 +116,7 @@ const NationEditingTable: FC = () => {
 							>{`${competition.value}\n`}</Typography>
 						)),
 				Edit: ({ column, row }) =>
-					EditMultipleValueRow<Nation>({
+					EditMultipleValueRow<Team>({
 						column,
 						row,
 						data: respondedCompetitions,
@@ -124,17 +126,17 @@ const NationEditingTable: FC = () => {
 		],
 		[isLoadingCompetitions, respondedCompetitions, validationErrors],
 	);
-	const defaultMRTOptions = getDefaultMRTOptions<Nation>();
+	const defaultMRTOptions = getDefaultMRTOptions<Team>();
 	const table = useMaterialReactTable({
 		...defaultMRTOptions,
 		columns,
-		data: nations,
+		data: teams,
 		state: {
 			isLoading,
 		},
 		autoResetPageIndex: false,
 		getRowId: (row) => row.id,
-		onEditingRowSave: handleSaveNation,
+		onEditingRowSave: handleSaveTeam,
 		onEditingRowCancel: () => setValidationErrors({}),
 		filterFns: {
 			competitionsFilter: (row, columnId, filterValue) =>
@@ -153,10 +155,10 @@ const NationEditingTable: FC = () => {
 		renderTopToolbar: ({ table }) => {
 			// Команды загружаются из API в выбранный в шапке турнир.
 			const handleUpload = () => {
-				if (competitionId !== undefined) uploadNations(competitionId);
+				if (competitionId !== undefined) uploadTeams(competitionId);
 			};
 			const handleUpdate = () => {
-				if (competitionId !== undefined) updateNations(competitionId);
+				if (competitionId !== undefined) updateTeams(competitionId);
 			};
 			return (
 				<Box
@@ -178,31 +180,31 @@ const NationEditingTable: FC = () => {
 						<MRT_ToggleFiltersButton table={table} />
 					</Box>
 					<Box>
-						{(uploadNationsData || uploadNationsError) && (
+						{(uploadTeamsData || uploadTeamsError) && (
 							<ShowMessage
-								error={uploadNationsError}
-								message={uploadNationsData?.message}
+								error={uploadTeamsError}
+								message={uploadTeamsData?.message}
 								severity="info"
 							/>
 						)}
-						{(updateNationsData || updateNationsError) && (
+						{(updateTeamsData || updateTeamsError) && (
 							<ShowMessage
-								error={updateNationsError}
-								message={updateNationsData?.message}
+								error={updateTeamsError}
+								message={updateTeamsData?.message}
 								severity="info"
 							/>
 						)}
 						<Box sx={{ display: "flex", gap: "0.5rem" }}>
 							<Button
 								variant="contained"
-								disabled={isLoadingUploadNations || competitionId === undefined}
+								disabled={isLoadingUploadTeams || competitionId === undefined}
 								onClick={handleUpload}
 							>
 								Upload
 							</Button>
 							<Button
 								variant="contained"
-								disabled={isLoadingUpdateNations || competitionId === undefined}
+								disabled={isLoadingUpdateTeams || competitionId === undefined}
 								onClick={handleUpdate}
 							>
 								Update
@@ -216,4 +218,4 @@ const NationEditingTable: FC = () => {
 	return <MaterialReactTable table={table} />;
 };
 
-export { NationEditingTable };
+export { TeamEditingTable };
